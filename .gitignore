@@ -1,0 +1,6 @@
+.venv/
+.lotus_env/
+__pycache__/
+*.pyc
+*.dll
+*.lib

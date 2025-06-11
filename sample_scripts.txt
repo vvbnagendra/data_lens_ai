@@ -1,0 +1,22 @@
+# Create new venv
+python -m venv venv
+
+-- Setting virtual environment
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.\.venv\Scripts\Activate.ps1
+
+deactivate
+Remove-Item -Recurse -Force .\venv
+
+
+# Delete old venv
+Remove-Item -Recurse -Force .\venv
+
+# Create new venv
+python -m venv venv
+
+# Activate it (PowerShell)
+.\venv\Scripts\Activate.ps1
+
+# (Optional) Reinstall dependencies from requirements.txt
+pip install -r requirements.txt
