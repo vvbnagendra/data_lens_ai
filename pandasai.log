@@ -5627,3 +5627,1444 @@ min    1957.000000                    -29.738000               12.000000
 max    2023.000000                     -0.094000               61.000000}
 2025-06-10 22:55:59 [INFO] Executed in: 84.73818874359131s
 2025-06-10 22:55:59 [INFO] Executing Step 6: ResultParsing
+2025-06-12 18:03:06 [INFO] Question: You are a Python data analyst. Only return valid Python code using a DataFrame called df. Don't explain or output anything else. Summarise the data and assign the result to a variable named result, in the format: {'type': 'string', 'value': '...'}
+2025-06-12 18:03:07 [INFO] Running PandasAI with google LLM...
+2025-06-12 18:03:07 [INFO] Prompt ID: ff09dcd4-4369-4803-9e65-5f2fd7532b84
+2025-06-12 18:03:07 [INFO] Executing Step 0: CacheLookup
+2025-06-12 18:03:07 [INFO] Executing Step 1: PromptGeneration
+2025-06-12 18:03:07 [INFO] Using prompt: <dataframe>
+dfs[0]:67x3
+Year,Mean cumulative mass balance,Number of observations
+1959,-1.431,13.0
+1957,-0.094,12.0
+1958,-0.963,12.0
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: You are a Python data analyst. Only return valid Python code using a DataFrame called df. Don't explain or output anything else. Summarise the data and assign the result to a variable named result, in the format: {'type': 'string', 'value': '...'}
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-06-12 18:03:07 [INFO] Executing Step 2: CodeGenerator
+2025-06-12 18:03:09 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+df = dfs[0]
+
+summary = f"Shape: {df.shape}\n"
+summary += f"Columns: {', '.join(df.columns)}\n"
+summary += f"Data types:\n{df.dtypes}\n"
+summary += f"Missing values:\n{df.isnull().sum()}\n"
+summary += f"Descriptive statistics:\n{df.describe()}"
+
+result = {'type': 'string', 'value': summary}
+            ```
+            
+2025-06-12 18:03:09 [INFO] Executing Step 3: CachePopulation
+2025-06-12 18:03:09 [INFO] Executing Step 4: CodeExecution
+2025-06-12 18:03:09 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-12 18:03:09 [INFO] 
+Code running:
+```
+df = dfs[0]
+summary = f'Shape: {df.shape}\n'
+summary += f"Columns: {', '.join(df.columns)}\n"
+summary += f"""Data types:
+{df.dtypes}
+"""
+summary += f"""Missing values:
+{df.isnull().sum()}
+"""
+summary += f"""Descriptive statistics:
+{df.describe()}"""
+result = {'type': 'string', 'value': summary}
+        ```
+2025-06-12 18:03:09 [INFO] Executing Step 5: ResultValidation
+2025-06-12 18:03:09 [INFO] Answer: {'type': 'string', 'value': 'Shape: (67, 3)\nColumns: Year, Mean cumulative mass balance, Number of observations\nData types:\nYear                              int64\nMean cumulative mass balance    float64\nNumber of observations          float64\ndtype: object\nMissing values:\nYear                            0\nMean cumulative mass balance    0\nNumber of observations          0\ndtype: int64\nDescriptive statistics:\n              Year  Mean cumulative mass balance  Number of observations\ncount    67.000000                     67.000000               67.000000\nmean   1990.000000                    -10.940418               45.865672\nstd      19.485037                      8.023646               14.890403\nmin    1957.000000                    -29.738000               12.000000\n25%    1973.500000                    -16.668000               35.000000\n50%    1990.000000                     -8.274000               53.000000\n75%    2006.500000                     -4.495500               58.500000\nmax    2023.000000                     -0.094000               61.000000'}
+2025-06-12 18:03:09 [INFO] Executed in: 2.563054323196411s
+2025-06-12 18:03:09 [INFO] Executing Step 6: ResultParsing
+2025-06-12 18:10:09 [INFO] Question: summarise this data
+2025-06-12 18:10:10 [INFO] Running PandasAI with google LLM...
+2025-06-12 18:10:10 [INFO] Prompt ID: 47e72191-8e46-46da-aede-f040773e9507
+2025-06-12 18:10:10 [INFO] Executing Step 0: CacheLookup
+2025-06-12 18:10:10 [INFO] Executing Step 1: PromptGeneration
+2025-06-12 18:10:10 [INFO] Using prompt: <dataframe>
+dfs[0]:68x3
+Year,Mean cumulative mass balance,Number of observations
+1957,-0.094,12.0
+1956,0.0,
+1958,-0.963,12.0
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: summarise this data
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-06-12 18:10:10 [INFO] Executing Step 2: CodeGenerator
+2025-06-12 18:10:12 [INFO] Code generated:
+            ```
+            import pandas as pd
+
+df = dfs[0]
+
+summary = df.describe(include='all')
+
+result = { "type": "dataframe", "value": summary }
+            ```
+            
+2025-06-12 18:10:12 [INFO] Executing Step 3: CachePopulation
+2025-06-12 18:10:12 [INFO] Executing Step 4: CodeExecution
+2025-06-12 18:10:12 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-12 18:10:12 [INFO] 
+Code running:
+```
+df = dfs[0]
+summary = df.describe(include='all')
+result = {'type': 'dataframe', 'value': summary}
+        ```
+2025-06-12 18:10:12 [INFO] Executing Step 5: ResultValidation
+2025-06-12 18:10:12 [INFO] Answer: {'type': 'dataframe', 'value':              Year  Mean cumulative mass balance  Number of observations
+count    68.00000                     68.000000               67.000000
+mean   1989.50000                    -10.779529               45.865672
+std      19.77372                      8.073302               14.890403
+min    1956.00000                    -29.738000               12.000000
+25%    1972.75000                    -16.533000               35.000000
+50%    1989.50000                     -8.031500               53.000000
+75%    2006.25000                     -4.357750               58.500000
+max    2023.00000                      0.000000               61.000000}
+2025-06-12 18:10:12 [INFO] Executed in: 2.2705092430114746s
+2025-06-12 18:10:12 [INFO] Executing Step 6: ResultParsing
+2025-06-12 18:11:37 [INFO] Question: best year in terms of observations
+2025-06-12 18:11:37 [INFO] Running PandasAI with google LLM...
+2025-06-12 18:11:37 [INFO] Prompt ID: d937fc82-ec62-4e88-8603-aefe26f8141f
+2025-06-12 18:11:37 [INFO] Executing Step 0: CacheLookup
+2025-06-12 18:11:37 [INFO] Executing Step 1: PromptGeneration
+2025-06-12 18:11:37 [INFO] Using prompt: <dataframe>
+dfs[0]:68x3
+Year,Mean cumulative mass balance,Number of observations
+1957,-0.094,12.0
+1958,-0.963,12.0
+1956,0.0,
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: best year in terms of observations
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-06-12 18:11:37 [INFO] Executing Step 2: CodeGenerator
+2025-06-12 18:11:40 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+df = dfs[0].copy()
+df = df.dropna()
+
+df['Number of observations'] = pd.to_numeric(df['Number of observations'])
+
+best_year = df.loc[df['Number of observations'].idxmax(), 'Year']
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+result = { "type": "number", "value": best_year }
+            ```
+            
+2025-06-12 18:11:40 [INFO] Executing Step 3: CachePopulation
+2025-06-12 18:11:40 [INFO] Executing Step 4: CodeExecution
+2025-06-12 18:11:40 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-12 18:11:40 [INFO] 
+Code running:
+```
+df = dfs[0].copy()
+df = df.dropna()
+df['Number of observations'] = pd.to_numeric(df['Number of observations'])
+best_year = df.loc[df['Number of observations'].idxmax(), 'Year']
+result = {'type': 'number', 'value': best_year}
+        ```
+2025-06-12 18:11:40 [INFO] Executing Step 5: ResultValidation
+2025-06-12 18:11:40 [INFO] Answer: {'type': 'number', 'value': 1993}
+2025-06-12 18:11:40 [INFO] Executed in: 3.094316244125366s
+2025-06-12 18:11:40 [INFO] Executing Step 6: ResultParsing
+2025-06-12 18:11:50 [INFO] Question: best year in terms of observations and how many ?
+2025-06-12 18:11:50 [INFO] Running PandasAI with google LLM...
+2025-06-12 18:11:50 [INFO] Prompt ID: 0f995b0c-770d-4f0f-a461-44091cb86fa5
+2025-06-12 18:11:50 [INFO] Executing Step 0: CacheLookup
+2025-06-12 18:11:50 [INFO] Executing Step 1: PromptGeneration
+2025-06-12 18:11:50 [INFO] Using prompt: <dataframe>
+dfs[0]:68x3
+Year,Mean cumulative mass balance,Number of observations
+1956,0.0,
+1957,-0.094,12.0
+1958,-0.963,12.0
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: best year in terms of observations and how many ?
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-06-12 18:11:50 [INFO] Executing Step 2: CodeGenerator
+2025-06-12 18:11:53 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+df = dfs[0]
+
+# Find the year with the most observations
+best_year = df.loc[df['Number of observations'].idxmax()]
+
+# Extract the year and number of observations
+year = best_year['Year']
+observations = int(best_year['Number of observations'])
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+result = { "type": "string", "value": f"The best year in terms of observations is {year} with {observations} observations." }
+            ```
+            
+2025-06-12 18:11:53 [INFO] Executing Step 3: CachePopulation
+2025-06-12 18:11:53 [INFO] Executing Step 4: CodeExecution
+2025-06-12 18:11:53 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-12 18:11:53 [INFO] 
+Code running:
+```
+df = dfs[0]
+best_year = df.loc[df['Number of observations'].idxmax()]
+year = best_year['Year']
+observations = int(best_year['Number of observations'])
+result = {'type': 'string', 'value': f'The best year in terms of observations is {year} with {observations} observations.'}
+        ```
+2025-06-12 18:11:53 [INFO] Executing Step 5: ResultValidation
+2025-06-12 18:11:53 [INFO] Answer: {'type': 'string', 'value': 'The best year in terms of observations is 1993.0 with 61 observations.'}
+2025-06-12 18:11:53 [INFO] Executed in: 2.9906623363494873s
+2025-06-12 18:11:53 [INFO] Executing Step 6: ResultParsing
+2025-06-12 18:12:09 [INFO] Question: average number of observations
+2025-06-12 18:12:09 [INFO] Running PandasAI with google LLM...
+2025-06-12 18:12:09 [INFO] Prompt ID: d8f6639c-af9d-484f-a401-645f008b61e9
+2025-06-12 18:12:09 [INFO] Executing Step 0: CacheLookup
+2025-06-12 18:12:09 [INFO] Executing Step 1: PromptGeneration
+2025-06-12 18:12:09 [INFO] Using prompt: <dataframe>
+dfs[0]:68x3
+Year,Mean cumulative mass balance,Number of observations
+1958,-0.963,12.0
+1957,-0.094,12.0
+1956,0.0,
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: average number of observations
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-06-12 18:12:09 [INFO] Executing Step 2: CodeGenerator
+2025-06-12 18:12:12 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+df = dfs[0].copy()
+df = df.dropna()
+average_observations = df['Number of observations'].mean()
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+result = { "type": "number", "value": average_observations }
+            ```
+            
+2025-06-12 18:12:12 [INFO] Executing Step 3: CachePopulation
+2025-06-12 18:12:12 [INFO] Executing Step 4: CodeExecution
+2025-06-12 18:12:12 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-12 18:12:12 [INFO] 
+Code running:
+```
+df = dfs[0].copy()
+df = df.dropna()
+average_observations = df['Number of observations'].mean()
+result = {'type': 'number', 'value': average_observations}
+        ```
+2025-06-12 18:12:12 [INFO] Executing Step 5: ResultValidation
+2025-06-12 18:12:12 [INFO] Answer: {'type': 'number', 'value': 45.865671641791046}
+2025-06-12 18:12:12 [INFO] Executed in: 2.422764301300049s
+2025-06-12 18:12:12 [INFO] Executing Step 6: ResultParsing
+2025-06-12 18:19:49 [INFO] Question: average number of observations
+2025-06-12 18:19:49 [INFO] Running PandasAI with google LLM...
+2025-06-12 18:19:49 [INFO] Prompt ID: 03f3440e-671e-4b0b-9b1f-4cc5b624384e
+2025-06-12 18:19:49 [INFO] Executing Step 0: CacheLookup
+2025-06-12 18:19:49 [INFO] Using cached response
+2025-06-12 18:19:49 [INFO] Executing Step 1: PromptGeneration
+2025-06-12 18:19:49 [INFO] Executing Step 2: CodeGenerator
+2025-06-12 18:19:49 [INFO] Executing Step 3: CachePopulation
+2025-06-12 18:19:49 [INFO] Executing Step 4: CodeExecution
+2025-06-12 18:19:49 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-12 18:19:49 [INFO] 
+Code running:
+```
+df = dfs[0].copy()
+df = df.dropna()
+average_observations = df['Number of observations'].mean()
+result = {'type': 'number', 'value': average_observations}
+        ```
+2025-06-12 18:19:49 [INFO] Executing Step 5: ResultValidation
+2025-06-12 18:19:49 [INFO] Answer: {'type': 'number', 'value': 45.865671641791046}
+2025-06-12 18:19:49 [INFO] Executed in: 0.05849027633666992s
+2025-06-12 18:19:49 [INFO] Executing Step 6: ResultParsing
+2025-06-12 18:20:05 [INFO] Question: plot the yearwise timeline
+2025-06-12 18:20:05 [INFO] Running PandasAI with google LLM...
+2025-06-12 18:20:05 [INFO] Prompt ID: fbdf561e-5c97-448a-916f-da4904a6368a
+2025-06-12 18:20:05 [INFO] Executing Step 0: CacheLookup
+2025-06-12 18:20:05 [INFO] Executing Step 1: PromptGeneration
+2025-06-12 18:20:05 [INFO] Using prompt: <dataframe>
+dfs[0]:68x3
+Year,Mean cumulative mass balance,Number of observations
+1958,-0.963,12.0
+1957,-0.094,12.0
+1956,0.0,
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: plot the yearwise timeline
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-06-12 18:20:05 [INFO] Executing Step 2: CodeGenerator
+2025-06-12 18:20:08 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Write code here
+df = dfs[0]
+
+# Convert 'Year' to datetime objects
+df['Year'] = pd.to_datetime(df['Year'], format='%Y')
+
+# Set 'Year' as index
+df = df.set_index('Year')
+
+# Create the plot
+plt.figure(figsize=(10, 6))
+plt.plot(df.index, df['Mean cumulative mass balance'])
+
+# Add labels and title
+plt.xlabel('Year')
+plt.ylabel('Mean cumulative mass balance')
+plt.title('Yearwise Timeline of Mean Cumulative Mass Balance')
+
+# Rotate x-axis labels for better readability
+plt.xticks(rotation=45)
+
+# Add grid
+plt.grid(True)
+
+# Save the plot to a file
+plt.savefig('timeline_plot.png')
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+result = { "type": "plot", "value": "timeline_plot.png" }
+            ```
+            
+2025-06-12 18:20:08 [INFO] Executing Step 3: CachePopulation
+2025-06-12 18:20:08 [INFO] Executing Step 4: CodeExecution
+2025-06-12 18:20:08 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-12 18:20:08 [INFO] 
+Code running:
+```
+df = dfs[0]
+df['Year'] = pd.to_datetime(df['Year'], format='%Y')
+df = df.set_index('Year')
+plt.figure(figsize=(10, 6))
+plt.plot(df.index, df['Mean cumulative mass balance'])
+plt.xlabel('Year')
+plt.ylabel('Mean cumulative mass balance')
+plt.title('Yearwise Timeline of Mean Cumulative Mass Balance')
+plt.xticks(rotation=45)
+plt.grid(True)
+plt.savefig('C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png')
+result = {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+        ```
+2025-06-12 18:20:08 [INFO] Executing Step 5: ResultValidation
+2025-06-12 18:20:08 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+2025-06-12 18:20:08 [INFO] Executed in: 3.019336223602295s
+2025-06-12 18:20:08 [INFO] Executing Step 6: ResultParsing
+2025-06-12 18:24:04 [INFO] Question: plot the yearwise timeline
+2025-06-12 18:24:04 [INFO] Running PandasAI with google LLM...
+2025-06-12 18:24:04 [INFO] Prompt ID: 51832ed1-fbcb-40e8-a5b8-067eb175a3a2
+2025-06-12 18:24:04 [INFO] Executing Step 0: CacheLookup
+2025-06-12 18:24:04 [INFO] Using cached response
+2025-06-12 18:24:04 [INFO] Executing Step 1: PromptGeneration
+2025-06-12 18:24:04 [INFO] Executing Step 2: CodeGenerator
+2025-06-12 18:24:04 [INFO] Executing Step 3: CachePopulation
+2025-06-12 18:24:04 [INFO] Executing Step 4: CodeExecution
+2025-06-12 18:24:04 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-12 18:24:04 [INFO] 
+Code running:
+```
+df = dfs[0]
+df['Year'] = pd.to_datetime(df['Year'], format='%Y')
+df = df.set_index('Year')
+plt.figure(figsize=(10, 6))
+plt.plot(df.index, df['Mean cumulative mass balance'])
+plt.xlabel('Year')
+plt.ylabel('Mean cumulative mass balance')
+plt.title('Yearwise Timeline of Mean Cumulative Mass Balance')
+plt.xticks(rotation=45)
+plt.grid(True)
+plt.savefig('C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png')
+result = {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+        ```
+2025-06-12 18:24:04 [INFO] Executing Step 5: ResultValidation
+2025-06-12 18:24:04 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+2025-06-12 18:24:04 [INFO] Executed in: 0.19476652145385742s
+2025-06-12 18:24:04 [INFO] Executing Step 6: ResultParsing
+2025-06-12 18:24:12 [INFO] Question: plot the yearwise timeline
+2025-06-12 18:24:12 [INFO] Running PandasAI with google LLM...
+2025-06-12 18:24:12 [INFO] Prompt ID: d7e4d120-c0a3-4c77-8f75-bef59315b40e
+2025-06-12 18:24:12 [INFO] Executing Step 0: CacheLookup
+2025-06-12 18:24:12 [INFO] Using cached response
+2025-06-12 18:24:12 [INFO] Executing Step 1: PromptGeneration
+2025-06-12 18:24:12 [INFO] Executing Step 2: CodeGenerator
+2025-06-12 18:24:12 [INFO] Executing Step 3: CachePopulation
+2025-06-12 18:24:12 [INFO] Executing Step 4: CodeExecution
+2025-06-12 18:24:12 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-12 18:24:12 [INFO] 
+Code running:
+```
+df = dfs[0]
+df['Year'] = pd.to_datetime(df['Year'], format='%Y')
+df = df.set_index('Year')
+plt.figure(figsize=(10, 6))
+plt.plot(df.index, df['Mean cumulative mass balance'])
+plt.xlabel('Year')
+plt.ylabel('Mean cumulative mass balance')
+plt.title('Yearwise Timeline of Mean Cumulative Mass Balance')
+plt.xticks(rotation=45)
+plt.grid(True)
+plt.savefig('C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png')
+result = {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+        ```
+2025-06-12 18:24:12 [INFO] Executing Step 5: ResultValidation
+2025-06-12 18:24:12 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+2025-06-12 18:24:12 [INFO] Executed in: 0.28641319274902344s
+2025-06-12 18:24:12 [INFO] Executing Step 6: ResultParsing
+2025-06-12 18:24:12 [INFO] Question: plot the yearwise timeline
+2025-06-12 18:24:12 [INFO] Running PandasAI with google LLM...
+2025-06-12 18:24:12 [INFO] Prompt ID: f8dc98bd-111b-4e5a-b402-5dfebd2b6ad9
+2025-06-12 18:24:12 [INFO] Executing Step 0: CacheLookup
+2025-06-12 18:24:12 [INFO] Using cached response
+2025-06-12 18:24:12 [INFO] Executing Step 1: PromptGeneration
+2025-06-12 18:24:12 [INFO] Executing Step 2: CodeGenerator
+2025-06-12 18:24:12 [INFO] Executing Step 3: CachePopulation
+2025-06-12 18:24:12 [INFO] Executing Step 4: CodeExecution
+2025-06-12 18:24:12 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-12 18:24:12 [INFO] 
+Code running:
+```
+df = dfs[0]
+df['Year'] = pd.to_datetime(df['Year'], format='%Y')
+df = df.set_index('Year')
+plt.figure(figsize=(10, 6))
+plt.plot(df.index, df['Mean cumulative mass balance'])
+plt.xlabel('Year')
+plt.ylabel('Mean cumulative mass balance')
+plt.title('Yearwise Timeline of Mean Cumulative Mass Balance')
+plt.xticks(rotation=45)
+plt.grid(True)
+plt.savefig('C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png')
+result = {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+        ```
+2025-06-12 18:24:13 [INFO] Executing Step 5: ResultValidation
+2025-06-12 18:24:13 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+2025-06-12 18:24:13 [INFO] Executed in: 0.3912954330444336s
+2025-06-12 18:24:13 [INFO] Executing Step 6: ResultParsing
+2025-06-12 18:24:20 [INFO] Question: plot the yearwise timeline
+2025-06-12 18:24:20 [INFO] Running PandasAI with google LLM...
+2025-06-12 18:24:20 [INFO] Prompt ID: a1aa9a68-6f5d-4e4b-a4e8-42a6bba5db2b
+2025-06-12 18:24:20 [INFO] Executing Step 0: CacheLookup
+2025-06-12 18:24:20 [INFO] Using cached response
+2025-06-12 18:24:20 [INFO] Executing Step 1: PromptGeneration
+2025-06-12 18:24:20 [INFO] Executing Step 2: CodeGenerator
+2025-06-12 18:24:20 [INFO] Executing Step 3: CachePopulation
+2025-06-12 18:24:20 [INFO] Executing Step 4: CodeExecution
+2025-06-12 18:24:20 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-12 18:24:20 [INFO] 
+Code running:
+```
+df = dfs[0]
+df['Year'] = pd.to_datetime(df['Year'], format='%Y')
+df = df.set_index('Year')
+plt.figure(figsize=(10, 6))
+plt.plot(df.index, df['Mean cumulative mass balance'])
+plt.xlabel('Year')
+plt.ylabel('Mean cumulative mass balance')
+plt.title('Yearwise Timeline of Mean Cumulative Mass Balance')
+plt.xticks(rotation=45)
+plt.grid(True)
+plt.savefig('C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png')
+result = {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+        ```
+2025-06-12 18:24:21 [INFO] Executing Step 5: ResultValidation
+2025-06-12 18:24:21 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+2025-06-12 18:24:21 [INFO] Executed in: 0.2847719192504883s
+2025-06-12 18:24:21 [INFO] Executing Step 6: ResultParsing
+2025-06-12 18:24:21 [INFO] Question: plot the yearwise timeline
+2025-06-12 18:24:21 [INFO] Running PandasAI with google LLM...
+2025-06-12 18:24:21 [INFO] Prompt ID: 2dcd3c34-d31b-48cd-9c54-204db0be3907
+2025-06-12 18:24:21 [INFO] Executing Step 0: CacheLookup
+2025-06-12 18:24:21 [INFO] Using cached response
+2025-06-12 18:24:21 [INFO] Executing Step 1: PromptGeneration
+2025-06-12 18:24:21 [INFO] Executing Step 2: CodeGenerator
+2025-06-12 18:24:21 [INFO] Executing Step 3: CachePopulation
+2025-06-12 18:24:21 [INFO] Executing Step 4: CodeExecution
+2025-06-12 18:24:21 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-12 18:24:21 [INFO] 
+Code running:
+```
+df = dfs[0]
+df['Year'] = pd.to_datetime(df['Year'], format='%Y')
+df = df.set_index('Year')
+plt.figure(figsize=(10, 6))
+plt.plot(df.index, df['Mean cumulative mass balance'])
+plt.xlabel('Year')
+plt.ylabel('Mean cumulative mass balance')
+plt.title('Yearwise Timeline of Mean Cumulative Mass Balance')
+plt.xticks(rotation=45)
+plt.grid(True)
+plt.savefig('C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png')
+result = {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+        ```
+2025-06-12 18:24:21 [INFO] Executing Step 5: ResultValidation
+2025-06-12 18:24:21 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+2025-06-12 18:24:21 [INFO] Executed in: 0.39448046684265137s
+2025-06-12 18:24:21 [INFO] Executing Step 6: ResultParsing
+2025-06-12 18:24:29 [INFO] Question: plot the yearwise timeline
+2025-06-12 18:24:29 [INFO] Running PandasAI with google LLM...
+2025-06-12 18:24:29 [INFO] Prompt ID: 58db9f86-450a-4f6e-8b3e-049f7c319d94
+2025-06-12 18:24:29 [INFO] Executing Step 0: CacheLookup
+2025-06-12 18:24:29 [INFO] Using cached response
+2025-06-12 18:24:29 [INFO] Executing Step 1: PromptGeneration
+2025-06-12 18:24:29 [INFO] Executing Step 2: CodeGenerator
+2025-06-12 18:24:29 [INFO] Executing Step 3: CachePopulation
+2025-06-12 18:24:29 [INFO] Executing Step 4: CodeExecution
+2025-06-12 18:24:29 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-12 18:24:29 [INFO] 
+Code running:
+```
+df = dfs[0]
+df['Year'] = pd.to_datetime(df['Year'], format='%Y')
+df = df.set_index('Year')
+plt.figure(figsize=(10, 6))
+plt.plot(df.index, df['Mean cumulative mass balance'])
+plt.xlabel('Year')
+plt.ylabel('Mean cumulative mass balance')
+plt.title('Yearwise Timeline of Mean Cumulative Mass Balance')
+plt.xticks(rotation=45)
+plt.grid(True)
+plt.savefig('C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png')
+result = {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+        ```
+2025-06-12 18:24:30 [INFO] Executing Step 5: ResultValidation
+2025-06-12 18:24:30 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+2025-06-12 18:24:30 [INFO] Executed in: 1.1172263622283936s
+2025-06-12 18:24:30 [INFO] Executing Step 6: ResultParsing
+2025-06-12 18:26:05 [INFO] Question: summarise the data and plot required charts
+2025-06-12 18:26:05 [INFO] Running PandasAI with google LLM...
+2025-06-12 18:26:05 [INFO] Prompt ID: edefcf9b-2876-4aed-a1bd-da9ed85d43ce
+2025-06-12 18:26:05 [INFO] Executing Step 0: CacheLookup
+2025-06-12 18:26:06 [INFO] Executing Step 1: PromptGeneration
+2025-06-12 18:26:06 [INFO] Using prompt: <dataframe>
+dfs[0]:197799x39
+Report Number,Local Case Number,Agency Name,ACRS Report Type,Crash Date/Time,Route Type,Road Name,Cross-Street Name,Off-Road Description,Municipality,Related Non-Motorist,Collision Type,Weather,Surface Condition,Light,Traffic Control,Driver Substance Abuse,Non-Motorist Substance Abuse,Person ID,Driver At Fault,Injury Severity,Circumstance,Driver Distracted By,Drivers License State,Vehicle ID,Vehicle Damage Extent,Vehicle First Impact Location,Vehicle Body Type,Vehicle Movement,Vehicle Going Dir,Speed Limit,Driverless Vehicle,Parked Vehicle,Vehicle Year,Vehicle Make,Vehicle Model,Latitude,Longitude,Location
+DM8479000T,210020119,Takoma Park Police Depart,Property Damage Crash,2021-05-27 19:40:00,,,,IN PARKING LOT,,,OTHER,CLEAR,,DAYLIGHT,NO CONTROLS,NONE DETECTED,,CF61C6EB-61C4-4627-976...,No,NO APPARENT INJURY,,UNKNOWN,MD,D3F480EE-638B-459A-BC2...,SUPERFICIAL,ONE OCLOCK,OTHER,PARKED,,0,No,Yes,2017,HINO,TWK,38.98765667,-76.987545,"(38.98765667, -76.987545)"
+MCP20160036,180040948,Montgomery County Police,Property Damage Crash,2018-08-17 14:25:00,,,,PARKING LOT OF 16246 FREDERICK RD,,,OTHER,CLEAR,,DAYLIGHT,,,,E1D9F62E-0C17-4843-B79...,Yes,NO APPARENT INJURY,,NOT DISTRACTED,MD,995C9706-91EC-48FC-8D2...,NO DAMAGE,SIX OCLOCK,PASSENGER CAR,BACKING,West,15,No,No,2015,MAZD,TK,38.743373,-77.54699707,"(38.743373, -77.54699707)"
+MCP2970000R,15045937,MONTGOMERY,Property Damage Crash,2015-09-11 13:29:00,,,,"Parking Lot: 
+2525 Ennalls Ave",,,OTHER,CLEAR,,DAYLIGHT,NO CONTROLS,UNKNOWN,,E0C26FD8-EE66-4B8D-92A...,Yes,NO APPARENT INJURY,,UNKNOWN,,14ECEFCD-3A58-4991-A9C...,UNKNOWN,UNKNOWN,PASSENGER CAR,PARKING,South,5,No,No,2012,TOYOTA,SU,39.03991652,-77.05364898,"(39.03991652, -77.05364898)"
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: summarise the data and plot required charts
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-06-12 18:26:06 [INFO] Executing Step 2: CodeGenerator
+2025-06-12 18:26:12 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = dfs[0].copy()
+
+# Data Cleaning and Preprocessing
+df['Crash Date/Time'] = pd.to_datetime(df['Crash Date/Time'])
+
+# Basic Summary Statistics
+summary_stats = df.describe(include='all')
+
+# Value Counts for Categorical Columns
+categorical_counts = {}
+for col in df.select_dtypes(include='object'):
+    categorical_counts[col] = df[col].value_counts()
+
+# Time Series Analysis (Crashes Over Time)
+crashes_over_time = df.groupby(df['Crash Date/Time'].dt.date).size()
+
+# Plotting
+plt.figure(figsize=(12, 6))
+crashes_over_time.plot(title='Crashes Over Time')
+plt.xlabel('Date')
+plt.ylabel('Number of Crashes')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.savefig("crashes_over_time.png")
+plt.close()
+
+# Collision Type Distribution
+collision_type_counts = df['Collision Type'].value_counts()
+plt.figure(figsize=(10, 6))
+collision_type_counts.plot(kind='bar', title='Collision Type Distribution')
+plt.xlabel('Collision Type')
+plt.ylabel('Number of Crashes')
+plt.xticks(rotation=45, ha='right')
+plt.tight_layout()
+plt.savefig("collision_type_distribution.png")
+plt.close()
+
+
+# Weather Condition Distribution
+weather_counts = df['Weather'].value_counts()
+plt.figure(figsize=(10, 6))
+weather_counts.plot(kind='bar', title='Weather Condition Distribution')
+plt.xlabel('Weather Condition')
+plt.ylabel('Number of Crashes')
+plt.xticks(rotation=45, ha='right')
+plt.tight_layout()
+plt.savefig("weather_condition_distribution.png")
+plt.close()
+
+
+# Injury Severity Distribution
+injury_severity_counts = df['Injury Severity'].value_counts()
+plt.figure(figsize=(10, 6))
+injury_severity_counts.plot(kind='bar', title='Injury Severity Distribution')
+plt.xlabel('Injury Severity')
+plt.ylabel('Number of Crashes')
+plt.xticks(rotation=45, ha='right')
+plt.tight_layout()
+plt.savefig("injury_severity_distribution.png")
+plt.close()
+
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+result = {
+    "type": "string",
+    "value": "Data analysis and plots completed.  See generated plots: crashes_over_time.png, collision_type_distribution.png, weather_condition_distribution.png, injury_severity_distribution.png"
+}
+            ```
+            
+2025-06-12 18:26:12 [INFO] Executing Step 3: CachePopulation
+2025-06-12 18:26:12 [INFO] Executing Step 4: CodeExecution
+2025-06-12 18:26:12 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-12 18:26:12 [INFO] 
+Code running:
+```
+df = dfs[0].copy()
+df['Crash Date/Time'] = pd.to_datetime(df['Crash Date/Time'])
+summary_stats = df.describe(include='all')
+categorical_counts = {}
+for col in df.select_dtypes(include='object'):
+    categorical_counts[col] = df[col].value_counts()
+crashes_over_time = df.groupby(df['Crash Date/Time'].dt.date).size()
+plt.figure(figsize=(12, 6))
+crashes_over_time.plot(title='Crashes Over Time')
+plt.xlabel('Date')
+plt.ylabel('Number of Crashes')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.savefig('C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png')
+plt.close()
+collision_type_counts = df['Collision Type'].value_counts()
+plt.figure(figsize=(10, 6))
+collision_type_counts.plot(kind='bar', title='Collision Type Distribution')
+plt.xlabel('Collision Type')
+plt.ylabel('Number of Crashes')
+plt.xticks(rotation=45, ha='right')
+plt.tight_layout()
+plt.savefig('C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png')
+plt.close()
+weather_counts = df['Weather'].value_counts()
+plt.figure(figsize=(10, 6))
+weather_counts.plot(kind='bar', title='Weather Condition Distribution')
+plt.xlabel('Weather Condition')
+plt.ylabel('Number of Crashes')
+plt.xticks(rotation=45, ha='right')
+plt.tight_layout()
+plt.savefig('C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png')
+plt.close()
+injury_severity_counts = df['Injury Severity'].value_counts()
+plt.figure(figsize=(10, 6))
+injury_severity_counts.plot(kind='bar', title='Injury Severity Distribution')
+plt.xlabel('Injury Severity')
+plt.ylabel('Number of Crashes')
+plt.xticks(rotation=45, ha='right')
+plt.tight_layout()
+plt.savefig('C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png')
+plt.close()
+result = {'type': 'string', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+        ```
+2025-06-12 18:26:18 [INFO] Executing Step 5: ResultValidation
+2025-06-12 18:26:18 [INFO] Answer: {'type': 'string', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+2025-06-12 18:26:18 [INFO] Executed in: 12.811880350112915s
+2025-06-12 18:26:18 [INFO] Executing Step 6: ResultParsing
+2025-06-12 18:27:22 [INFO] Question: summarise the data 
+2025-06-12 18:27:22 [INFO] Running PandasAI with google LLM...
+2025-06-12 18:27:22 [INFO] Prompt ID: 7b41449c-e910-4fb9-868d-cc2a9e80ab9f
+2025-06-12 18:27:22 [INFO] Executing Step 0: CacheLookup
+2025-06-12 18:27:22 [INFO] Executing Step 1: PromptGeneration
+2025-06-12 18:27:22 [INFO] Using prompt: <dataframe>
+dfs[0]:197799x39
+Report Number,Local Case Number,Agency Name,ACRS Report Type,Crash Date/Time,Route Type,Road Name,Cross-Street Name,Off-Road Description,Municipality,Related Non-Motorist,Collision Type,Weather,Surface Condition,Light,Traffic Control,Driver Substance Abuse,Non-Motorist Substance Abuse,Person ID,Driver At Fault,Injury Severity,Circumstance,Driver Distracted By,Drivers License State,Vehicle ID,Vehicle Damage Extent,Vehicle First Impact Location,Vehicle Body Type,Vehicle Movement,Vehicle Going Dir,Speed Limit,Driverless Vehicle,Parked Vehicle,Vehicle Year,Vehicle Make,Vehicle Model,Latitude,Longitude,Location
+MCP2970000R,15045937,MONTGOMERY,Property Damage Crash,2015-09-11 13:29:00,,,,"Parking Lot: 
+2525 Enn...",,,OTHER,CLEAR,,DAYLIGHT,NO CONTROLS,UNKNOWN,,E0C26FD8-EE66-4B8D-92A...,Yes,NO APPARENT INJURY,,UNKNOWN,,14ECEFCD-3A58-4991-A9C...,UNKNOWN,UNKNOWN,PASSENGER CAR,PARKING,South,5,No,No,2012,TOYOTA,SU,39.03991652,-77.05364898,"(39.03991652, -77.0536..."
+DM8479000T,210020119,Takoma Park Police Depart,Property Damage Crash,2021-05-27 19:40:00,,,,IN PARKING LOT...,,,OTHER,CLEAR,,DAYLIGHT,NO CONTROLS,NONE DETECTED,,CF61C6EB-61C4-4627-976...,No,NO APPARENT INJURY,,UNKNOWN,MD,D3F480EE-638B-459A-BC2...,SUPERFICIAL,ONE OCLOCK,OTHER,PARKED,,0,No,Yes,2017,HINO,TWK,38.98765667,-76.987545,"(38.98765667, -76.9875..."
+MCP20160036,180040948,Montgomery County Police,Property Damage Crash,2018-08-17 14:25:00,,,,PARKING LOT OF 16246 F...,,,OTHER,CLEAR,,DAYLIGHT,,,,E1D9F62E-0C17-4843-B79...,Yes,NO APPARENT INJURY,,NOT DISTRACTED,MD,995C9706-91EC-48FC-8D2...,NO DAMAGE,SIX OCLOCK,PASSENGER CAR,BACKING,West,15,No,No,2015,MAZD,TK,38.743373,-77.54699707,"(38.743373, -77.546997..."
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: summarise the data 
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-06-12 18:27:22 [INFO] Executing Step 2: CodeGenerator
+2025-06-12 18:27:25 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+
+df = dfs[0]
+
+# Calculate summary statistics for numerical columns
+numerical_summary = df.describe()
+
+# Calculate value counts for categorical columns
+categorical_summary = {}
+for col in df.select_dtypes(include='object').columns:
+    categorical_summary[col] = df[col].value_counts()
+
+result = { "type": "string", "value": f"Numerical Summary:\n{numerical_summary}\n\nCategorical Summary:\n{categorical_summary}" }
+            ```
+            
+2025-06-12 18:27:25 [INFO] Executing Step 3: CachePopulation
+2025-06-12 18:27:25 [INFO] Executing Step 4: CodeExecution
+2025-06-12 18:27:25 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-12 18:27:25 [INFO] 
+Code running:
+```
+df = dfs[0]
+numerical_summary = df.describe()
+categorical_summary = {}
+for col in df.select_dtypes(include='object').columns:
+    categorical_summary[col] = df[col].value_counts()
+result = {'type': 'string', 'value': f"""Numerical Summary:
+{numerical_summary}
+
+Categorical Summary:
+{categorical_summary}"""}
+        ```
+2025-06-12 18:27:26 [INFO] Executing Step 5: ResultValidation
+2025-06-12 18:27:26 [INFO] Answer: {'type': 'string', 'value': "Numerical Summary:\n         Speed Limit   Vehicle Year       Latitude      Longitude\ncount  197799.000000  197799.000000  197799.000000  197799.000000\nmean       32.278449    1965.594457      39.083069     -77.112144\nstd        11.254117     340.412170       0.071836       0.098215\nmin         0.000000       0.000000      37.720000     -79.486000\n25%        25.000000    2006.000000      39.024443     -77.189354\n50%        35.000000    2012.000000      39.074883     -77.105268\n75%        40.000000    2016.000000      39.139801     -77.039162\nmax        75.000000    9999.000000      39.990414     -75.527708\n\nCategorical Summary:\n{'Report Number': MCP229800RC    10\nMCP32800050     9\nMCP2693003Q     9\nMCP12130045     9\nMCP28810040     8\n               ..\nMCP2892002Z     1\nMCP3009000G     1\nMCP26390025     1\nMCP2977006X     1\nMCP27630058     1\nName: Report Number, Length: 111413, dtype: int64, 'Local Case Number': 200022715    10\n210022877     9\n180051879     9\n240024231     9\n220055904     8\n             ..\n220033741     1\n15007746      1\n16035610      1\n220002286     1\n250023726     1\nName: Local Case Number, Length: 111302, dtype: int64, 'Agency Name': Montgomery County Police     138376\nMONTGOMERY                    32247\nRockville Police Departme      9839\nGaithersburg Police Depar      7841\nTakoma Park Police Depart      2993\nROCKVILLE                      2389\nGAITHERSBURG                   2019\nMaryland-National Capital      1154\nTAKOMA                          646\nMCPARK                          295\nName: Agency Name, dtype: int64, 'ACRS Report Type': Property Damage Crash    126589\nInjury Crash              70719\nFatal Crash                 491\nName: ACRS Report Type, dtype: int64, 'Route Type': Maryland (State)          77077\nCounty                    55574\nMunicipality               9380\nCounty Route               9065\nMaryland (State) Route     8764\nUS (State)                 8666\nInterstate (State)         3460\nMunicipality Route         1849\nOther Public Roadway       1341\nRamp                       1049\nGovernment                  627\nLocal Route                 496\nBicycle Route               324\nSpur                        245\nPrivate Route               199\nCrossover                   173\nGovernment Route            112\nService Road                 49\nUnknown                      20\nName: Route Type, dtype: int64, 'Road Name': GEORGIA AVE          11448\nNEW HAMPSHIRE AVE     7222\nFREDERICK RD          6065\nROCKVILLE PIKE        5117\nCONNECTICUT AVE       4400\n                     ...  \nMCDONALD DR              1\nHALE PL                  1\nBRANCHWOOD LA            1\nMONITOR DR               1\nHAMBLETONAN WAY          1\nName: Road Name, Length: 4558, dtype: int64, 'Cross-Street Name': GEORGIA AVE           2272\nCONNECTICUT AVE       1684\nFREDERICK RD          1655\nNEW HAMPSHIRE AVE     1409\nVEIRS MILL RD         1327\n                      ... \nHIGHLAND RIDGE AVE       1\nPACA PL                  1\nWOODBURY DR              1\nSTRUC - METRO            1\nAPOLLO LA                1\nName: Cross-Street Name, Length: 7385, dtype: int64, 'Off-Road Description': PARKING LOT                                                              132\nParking Lot Way        PARKING LOT                                        20\nParking Stall        PARKING LOT                                          18\nPARKING LOT OF 11160 VEIRS MILL RD                                        15\nPARKING LOT OF 10901 WESTLAKE DR                                          13\n                                                                        ... \nCOB PARKING GARAGE 100 MARYLAND AVE....TOP FLOOR                           1\nPARKING SPACE IN FRONT OF 19308 CIRCLE GATE DRIVE GERMANTOWN MD 20874      1\nMONTGOMERY COUNTY PARKING LOT LOT 10-4600 LELAND ST.                       1\nPARKING LOT OF 18200BLK LOST KNIFE CIRCLE                                  1\nParking Stall        PARKING LOT OF 9221 CORPORATE BLVD                    1\nName: Off-Road Description, Length: 13030, dtype: int64, 'Municipality': ROCKVILLE              9320\nGAITHERSBURG           6437\nTAKOMA PARK            1685\nKENSINGTON              413\nCHEVY CHASE #4          325\nCHEVY CHASE #3          156\nFRIENDSHIP HEIGHTS      133\nPOOLESVILLE             108\nCHEVY CHASE VIEW         93\nCHEVY CHASE VILLAGE      87\nCHEVY CHASE #5           74\nGARRETT PARK             53\nSOMERSET                 53\nWASHINGTON GROVE         41\nNORTH CHEVY CHASE        34\nGLEN ECHO                33\nMATINS ADDITION          28\nLAYTONSVILLE             25\nBROOKEVILLE              16\nDRUMMOND                 12\nName: Municipality, dtype: int64, 'Related Non-Motorist': PEDESTRIAN                                                                                3880\nBICYCLIST                                                                                 1169\nPedestrian                                                                                 655\nOTHER                                                                                      246\nCyclist (non-electric)                                                                     142\nOTHER CONVEYANCE                                                                            84\nScooter (electric)                                                                          46\nMACHINE OPERATOR/RIDER                                                                      39\nCyclist (Electric)                                                                          39\nOTHER PEDALCYCLIST                                                                          26\nOther Pedestrian (person in a building, skater, personal conveyance, etc.)                  12\nOTHER, PEDESTRIAN                                                                            9\nOccupant of Motor Vehicle Not in Transport                                                   9\nWheelchair (electric)                                                                        8\nScooter (non-Electric)                                                                       6\nUnknown Type Of Non-Motorist                                                                 5\nUnknown                                                                                      4\nBICYCLIST, OTHER                                                                             4\nBICYCLIST, PEDESTRIAN                                                                        3\nOccupant Of a Non-Motor Vehicle Transportation Device                                        3\nWheelchair (non-electric)                                                                    1\nUnknown, Wheelchair (electric)                                                               1\nOccupant of Motor Vehicle Not in Transport, Pedestrian                                       1\nOTHER, OTHER CONVEYANCE                                                                      1\nOther Pedestrian (person in a building, skater, personal conveyance, etc.), Pedestrian       1\nIN ANIMAL-DRAWN VEH                                                                          1\nOTHER CONVEYANCE, PEDESTRIAN                                                                 1\nPedestrian, Wheelchair (non-electric)                                                        1\nName: Related Non-Motorist, dtype: int64, 'Collision Type': SAME DIR REAR END                55759\nSTRAIGHT MOVEMENT ANGLE          30342\nOTHER                            19030\nSAME DIRECTION SIDESWIPE         16227\nSINGLE VEHICLE                   15872\nHEAD ON LEFT TURN                12926\nFront to Rear                     7668\nAngle                             5089\nSideswipe, Same Direction         4007\nSAME DIRECTION RIGHT TURN         3832\nHEAD ON                           3786\nSAME DIRECTION LEFT TURN          3715\nSingle Vehicle                    2964\nOPPOSITE DIRECTION SIDESWIPE      2883\nANGLE MEETS LEFT TURN             2033\nOther                             1653\nFront to Front                    1502\nRear To Side                      1314\nANGLE MEETS RIGHT TURN            1204\nSideswipe, Opposite Direction      972\nSAME DIR REND LEFT TURN            743\nSAME DIR REND RIGHT TURN           720\nSAME DIR BOTH LEFT TURN            719\nUNKNOWN                            718\nANGLE MEETS LEFT HEAD ON           700\nRear To Rear                       329\nOPPOSITE DIR BOTH LEFT TURN        322\nUnknown                            185\nName: Collision Type, dtype: int64, 'Weather': CLEAR                                116780\nRAINING                               20609\nClear                                 19963\nCLOUDY                                17295\nRain                                   2794\nCloudy                                 2298\nSNOW                                   1444\nUNKNOWN                                 693\nFOGGY                                   676\nWINTRY MIX                              391\nOTHER                                   370\nSnow                                    269\nSLEET                                   218\nUnknown                                 155\nSEVERE WINDS                            154\nBLOWING SNOW                            115\nBlowing Snow                             64\nFreezing Rain Or Freezing Drizzle        53\nFog, Smog, Smoke                         51\nSevere Crosswinds                        24\nBLOWING SAND, SOIL, DIRT                 15\nSleet Or Hail                            12\nName: Weather, dtype: int64, 'Surface Condition': DRY                         120577\nWET                          28429\nDry                          18968\nWet                           3756\nICE                           1058\nSNOW                           938\nUNKNOWN                        509\nSLUSH                          204\nSnow                           198\nOTHER                          164\nIce/Frost                      158\nSlush                           76\nMUD, DIRT, GRAVEL               46\nWATER(STANDING/MOVING)          41\nOther                           40\nOIL                             28\nWater (standing, moving)         8\nMud, Dirt, Gravel                5\nSand                             4\nSAND                             4\nOil                              1\nName: Surface Condition, dtype: int64, 'Light': DAYLIGHT                    116150\nDARK LIGHTS ON               39551\nDaylight                     17855\nDark - Lighted                5949\nDARK NO LIGHTS                4966\nDUSK                          3935\nDAWN                          3472\nDARK -- UNKNOWN LIGHTING      1578\nDark - Not Lighted             925\nUNKNOWN                        677\nDusk                           348\nOTHER                          342\nDawn                           263\nDark - Unknown Lighting        165\nUnknown                         93\nOther                           85\nName: Light, dtype: int64, 'Traffic Control': NO CONTROLS                                                                 68626\nTRAFFIC SIGNAL                                                              58898\nSTOP SIGN                                                                   12488\nNo Controls                                                                 12020\nTraffic Control Signal                                                       8374\nFLASHING TRAFFIC SIGNAL                                                      2132\nOTHER                                                                        1991\nYIELD SIGN                                                                   1727\nStop Sign                                                                    1507\nFlashing Traffic Control Signal                                               449\nUNKNOWN                                                                       285\nPERSON                                                                        282\nYield Sign                                                                    248\nLane Use Control Signal                                                       176\nWARNING SIGN                                                                  154\nPedestrian Crossing Sign                                                      153\nOther                                                                         108\nPedestrian Crossing                                                            96\nOther Pavement Marking (excluding edgelines, centerlines, or lane lines)       83\nOther Signal                                                                   50\nRAILWAY CROSSING DEVICE                                                        44\nOther Warning Sign                                                             31\nPerson (including flagger, law enforcement, crossing guard, etc.               29\nIntersection Ahead Warning Sign                                                23\nSCHOOL ZONE SIGN DEVICE                                                        16\nCurve Ahead Warning Sign                                                       11\nSchool Zone Sign                                                                5\nReduce Speed Ahead Warning Sign                                                 4\nFlashing Railroad Crossing Signal (may include gates)                           3\nRamp Meter Signal                                                               2\nBicycle Crossing Sign                                                           2\nSchool Zone                                                                     2\nName: Traffic Control, dtype: int64, 'Driver Substance Abuse': NONE DETECTED                                          122544\nNot Suspect of Alcohol Use, Not Suspect of Drug Use     22088\nUNKNOWN                                                 11990\nALCOHOL PRESENT                                          4087\nUnknown, Unknown                                         2707\nALCOHOL CONTRIBUTED                                      1435\nSuspect of Alcohol Use, Not Suspect of Drug Use           625\nILLEGAL DRUG PRESENT                                      259\nMEDICATION PRESENT                                        117\nILLEGAL DRUG CONTRIBUTED                                  102\nCOMBINED SUBSTANCE PRESENT                                 92\nSuspect of Alcohol Use, Unknown                            78\nMEDICATION CONTRIBUTED                                     64\nUnknown, Not Suspect of Drug Use                           61\nOTHER                                                      59\nCOMBINATION CONTRIBUTED                                    47\nSuspect of Alcohol Use, Suspect of Drug Use                47\nNot Suspect of Alcohol Use, Suspect of Drug Use            36\nNot Suspect of Alcohol Use, Unknown                        36\nUnknown, Suspect of Drug Use                                5\nName: Driver Substance Abuse, dtype: int64, 'Non-Motorist Substance Abuse': NONE DETECTED                                                                                                                                                    3867\nNot Suspect of Alcohol Use, Not Suspect of Drug Use                                                                                                               792\nUNKNOWN                                                                                                                                                           222\nALCOHOL PRESENT                                                                                                                                                   145\nUnknown, Unknown                                                                                                                                                   46\nALCOHOL CONTRIBUTED                                                                                                                                                39\nNot Suspect of Alcohol Use, Not Suspect of Drug Use, Not Suspect of Alcohol Use, Not Suspect of Drug Use                                                           36\nSuspect of Alcohol Use, Not Suspect of Drug Use                                                                                                                    29\nN/A, NONE DETECTED                                                                                                                                                 24\nSuspect of Alcohol Use, Unknown                                                                                                                                    11\nNot Suspect of Alcohol Use, Not Suspect of Drug Use, Not Suspect of Alcohol Use, Not Suspect of Drug Use, Not Suspect of Alcohol Use, Not Suspect of Drug Use       6\nILLEGAL DRUG PRESENT                                                                                                                                                5\nNot Suspect of Alcohol Use, Unknown                                                                                                                                 4\nSuspect of Alcohol Use, Suspect of Drug Use                                                                                                                         4\nMEDICATION PRESENT                                                                                                                                                  4\nUnknown, Not Suspect of Drug Use                                                                                                                                    4\nNot Suspect of Alcohol Use, Suspect of Drug Use                                                                                                                     2\nCOMBINATION CONTRIBUTED                                                                                                                                             2\nNONE DETECTED, UNKNOWN                                                                                                                                              2\nILLEGAL DRUG CONTRIBUTED                                                                                                                                            2\nALCOHOL PRESENT, NONE DETECTED                                                                                                                                      1\nN/A, UNKNOWN                                                                                                                                                        1\nOTHER                                                                                                                                                               1\nCOMBINED SUBSTANCE PRESENT                                                                                                                                          1\nALCOHOL CONTRIBUTED, ALCOHOL PRESENT                                                                                                                                1\nName: Non-Motorist Substance Abuse, dtype: int64, 'Person ID': CF61C6EB-61C4-4627-9767-635D2F0174A6    1\n2EA5BEC4-0FB4-4FE3-836F-E955C105F3E4    1\nBB5A5D86-82EC-41BB-BB09-098DD8756E86    1\n84F1FF7E-A52C-4D47-A5B8-65D6CDA7D768    1\n3766415D-6813-4467-A57E-88A196C4D1B1    1\n                                       ..\n6DD9FE34-7E10-4038-8257-B2F469DBD4D7    1\n39E26C38-57D4-42E8-A267-9CB20E8B720E    1\n5F55AF5F-CB79-407F-9512-0B1B4EE086FF    1\nEE8C1392-DD32-49B1-A99B-52D4225D9D58    1\n0FD72892-9A6D-4E84-A255-9C6D062C33F7    1\nName: Person ID, Length: 197799, dtype: int64, 'Driver At Fault': Yes        100807\nNo          92310\nUnknown      4682\nName: Driver At Fault, dtype: int64, 'Injury Severity': NO APPARENT INJURY          141196\nNo Apparent Injury           19906\nPOSSIBLE INJURY              17481\nSUSPECTED MINOR INJURY       11871\nSuspected Minor Injury        2198\nPossible Injury               1698\nSUSPECTED SERIOUS INJURY      1414\nSuspected Serious Injury       209\nFATAL INJURY                   154\nFatal Injury                    25\nName: Injury Severity, dtype: int64, 'Circumstance': RAIN, SNOW, WET                                                                                                                                                                            12172\nN/A, WET                                                                                                                                                                                    9085\nFailed to Yield Right-of-Way                                                                                                                                                                1278\nN/A, RAIN, SNOW                                                                                                                                                                             1177\nSLEET, HAIL, FREEZ. RAIN, WET                                                                                                                                                               1065\n                                                                                                                                                                                           ...  \nFailed to Keep in Proper Lane, Over-Correcting/Over-Steering, Ran Off Roadway, Too Fast For Conditions                                                                                         1\nDisregarded Other Traffic Sign, Operated Motor Vehicle in Inattentive, Careless, Negligent, or Erratic Manner, Operated Motor Vehicle in Reckless or Aggressive Manner, Ran Off Roadway        1\nFailed to Yield Right-of-Way, Improper Turn, Ran Off Roadway                                                                                                                                   1\nDisregarded Other Road Markings, Disregarded Other Traffic Sign, Failed to Keep in Proper Lane, Ran Off Roadway                                                                                1\nDisregarded Other Road Markings, Improper Passing, Ran Off Roadway                                                                                                                             1\nName: Circumstance, Length: 687, dtype: int64, 'Driver Distracted By': NOT DISTRACTED                                       106718\nUNKNOWN                                               32803\nLOOKED BUT DID NOT SEE                                21546\nNot Distracted                                        17040\nUnknown                                                6032\nINATTENTIVE OR LOST IN THOUGHT                         4320\nOTHER DISTRACTION                                      3245\nDISTRACTED BY OUTSIDE PERSON OBJECT OR EVENT            970\nOther Action (looking away from task, etc.)             744\nBY OTHER OCCUPANTS                                      418\nOTHER CELLULAR PHONE RELATED                            372\nOTHER ELECTRONIC DEVICE (NAVIGATIONAL PALM PILOT)       325\nTALKING OR LISTENING TO CELLULAR PHONE                  282\nNO DRIVER PRESENT                                       279\nBY MOVING OBJECT IN VEHICLE                             212\nEATING OR DRINKING                                      196\nADJUSTING AUDIO AND OR CLIMATE CONTROLS                 134\nUSING OTHER DEVICE CONTROLS INTEGRAL TO VEHICLE          92\nTEXTING FROM A CELLULAR PHONE                            67\nUSING DEVICE OBJECT BROUGHT INTO VEHICLE                 63\nTalking/listening                                        55\nDIALING CELLULAR PHONE                                   48\nManually Operating (dialing, playing game, etc.)         30\nSMOKING RELATED                                          26\nName: Driver Distracted By, dtype: int64, 'Drivers License State': MD        163374\nDC          5786\nVA          5658\nXX          1843\nPA          1238\n           ...  \nMX-ROO         1\nNT             1\nSK             1\nFM             1\nMX-GRO         1\nName: Drivers License State, Length: 80, dtype: int64, 'Vehicle ID': D3F480EE-638B-459A-BC20-533741BC4F76    1\nC6856CE4-D530-4C45-A9FD-66D5C93A4033    1\nB8BF15E9-FC80-4437-B2F7-87AC8520659F    1\nECDEF86F-F2E2-4A46-9C39-BA7C4FF18E90    1\n2E6A68C3-6CC7-4769-94AE-795B66750742    1\n                                       ..\n3A8A7787-52AE-4EF4-A3D8-549093BF6A0C    1\n3D41DE12-A73B-41C8-9F31-4E2EDF91219B    1\n3680AE07-DD0C-48CC-A216-C509DCA11A8D    1\n89B61C6E-6F22-4DD2-B476-4E6D8233ACC8    1\n6FD515D5-E2FD-44B2-8278-B6D4DB268D87    1\nName: Vehicle ID, Length: 197799, dtype: int64, 'Vehicle Damage Extent': DISABLING               62354\nFUNCTIONAL              44993\nSUPERFICIAL             43877\nDisabling               10899\nDESTROYED                7610\nSuperficial              6951\nUNKNOWN                  6620\nNO DAMAGE                6244\nFunctional               5786\nVehicle Not at Scene     1757\nNo Damage                 290\nOTHER                     102\nName: Vehicle Damage Extent, dtype: int64, 'Vehicle First Impact Location': TWELVE OCLOCK           68025\nSIX OCLOCK              34275\nONE OCLOCK              16197\nELEVEN OCLOCK           13774\nTwelve O Clock           7536\nTWO OCLOCK               6238\nTEN OCLOCK               6191\nSEVEN OCLOCK             4279\nFOUR OCLOCK              4126\nFIVE OCLOCK              4064\nEIGHT OCLOCK             3700\nSix O Clock              3584\nTHREE OCLOCK             3379\nNINE OCLOCK              3358\nUNKNOWN                  3082\nOne O Clock              2768\nEleven O Clock           2711\nVehicle Not at Scene     1757\nTen O Clock              1050\nTwo O Clock               987\nSeven O Clock             909\nNine O Clock              841\nThree O Clock             830\nFive O Clock              801\nFour O Clock              662\nEight O Clock             632\nUNDERSIDE                 524\nNON-COLLISION             394\nROOF TOP                  354\nNon-Collision             290\nTop                       175\nUnderside                 121\nCargo Loss                 29\nName: Vehicle First Impact Location, dtype: int64, 'Vehicle Body Type': PASSENGER CAR                                                119109\nPassenger Car                                                 16517\n(SPORT) UTILITY VEHICLE                                       15990\nPICKUP TRUCK                                                   6787\nVAN                                                            4958\nSport Utility Vehicle                                          4130\nTRANSIT BUS                                                    3642\nSCHOOL BUS                                                     2975\nPOLICE VEHICLE/NON EMERGENCY                                   2119\nOTHER LIGHT TRUCKS (10,000LBS (4,536KG) OR LESS)               1909\nCARGO VAN/LIGHT TRUCK 2 AXLES (OVER 10,000LBS (4,536 KG))      1858\nOTHER                                                          1539\nPOLICE VEHICLE/EMERGENCY                                       1497\nMEDIUM/HEAVY TRUCKS 3 AXLES (OVER 10,000LBS (4,536KG))         1469\nPickup                                                         1319\nUNKNOWN                                                        1061\nMOTORCYCLE                                                      889\nSTATION WAGON                                                   692\nBus - Transit                                                   645\nBus - School                                                    629\nVan - Passenger (&lt;9 Seats)                                   576\nTRUCK TRACTOR                                                   500\nAMBULANCE/EMERGENCY                                             466\nFIRE VEHICLE/EMERGENCY                                          437\nOTHER BUS                                                       418\nOther Trucks                                                    329\nFIRE VEHICLE/NON EMERGENCY                                      296\nOther                                                           233\nRECREATIONAL VEHICLE                                            197\nSingle-Unit Truck                                               195\nAMBULANCE/NON EMERGENCY                                         185\nVan - Cargo                                                     159\nStation Wagon                                                   158\nMotorcycle - 2 Wheeled                                          130\nSNOWMOBILE                                                      123\nALL TERRAIN VEHICLE (ATV)                                       119\nUnknown                                                         111\nTruck Tractor                                                    93\nMOPED                                                            87\nAUTOCYCLE                                                        41\nLOW SPEED VEHICLE                                                34\nMoped Or motorized bicycle                                       34\nAll-Terrain Vehicle/All-Terrain Cycle (ATV/ATC)                  32\nCROSS COUNTRY BUS                                                31\nBus - Other Type                                                 22\nFARM VEHICLE                                                     21\nLIMOUSINE                                                        16\nBus - Mini                                                       16\nConstruction Equipment (backhoe, bulldozer, etc.)                15\nRecreational Off-Highway Vehicles (ROV)                           6\nSnowmobile                                                        5\nLow Speed Vehicle                                                 4\nFarm Equipment (Tractor, combine harvester, etc.)                 3\nMotorcycle - 3 Wheeled                                            3\nBus - Cross Country                                               3\nVan - Passenger (15 Seats)                                        3\nAutocycle                                                         2\nVan - Passenger (9 or 12 Seats)                                   1\nGolf Cart                                                         1\nName: Vehicle Body Type, dtype: int64, 'Vehicle Movement': MOVING CONSTANT SPEED      67240\nSLOWING OR STOPPING        24454\nSTOPPED IN TRAFFIC LANE    18400\nMAKING LEFT TURN           16611\nMoving Constant Speed      10034\nACCELERATING                9659\nBACKING                     5783\nMAKING RIGHT TURN           5415\nCHANGING LANES              4682\nSTARTING FROM LANE          4507\nSlowing or Stopping         3036\nTurning Left                2913\nUNKNOWN                     2819\nPARKED                      2689\nStopped in Traffic          2150\nPARKING                     1934\nSTARTING FROM PARKED        1895\nAccelerating                1667\nMAKING U TURN               1225\nBacking                     1004\nTurning Right                988\nPASSING                      954\nChanging Lanes               906\nOTHER                        898\nENTERING TRAFFIC LANE        819\nSKIDDING                     690\nEntering Traffic Lane        609\nParked                       564\nNEGOTIATING A CURVE          545\nNegotiating a Curve          327\nOvertaking/Passing           294\nRIGHT TURN ON RED            267\nMaking U-Turn                253\nLEAVING TRAFFIC LANE         207\nLeaving Traffic Lane          91\nDRIVERLESS MOVING VEH.        37\nName: Vehicle Movement, dtype: int64, 'Vehicle Going Dir': North             47647\nSouth             46687\nEast              35296\nWest              34766\nNorthbound         5795\nUnknown            5709\nSouthbound         5357\nEastbound          4132\nWestbound          3820\nNot On Roadway     1432\nName: Vehicle Going Dir, dtype: int64, 'Driverless Vehicle': No         197052\nUnknown       747\nName: Driverless Vehicle, dtype: int64, 'Parked Vehicle': No     193060\nYes      3212\nName: Parked Vehicle, dtype: int64, 'Vehicle Make': TOYOTA       28062\nHONDA        22620\nFORD         19515\nNISSAN       10005\nTOYT          8841\n             ...  \nMOTIV            1\nDAIMERLER        1\nMARTZ            1\nPORSH            1\nMINICARS         1\nName: Vehicle Make, Length: 1952, dtype: int64, 'Vehicle Model': 4S          13753\nTK          10982\nCAMRY        7285\nCIVIC        6611\nCOROLLA      6569\n            ...  \nTT-R110E        1\n650CC           1\nA4 4DOOR        1\nCL450           1\nLYRIQ           1\nName: Vehicle Model, Length: 7078, dtype: int64, 'Location': (38.953, -77.338)              45\n(39.11342767, -77.23648183)    29\n(39.045425, -76.99073667)      26\n(39.04627667, -76.990695)      24\n(39.07997592, -77.13826298)    20\n                               ..\n(39.04156126, -76.98093295)     1\n(39.06437221, -76.96906283)     1\n(39.13309667, -77.172345)       1\n(39.20044961, -77.39497134)     1\n(39.10795006, -77.19225932)     1\nName: Location, Length: 110557, dtype: int64}"}
+2025-06-12 18:27:26 [INFO] Executed in: 4.120588064193726s
+2025-06-12 18:27:26 [INFO] Executing Step 6: ResultParsing
+2025-06-12 18:27:46 [INFO] Question: explain the data in simple english by summarising
+2025-06-12 18:27:46 [INFO] Running PandasAI with google LLM...
+2025-06-12 18:27:46 [INFO] Prompt ID: e3a32684-57c8-478a-9966-d6205278a6ef
+2025-06-12 18:27:46 [INFO] Executing Step 0: CacheLookup
+2025-06-12 18:27:47 [INFO] Executing Step 1: PromptGeneration
+2025-06-12 18:27:47 [INFO] Using prompt: <dataframe>
+dfs[0]:197799x39
+Report Number,Local Case Number,Agency Name,ACRS Report Type,Crash Date/Time,Route Type,Road Name,Cross-Street Name,Off-Road Description,Municipality,Related Non-Motorist,Collision Type,Weather,Surface Condition,Light,Traffic Control,Driver Substance Abuse,Non-Motorist Substance Abuse,Person ID,Driver At Fault,Injury Severity,Circumstance,Driver Distracted By,Drivers License State,Vehicle ID,Vehicle Damage Extent,Vehicle First Impact Location,Vehicle Body Type,Vehicle Movement,Vehicle Going Dir,Speed Limit,Driverless Vehicle,Parked Vehicle,Vehicle Year,Vehicle Make,Vehicle Model,Latitude,Longitude,Location
+MCP20160036,180040948,Montgomery County Police,Property Damage Crash,2018-08-17 14:25:00,,,,PARKING LOT OF 16246 F...,,,OTHER,CLEAR,,DAYLIGHT,,,,E1D9F62E-0C17-4843-B79...,Yes,NO APPARENT INJURY,,NOT DISTRACTED,MD,995C9706-91EC-48FC-8D2...,NO DAMAGE,SIX OCLOCK,PASSENGER CAR,BACKING,West,15,No,No,2015,MAZD,TK,38.743373,-77.54699707,"(38.743373, -77.54699707)"
+DM8479000T,210020119,Takoma Park Police Depart,Property Damage Crash,2021-05-27 19:40:00,,,,IN PARKING LOT...,,,OTHER,CLEAR,,DAYLIGHT,NO CONTROLS,NONE DETECTED,,CF61C6EB-61C4-4627-976...,No,NO APPARENT INJURY,,UNKNOWN,MD,D3F480EE-638B-459A-BC2...,SUPERFICIAL,ONE OCLOCK,OTHER,PARKED,,0,No,Yes,2017,HINO,TWK,38.98765667,-76.987545,"(38.98765667, -76.987545)"
+MCP2970000R,15045937,MONTGOMERY,Property Damage Crash,2015-09-11 13:29:00,,,,"Parking Lot: 
+2525 Enn...",,,OTHER,CLEAR,,DAYLIGHT,NO CONTROLS,UNKNOWN,,E0C26FD8-EE66-4B8D-92A...,Yes,NO APPARENT INJURY,,UNKNOWN,,14ECEFCD-3A58-4991-A9C...,UNKNOWN,UNKNOWN,PASSENGER CAR,PARKING,South,5,No,No,2012,TOYOTA,SU,39.03991652,-77.05364898,"(39.03991652, -77.05364898)"
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: explain the data in simple english by summarising
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-06-12 18:27:47 [INFO] Executing Step 2: CodeGenerator
+2025-06-12 18:27:49 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+df = dfs[0]
+
+summary = {
+    "Number of rows": df.shape[0],
+    "Number of columns": df.shape[1],
+    "Columns": list(df.columns),
+    "Data types": dict(df.dtypes)
+}
+
+result = { "type": "string", "value": f"The dataset contains information about crashes. It has {df.shape[0]} rows and {df.shape[1]} columns. The columns include details like Report Number, Crash Date/Time, Location, Vehicle information and Driver information" }
+            ```
+            
+2025-06-12 18:27:49 [INFO] Executing Step 3: CachePopulation
+2025-06-12 18:27:49 [INFO] Executing Step 4: CodeExecution
+2025-06-12 18:27:49 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-12 18:27:49 [INFO] 
+Code running:
+```
+df = dfs[0]
+summary = {'Number of rows': df.shape[0], 'Number of columns': df.shape[1], 'Columns': list(df.columns), 'Data types': dict(df.dtypes)}
+result = {'type': 'string', 'value': f'The dataset contains information about crashes. It has {df.shape[0]} rows and {df.shape[1]} columns. The columns include details like Report Number, Crash Date/Time, Location, Vehicle information and Driver information'}
+        ```
+2025-06-12 18:27:49 [INFO] Executing Step 5: ResultValidation
+2025-06-12 18:27:49 [INFO] Answer: {'type': 'string', 'value': 'The dataset contains information about crashes. It has 197799 rows and 39 columns. The columns include details like Report Number, Crash Date/Time, Location, Vehicle information and Driver information'}
+2025-06-12 18:27:49 [INFO] Executed in: 3.02241587638855s
+2025-06-12 18:27:49 [INFO] Executing Step 6: ResultParsing
+2025-06-12 18:28:34 [INFO] Question: how is the data quality ?
+2025-06-12 18:28:34 [INFO] Running PandasAI with google LLM...
+2025-06-12 18:28:34 [INFO] Prompt ID: 23bddc7a-612a-478f-93fe-d89bf84e98ad
+2025-06-12 18:28:34 [INFO] Executing Step 0: CacheLookup
+2025-06-12 18:28:34 [INFO] Executing Step 1: PromptGeneration
+2025-06-12 18:28:35 [INFO] Using prompt: <dataframe>
+dfs[0]:197799x39
+Report Number,Local Case Number,Agency Name,ACRS Report Type,Crash Date/Time,Route Type,Road Name,Cross-Street Name,Off-Road Description,Municipality,Related Non-Motorist,Collision Type,Weather,Surface Condition,Light,Traffic Control,Driver Substance Abuse,Non-Motorist Substance Abuse,Person ID,Driver At Fault,Injury Severity,Circumstance,Driver Distracted By,Drivers License State,Vehicle ID,Vehicle Damage Extent,Vehicle First Impact Location,Vehicle Body Type,Vehicle Movement,Vehicle Going Dir,Speed Limit,Driverless Vehicle,Parked Vehicle,Vehicle Year,Vehicle Make,Vehicle Model,Latitude,Longitude,Location
+MCP20160036,180040948,Montgomery County Police,Property Damage Crash,2018-08-17 14:25:00,,,,PARKING LOT OF 16246 F...,,,OTHER,CLEAR,,DAYLIGHT,,,,E1D9F62E-0C17-4843-B79...,Yes,NO APPARENT INJURY,,NOT DISTRACTED,MD,995C9706-91EC-48FC-8D2...,NO DAMAGE,SIX OCLOCK,PASSENGER CAR,BACKING,West,15,No,No,2015,MAZD,TK,38.743373,-77.54699707,"(38.743373, -77.54699707)"
+MCP2970000R,15045937,MONTGOMERY,Property Damage Crash,2015-09-11 13:29:00,,,,"Parking Lot: 
+2525 Enn...",,,OTHER,CLEAR,,DAYLIGHT,NO CONTROLS,UNKNOWN,,E0C26FD8-EE66-4B8D-92A...,Yes,NO APPARENT INJURY,,UNKNOWN,,14ECEFCD-3A58-4991-A9C...,UNKNOWN,UNKNOWN,PASSENGER CAR,PARKING,South,5,No,No,2012,TOYOTA,SU,39.03991652,-77.05364898,"(39.03991652, -77.05364898)"
+DM8479000T,210020119,Takoma Park Police Depart,Property Damage Crash,2021-05-27 19:40:00,,,,IN PARKING LOT...,,,OTHER,CLEAR,,DAYLIGHT,NO CONTROLS,NONE DETECTED,,CF61C6EB-61C4-4627-976...,No,NO APPARENT INJURY,,UNKNOWN,MD,D3F480EE-638B-459A-BC2...,SUPERFICIAL,ONE OCLOCK,OTHER,PARKED,,0,No,Yes,2017,HINO,TWK,38.98765667,-76.987545,"(38.98765667, -76.987545)"
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: how is the data quality ?
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-06-12 18:28:35 [INFO] Executing Step 2: CodeGenerator
+2025-06-12 18:28:38 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+def assess_data_quality(df):
+    """
+    Assess the data quality of a DataFrame.
+
+    Args:
+        df (pd.DataFrame): The DataFrame to assess.
+
+    Returns:
+        dict: A dictionary containing data quality metrics.
+    """
+
+    total_rows = len(df)
+    
+    # Missing values
+    missing_values = df.isnull().sum()
+    missing_values_percent = (missing_values / total_rows) * 100
+
+    # Data types
+    data_types = df.dtypes
+
+    # Unique values
+    unique_values = df.nunique()
+
+    quality_report = {
+        "total_rows": total_rows,
+        "missing_values": missing_values.to_dict(),
+        "missing_values_percent": missing_values_percent.to_dict(),
+        "data_types": data_types.to_dict(),
+        "unique_values": unique_values.to_dict(),
+    }
+
+    return quality_report
+
+quality_report = assess_data_quality(df)
+
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+result = { "type": "dataframe", "value": pd.DataFrame(quality_report) }
+            ```
+            
+2025-06-12 18:28:38 [INFO] Executing Step 3: CachePopulation
+2025-06-12 18:28:38 [INFO] Executing Step 4: CodeExecution
+2025-06-12 18:28:38 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-12 18:28:38 [INFO] 
+Code running:
+```
+def assess_data_quality(df):
+    """
+    Assess the data quality of a DataFrame.
+
+    Args:
+        df (pd.DataFrame): The DataFrame to assess.
+
+    Returns:
+        dict: A dictionary containing data quality metrics.
+    """
+    total_rows = len(df)
+    missing_values = df.isnull().sum()
+    missing_values_percent = missing_values / total_rows * 100
+    data_types = df.dtypes
+    unique_values = df.nunique()
+    quality_report = {'total_rows': total_rows, 'missing_values': missing_values.to_dict(), 'missing_values_percent': missing_values_percent.to_dict(), 'data_types': data_types.to_dict(), 'unique_values': unique_values.to_dict()}
+    return quality_report
+
+
+quality_report = assess_data_quality(df)
+result = {'type': 'dataframe', 'value': pd.DataFrame(quality_report)}
+        ```
+2025-06-12 18:28:38 [WARNING] Failed to execute code with a correction framework [retry number: 1]
+2025-06-12 18:28:38 [ERROR] Failed with error: Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\pipelines\smart_datalake_chat\code_execution.py", line 52, in execute
+    result = pipeline_context.query_exec_tracker.execute_func(
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\query_exec_tracker.py", line 128, in execute_func
+    result = function(*args, **kwargs)
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\code_manager.py", line 207, in execute_code
+    exec(code_to_run, environment)
+  File "<string>", line 20, in <module>
+NameError: name 'df' is not defined
+. Retrying
+2025-06-12 18:28:38 [INFO] Using prompt: <dataframe>
+dfs[0]:197799x39
+Report Number,Local Case Number,Agency Name,ACRS Report Type,Crash Date/Time,Route Type,Road Name,Cross-Street Name,Off-Road Description,Municipality,Related Non-Motorist,Collision Type,Weather,Surface Condition,Light,Traffic Control,Driver Substance Abuse,Non-Motorist Substance Abuse,Person ID,Driver At Fault,Injury Severity,Circumstance,Driver Distracted By,Drivers License State,Vehicle ID,Vehicle Damage Extent,Vehicle First Impact Location,Vehicle Body Type,Vehicle Movement,Vehicle Going Dir,Speed Limit,Driverless Vehicle,Parked Vehicle,Vehicle Year,Vehicle Make,Vehicle Model,Latitude,Longitude,Location
+MCP20160036,180040948,Montgomery County Police,Property Damage Crash,2018-08-17 14:25:00,,,,PARKING LOT OF 16246 F...,,,OTHER,CLEAR,,DAYLIGHT,,,,E1D9F62E-0C17-4843-B79...,Yes,NO APPARENT INJURY,,NOT DISTRACTED,MD,995C9706-91EC-48FC-8D2...,NO DAMAGE,SIX OCLOCK,PASSENGER CAR,BACKING,West,15,No,No,2015,MAZD,TK,38.743373,-77.54699707,"(38.743373, -77.54699707)"
+MCP2970000R,15045937,MONTGOMERY,Property Damage Crash,2015-09-11 13:29:00,,,,"Parking Lot: 
+2525 Enn...",,,OTHER,CLEAR,,DAYLIGHT,NO CONTROLS,UNKNOWN,,E0C26FD8-EE66-4B8D-92A...,Yes,NO APPARENT INJURY,,UNKNOWN,,14ECEFCD-3A58-4991-A9C...,UNKNOWN,UNKNOWN,PASSENGER CAR,PARKING,South,5,No,No,2012,TOYOTA,SU,39.03991652,-77.05364898,"(39.03991652, -77.05364898)"
+DM8479000T,210020119,Takoma Park Police Depart,Property Damage Crash,2021-05-27 19:40:00,,,,IN PARKING LOT...,,,OTHER,CLEAR,,DAYLIGHT,NO CONTROLS,NONE DETECTED,,CF61C6EB-61C4-4627-976...,No,NO APPARENT INJURY,,UNKNOWN,MD,D3F480EE-638B-459A-BC2...,SUPERFICIAL,ONE OCLOCK,OTHER,PARKED,,0,No,Yes,2017,HINO,TWK,38.98765667,-76.987545,"(38.98765667, -76.987545)"
+</dataframe>
+
+The user asked the following question:
+Q: how is the data quality ?
+
+You generated this python code:
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+def assess_data_quality(df):
+    """
+    Assess the data quality of a DataFrame.
+
+    Args:
+        df (pd.DataFrame): The DataFrame to assess.
+
+    Returns:
+        dict: A dictionary containing data quality metrics.
+    """
+
+    total_rows = len(df)
+    
+    # Missing values
+    missing_values = df.isnull().sum()
+    missing_values_percent = (missing_values / total_rows) * 100
+
+    # Data types
+    data_types = df.dtypes
+
+    # Unique values
+    unique_values = df.nunique()
+
+    quality_report = {
+        "total_rows": total_rows,
+        "missing_values": missing_values.to_dict(),
+        "missing_values_percent": missing_values_percent.to_dict(),
+        "data_types": data_types.to_dict(),
+        "unique_values": unique_values.to_dict(),
+    }
+
+    return quality_report
+
+quality_report = assess_data_quality(df)
+
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+result = { "type": "dataframe", "value": pd.DataFrame(quality_report) }
+
+It fails with the following error:
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\pipelines\smart_datalake_chat\code_execution.py", line 52, in execute
+    result = pipeline_context.query_exec_tracker.execute_func(
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\query_exec_tracker.py", line 128, in execute_func
+    result = function(*args, **kwargs)
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\code_manager.py", line 207, in execute_code
+    exec(code_to_run, environment)
+  File "<string>", line 20, in <module>
+NameError: name 'df' is not defined
+
+
+Fix the python code above and return the new python code:
+2025-06-12 18:28:40 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-12 18:28:40 [INFO] 
+Code running:
+```
+def assess_data_quality(df):
+    """
+    Assess the data quality of a DataFrame.
+
+    Args:
+        df (pd.DataFrame): The DataFrame to assess.
+
+    Returns:
+        dict: A dictionary containing data quality metrics.
+    """
+    total_rows = len(df)
+    missing_values = df.isnull().sum()
+    missing_values_percent = missing_values / total_rows * 100
+    data_types = df.dtypes
+    unique_values = df.nunique()
+    quality_report = {'total_rows': total_rows, 'missing_values': missing_values, 'missing_values_percent': missing_values_percent, 'data_types': data_types, 'unique_values': unique_values}
+    return quality_report
+
+
+quality_report = assess_data_quality(df)
+quality_report_df = pd.DataFrame({'Metric': quality_report.keys(), 'Value': [str(v) for v in quality_report.values()]})
+result = {'type': 'dataframe', 'value': quality_report_df}
+        ```
+2025-06-12 18:28:40 [WARNING] Failed to execute code with a correction framework [retry number: 2]
+2025-06-12 18:28:40 [ERROR] Failed with error: Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\pipelines\smart_datalake_chat\code_execution.py", line 52, in execute
+    result = pipeline_context.query_exec_tracker.execute_func(
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\query_exec_tracker.py", line 128, in execute_func
+    result = function(*args, **kwargs)
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\code_manager.py", line 207, in execute_code
+    exec(code_to_run, environment)
+  File "<string>", line 20, in <module>
+NameError: name 'df' is not defined
+. Retrying
+2025-06-12 18:28:40 [INFO] Using prompt: <dataframe>
+dfs[0]:197799x39
+Report Number,Local Case Number,Agency Name,ACRS Report Type,Crash Date/Time,Route Type,Road Name,Cross-Street Name,Off-Road Description,Municipality,Related Non-Motorist,Collision Type,Weather,Surface Condition,Light,Traffic Control,Driver Substance Abuse,Non-Motorist Substance Abuse,Person ID,Driver At Fault,Injury Severity,Circumstance,Driver Distracted By,Drivers License State,Vehicle ID,Vehicle Damage Extent,Vehicle First Impact Location,Vehicle Body Type,Vehicle Movement,Vehicle Going Dir,Speed Limit,Driverless Vehicle,Parked Vehicle,Vehicle Year,Vehicle Make,Vehicle Model,Latitude,Longitude,Location
+MCP20160036,180040948,Montgomery County Police,Property Damage Crash,2018-08-17 14:25:00,,,,PARKING LOT OF 16246 F...,,,OTHER,CLEAR,,DAYLIGHT,,,,E1D9F62E-0C17-4843-B79...,Yes,NO APPARENT INJURY,,NOT DISTRACTED,MD,995C9706-91EC-48FC-8D2...,NO DAMAGE,SIX OCLOCK,PASSENGER CAR,BACKING,West,15,No,No,2015,MAZD,TK,38.743373,-77.54699707,"(38.743373, -77.54699707)"
+MCP2970000R,15045937,MONTGOMERY,Property Damage Crash,2015-09-11 13:29:00,,,,"Parking Lot: 
+2525 Enn...",,,OTHER,CLEAR,,DAYLIGHT,NO CONTROLS,UNKNOWN,,E0C26FD8-EE66-4B8D-92A...,Yes,NO APPARENT INJURY,,UNKNOWN,,14ECEFCD-3A58-4991-A9C...,UNKNOWN,UNKNOWN,PASSENGER CAR,PARKING,South,5,No,No,2012,TOYOTA,SU,39.03991652,-77.05364898,"(39.03991652, -77.05364898)"
+DM8479000T,210020119,Takoma Park Police Depart,Property Damage Crash,2021-05-27 19:40:00,,,,IN PARKING LOT...,,,OTHER,CLEAR,,DAYLIGHT,NO CONTROLS,NONE DETECTED,,CF61C6EB-61C4-4627-976...,No,NO APPARENT INJURY,,UNKNOWN,MD,D3F480EE-638B-459A-BC2...,SUPERFICIAL,ONE OCLOCK,OTHER,PARKED,,0,No,Yes,2017,HINO,TWK,38.98765667,-76.987545,"(38.98765667, -76.987545)"
+</dataframe>
+
+The user asked the following question:
+Q: how is the data quality ?
+
+You generated this python code:
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+def assess_data_quality(df):
+    """
+    Assess the data quality of a DataFrame.
+
+    Args:
+        df (pd.DataFrame): The DataFrame to assess.
+
+    Returns:
+        dict: A dictionary containing data quality metrics.
+    """
+
+    total_rows = len(df)
+    
+    # Missing values
+    missing_values = df.isnull().sum()
+    missing_values_percent = (missing_values / total_rows) * 100
+
+    # Data types
+    data_types = df.dtypes
+
+    # Unique values
+    unique_values = df.nunique()
+
+    quality_report = {
+        "total_rows": total_rows,
+        "missing_values": missing_values.to_dict(),
+        "missing_values_percent": missing_values_percent.to_dict(),
+        "data_types": data_types.to_dict(),
+        "unique_values": unique_values.to_dict(),
+    }
+
+    return quality_report
+
+quality_report = assess_data_quality(df)
+
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+result = { "type": "dataframe", "value": pd.DataFrame(quality_report) }
+
+It fails with the following error:
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\pipelines\smart_datalake_chat\code_execution.py", line 52, in execute
+    result = pipeline_context.query_exec_tracker.execute_func(
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\query_exec_tracker.py", line 128, in execute_func
+    result = function(*args, **kwargs)
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\code_manager.py", line 207, in execute_code
+    exec(code_to_run, environment)
+  File "<string>", line 20, in <module>
+NameError: name 'df' is not defined
+
+
+Fix the python code above and return the new python code:
+2025-06-12 18:28:43 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-12 18:28:43 [INFO] 
+Code running:
+```
+def assess_data_quality(df):
+    """
+    Assess the data quality of a DataFrame.
+
+    Args:
+        df (pd.DataFrame): The DataFrame to assess.
+
+    Returns:
+        dict: A dictionary containing data quality metrics.
+    """
+    total_rows = len(df)
+    missing_values = df.isnull().sum()
+    missing_values_percent = missing_values / total_rows * 100
+    data_types = df.dtypes
+    unique_values = df.nunique()
+    quality_report = {'total_rows': total_rows, 'missing_values': missing_values.to_dict(), 'missing_values_percent': missing_values_percent.to_dict(), 'data_types': data_types.to_dict(), 'unique_values': unique_values.to_dict()}
+    return quality_report
+
+
+quality_report = assess_data_quality(df)
+quality_report_df = pd.DataFrame({'metric': quality_report.keys(), 'value': quality_report.values()})
+result = {'type': 'dataframe', 'value': quality_report_df}
+        ```
+2025-06-12 18:28:43 [ERROR] Pipeline failed on step 4: name 'df' is not defined
+2025-06-12 18:35:16 [INFO] Question: top 10 companies by growth
+2025-06-12 18:35:17 [INFO] Running PandasAI with google LLM...
+2025-06-12 18:35:17 [INFO] Prompt ID: 2d7a109d-00d4-41fb-aff0-bd6e83401f43
+2025-06-12 18:35:17 [INFO] Executing Step 0: CacheLookup
+2025-06-12 18:35:17 [INFO] Executing Step 1: PromptGeneration
+2025-06-12 18:35:17 [INFO] Using prompt: <dataframe>
+dfs[0]:5000x19
+_input,_num,_widgetName,_source,_resultNumber,_pageUrl,id,rank,workers,company,url,state_l,state_s,city,metro,growth,revenue,industry,yrs_on_list
+,2,Inc5000 Company List,Inc5000 Company List,2,http://www.inc.com/inc...,25747,2,191,Quest Nutrition,quest-nutrition,California,CA,El Segundo,Los Angeles,57347.9246,82640563,Food & Beverage,1
+,1,Inc5000 Company List,Inc5000 Company List,1,http://www.inc.com/inc...,22890,1,227,Fuhu,fuhu,California,CA,El Segundo,Los Angeles,158956.9106,195640000,Consumer Products & Services,2
+,3,Inc5000 Company List,Inc5000 Company List,3,http://www.inc.com/inc...,25643,3,145,Reliant Asset Management,reliant-asset-management,Virginia,VA,Arlington,Washington DC,55460.1646,85076502,Business Products & Services,1
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: top 10 companies by growth
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-06-12 18:35:17 [INFO] Executing Step 2: CodeGenerator
+2025-06-12 18:35:19 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+df = dfs[0]
+
+df['growth'] = pd.to_numeric(df['growth'], errors='coerce')
+
+top_10_growth = df.nlargest(10, 'growth')
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+result = { "type": "dataframe", "value": top_10_growth }
+            ```
+            
+2025-06-12 18:35:19 [INFO] Executing Step 3: CachePopulation
+2025-06-12 18:35:19 [INFO] Executing Step 4: CodeExecution
+2025-06-12 18:35:19 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-12 18:35:19 [INFO] 
+Code running:
+```
+df = dfs[0]
+df['growth'] = pd.to_numeric(df['growth'], errors='coerce')
+top_10_growth = df.nlargest(10, 'growth')
+result = {'type': 'dataframe', 'value': top_10_growth}
+        ```
+2025-06-12 18:35:19 [INFO] Executing Step 5: ResultValidation
+2025-06-12 18:35:19 [INFO] Answer: {'type': 'dataframe', 'value':    _input  _num           _widgetName               _source  _resultNumber  ...               metro       growth    revenue                      industry yrs_on_list
+0     NaN     1  Inc5000 Company List  Inc5000 Company List              1  ...         Los Angeles  158956.9106  195640000  Consumer Products & Services           2
+1     NaN     2  Inc5000 Company List  Inc5000 Company List              2  ...         Los Angeles   57347.9246   82640563               Food & Beverage           1
+2     NaN     3  Inc5000 Company List  Inc5000 Company List              3  ...       Washington DC   55460.1646   85076502  Business Products & Services           1
+3     NaN     4  Inc5000 Company List  Inc5000 Company List              4  ...            San Jose   26042.9630   35293000                      Software           1
+4     NaN     5  Inc5000 Company List  Inc5000 Company List              5  ...              Boston   20690.4578   77652360            Telecommunications           1
+5     NaN     6  Inc5000 Company List  Inc5000 Company List              6  ...  Lewiston-Auburn ME   19876.5169  137977203                        Energy           2
+6     NaN     7  Inc5000 Company List  Inc5000 Company List              7  ...       San Francisco   18375.0693   27308000                        Health           2
+7     NaN     8  Inc5000 Company List  Inc5000 Company List              8  ...             Phoenix   16457.6529  159897088                        Health           1
+8     NaN     9  Inc5000 Company List  Inc5000 Company List              9  ...         Portland OR   16192.0610   26263454          Travel & Hospitality           1
+9     NaN    10  Inc5000 Company List  Inc5000 Company List             10  ...       Wilmington NC   16006.8013   32851754                        Energy           1
+
+[10 rows x 19 columns]}
+2025-06-12 18:35:19 [INFO] Executed in: 3.0723955631256104s
+2025-06-12 18:35:19 [INFO] Executing Step 6: ResultParsing
+2025-06-12 18:35:28 [INFO] Question: plot top 10 companies by growth
+2025-06-12 18:35:28 [INFO] Running PandasAI with google LLM...
+2025-06-12 18:35:28 [INFO] Prompt ID: 041efd51-8a8e-4b4b-b574-8cd04dfb1e72
+2025-06-12 18:35:28 [INFO] Executing Step 0: CacheLookup
+2025-06-12 18:35:28 [INFO] Executing Step 1: PromptGeneration
+2025-06-12 18:35:28 [INFO] Using prompt: <dataframe>
+dfs[0]:5000x19
+_input,_num,_widgetName,_source,_resultNumber,_pageUrl,id,rank,workers,company,url,state_l,state_s,city,metro,growth,revenue,industry,yrs_on_list
+,2,Inc5000 Company List,Inc5000 Company List,2,http://www.inc.com/inc...,25747,2,191,Quest Nutrition,quest-nutrition,California,CA,El Segundo,Los Angeles,57347.9246,82640563,Food & Beverage,1
+,1,Inc5000 Company List,Inc5000 Company List,1,http://www.inc.com/inc...,22890,1,227,Fuhu,fuhu,California,CA,El Segundo,Los Angeles,158956.9106,195640000,Consumer Products & Services,2
+,3,Inc5000 Company List,Inc5000 Company List,3,http://www.inc.com/inc...,25643,3,145,Reliant Asset Management,reliant-asset-management,Virginia,VA,Arlington,Washington DC,55460.1646,85076502,Business Products & Services,1
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: plot top 10 companies by growth
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-06-12 18:35:28 [INFO] Executing Step 2: CodeGenerator
+2025-06-12 18:35:32 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Write code here
+df = dfs[0]
+
+df['growth'] = pd.to_numeric(df['growth'], errors='coerce')
+
+top_10_growth = df.sort_values(by='growth', ascending=False).head(10)
+
+plt.figure(figsize=(12, 6))
+plt.bar(top_10_growth['company'], top_10_growth['growth'], color='skyblue')
+plt.xlabel('Company')
+plt.ylabel('Growth (%)')
+plt.title('Top 10 Companies by Growth')
+plt.xticks(rotation=45, ha='right')
+plt.tight_layout()
+plt.savefig("growth_chart.png")
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+result = { "type": "plot", "value": "growth_chart.png" }
+            ```
+            
+2025-06-12 18:35:32 [INFO] Executing Step 3: CachePopulation
+2025-06-12 18:35:32 [INFO] Executing Step 4: CodeExecution
+2025-06-12 18:35:32 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-12 18:35:32 [INFO] 
+Code running:
+```
+df = dfs[0]
+df['growth'] = pd.to_numeric(df['growth'], errors='coerce')
+top_10_growth = df.sort_values(by='growth', ascending=False).head(10)
+plt.figure(figsize=(12, 6))
+plt.bar(top_10_growth['company'], top_10_growth['growth'], color='skyblue')
+plt.xlabel('Company')
+plt.ylabel('Growth (%)')
+plt.title('Top 10 Companies by Growth')
+plt.xticks(rotation=45, ha='right')
+plt.tight_layout()
+plt.savefig('C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png')
+result = {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+        ```
+2025-06-12 18:35:32 [INFO] Executing Step 5: ResultValidation
+2025-06-12 18:35:32 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+2025-06-12 18:35:32 [INFO] Executed in: 3.6981396675109863s
+2025-06-12 18:35:32 [INFO] Executing Step 6: ResultParsing

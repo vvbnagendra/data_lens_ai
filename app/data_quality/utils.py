@@ -20,3 +20,11 @@ def get_huggingface_models():
         "google/flan-t5-base",
         # add more models you want to support
     ]
+
+def get_google_models():
+    # You can customize this list or fetch dynamically if you want
+    return [
+        "gemini-2.0-flash",
+        "google/flan-t5-base",
+        # add more models you want to support
+    ]

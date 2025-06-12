@@ -1,16 +1,19 @@
-# app/pages/4_Chat_with_Data.py
-
 import streamlit as st
 import pandas as pd
 from sqlalchemy import inspect
 import subprocess
 import json
 import sys
+import re
 
 from data_quality.pandasai_chat import get_smart_chat
-from data_quality.utils import get_ollama_models, get_huggingface_models
+from data_quality.utils import get_ollama_models, get_huggingface_models, get_google_models
 
 st.title("💬 Chat with Data")
+
+# Initialize chat history
+if "chat_history" not in st.session_state:
+    st.session_state.chat_history = []
 
 # Load data sources from session_state
 data_sources = {}
@@ -51,11 +54,16 @@ model_name = None
 model_backend = None
 
 if llm_backend == "pandasai":
-    # Get Ollama + HuggingFace models and combine for dropdown
+    # Get Ollama + HuggingFace + Google models and combine for dropdown
     ollama_models = get_ollama_models() or []
     hf_models = get_huggingface_models() or []
+    google_models = get_google_models() or []
 
-    combined_models = [f"ollama: {m}" for m in ollama_models] + [f"hf: {m}" for m in hf_models]
+    combined_models = (
+        [f"ollama: {m}" for m in ollama_models] +
+        [f"hf: {m}" for m in hf_models] +
+        [f"google: {m}" for m in google_models]
+    )
 
     if not combined_models:
         combined_models = ["hf: gpt2"]
@@ -68,18 +76,23 @@ if llm_backend == "pandasai":
     elif model_name_label.startswith("hf: "):
         model_backend = "huggingface"
         model_name = model_name_label.replace("hf: ", "")
+    elif model_name_label.startswith("google: "):
+        model_backend = "google"
+        model_name = model_name_label.replace("google: ", "")
     else:
         model_backend = "huggingface"
         model_name = model_name_label
 
 else:
-    # For lotus backend, simple text input for model name
     model_name = st.text_input("Model Name", "lotus-mixtral")
 
 # User question input
 question = st.text_input("Ask a question")
 
+# Handle question submission
 if question:
+    response = None
+
     if llm_backend == "pandasai":
         try:
             print("pandas-buchiki")
@@ -93,7 +106,6 @@ if question:
 
     elif llm_backend == "lotus":
         try:
-            # Serialize tables as list of (name, CSV string)
             print("lotus-buchiki")
             tables_for_lotus = [(name, df.to_csv(index=False)) for name, df in dfs]
 
@@ -101,10 +113,9 @@ if question:
                 "tables": tables_for_lotus,
                 "question": question,
                 "model": model_name,
-                "mode": "query"  # Keep it simple, no mode toggle here
+                "mode": "query"
             }
 
-            # Path to python executable inside lotus virtual env
             is_windows = sys.platform.startswith("win")
             lotus_python = ".\\.lotus_env\\Scripts\\python.exe" if is_windows else "./.lotus_env/bin/python"
 
@@ -122,4 +133,58 @@ if question:
         except Exception as e:
             response = f"LOTUS Exception: {e}"
 
-    st.markdown(f"🧠 **Response:** {response}")
+    # Save interaction to chat history
+    st.session_state.chat_history.append({
+        "question": question,
+        "response": response
+    })
+
+# Clear chat history
+if st.button("🗑️ Clear Chat History"):
+    st.session_state.chat_history = []
+    st.experimental_rerun()
+
+# Render chat history
+# Render chat history
+st.markdown("---")
+st.markdown("### 🧠 Chat History")
+
+for entry in reversed(st.session_state.chat_history):
+    st.markdown(f"**🧑 You:** {entry['question']}")
+    response = entry["response"]
+
+
+    # Check for and render Plotly figure
+    if isinstance(response, str) and "fig =" in response:
+        try:
+            local_env = {"pd": pd}
+            if len(dfs) == 1:
+                local_env["df"] = dfs[0][1]
+            else:
+                local_env["df"] = pd.concat([df for _, df in dfs])
+
+            exec(response, {}, local_env)
+            fig = local_env.get("fig")
+            if fig:
+                st.plotly_chart(fig, use_container_width=True)
+                continue
+        except Exception as e:
+            st.error(f"⚠️ Plot rendering error: {e}")
+            continue
+
+    # Format as code if response looks like code
+    if isinstance(response, str) and (
+        "def " in response or "import " in response or "```" in response
+    ):
+        cleaned = re.sub(r"```(?:python)?", "", response).replace("```", "")
+        st.code(cleaned.strip(), language="python")
+    else:
+    # If the response is a local image file path, show it as an image
+        if isinstance(response, str) and re.match(r".*\.(png|jpg|jpeg)$", response, re.IGNORECASE):
+            try:
+                st.image(response, caption="📊 Generated Chart", use_column_width=True)
+            except Exception as e:
+                st.error(f"⚠️ Could not load image: {e}")
+        else:
+            st.markdown(f"**🤖 Response:**\n\n{response}", unsafe_allow_html=True)
+

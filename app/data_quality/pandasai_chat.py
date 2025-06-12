@@ -1,5 +1,6 @@
 from pandasai import SmartDataframe, SmartDatalake
 from data_quality.ollama_llm_adapter import OllamaLLM
+from data_quality.google_llm_adapter import GoogleLLM
 from data_quality.huggingface_llm_adapter import HuggingFaceLLM
 from data_quality.lotus_llm_adapter import LotusLLM
 import pandas as pd
@@ -15,6 +16,11 @@ def get_llm_model(backend: str, model_name: str = None, **kwargs):
         if not model_name:
             raise ValueError("Model name is required for Hugging Face backend.")
         return HuggingFaceLLM(model=model_name)
+    elif backend == "google":
+        if not model_name:
+            raise ValueError("Model name is required for Google backend.")
+        return GoogleLLM(model=model_name)
+
     elif backend == "lotus":
         return LotusLLM(model=model_name or "lotus-mixtral")
     else:
