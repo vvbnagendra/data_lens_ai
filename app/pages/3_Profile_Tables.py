@@ -15,9 +15,19 @@ df_sources = []  # To hold dataframes from CSV or DB
 uploaded_file_name = None
 
 # --- 1. Check for uploaded CSV(s) ---
-if "df" in st.session_state:
-    df_sources.append(("Uploaded CSV", st.session_state["df"]))
-    uploaded_file_name = st.session_state.get("uploaded_file_name")
+# --- 1. Check for multiple uploaded CSVs ---
+# --- 1. Check for uploaded CSV(s) and allow selection ---
+selected_csvs = []
+if "csv_dataframes" in st.session_state:
+    csv_files = list(st.session_state["csv_dataframes"].keys())
+
+    selected_csvs = st.multiselect("Select uploaded CSV(s) to profile", csv_files)
+
+    for file_name in selected_csvs:
+        df = st.session_state["csv_dataframes"][file_name]
+        df_sources.append((f"Uploaded CSV: {file_name}", df))
+
+
 
 # --- 2. Check for connected database ---
 if "engine" in st.session_state:
@@ -42,8 +52,9 @@ if not df_sources:
 for source_name, df in df_sources:
 
     # Set base name for report
-    if source_name == "Uploaded CSV" and uploaded_file_name is not None:
-        base_name = uploaded_file_name
+    if source_name.startswith("Uploaded CSV:"):
+        base_name = source_name.split(":", 1)[-1].strip()
+
     elif source_name.startswith("DB Table"):
         base_name = source_name.split(":")[-1].strip()
     else:
@@ -51,7 +62,7 @@ for source_name, df in df_sources:
 
     # Display source information
     st.subheader(f"🔍 {source_name}")
-    st.subheader(uploaded_file_name)
+    # st.subheader(uploaded_file_name)
     st.dataframe(df.head())
 
     # Convert date columns

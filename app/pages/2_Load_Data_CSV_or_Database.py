@@ -10,16 +10,21 @@ st.title("📂 Load Data: CSV or Database")
 data_source = st.radio("Select Data Source:", ["Upload CSV", "Connect to Database"])
 
 if data_source == "Upload CSV":
-    uploaded_file = st.file_uploader("Upload your CSV file", type=["csv"])
-    if uploaded_file is not None:
-        try:
-            df = pd.read_csv(uploaded_file, low_memory=False)
-            st.session_state["df"] = df
-            st.session_state["uploaded_file_name"] = uploaded_file.name
-            st.success("✅ CSV file loaded successfully!")
-            st.dataframe(df.head())
-        except Exception as e:
-            st.error(f"❌ Error reading CSV file: {e}")
+    uploaded_files = st.file_uploader("Upload one or more CSV files", type=["csv"], accept_multiple_files=True)
+
+    if uploaded_files:
+        st.session_state["csv_dataframes"] = {}  # Dictionary to store multiple DataFrames
+
+        for file in uploaded_files:
+            try:
+                df = pd.read_csv(file, low_memory=False)
+                st.session_state["csv_dataframes"][file.name] = df
+                st.success(f"✅ Loaded {file.name}")
+                st.write(f"Preview of **{file.name}**:")
+                st.dataframe(df.head())
+            except Exception as e:
+                st.error(f"❌ Error reading {file.name}: {e}")
+
 
 else:
     # Load previously saved connections

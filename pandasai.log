@@ -7068,3 +7068,400 @@ result = {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/pres
 2025-06-12 18:35:32 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
 2025-06-12 18:35:32 [INFO] Executed in: 3.6981396675109863s
 2025-06-12 18:35:32 [INFO] Executing Step 6: ResultParsing
+2025-06-13 08:11:14 [INFO] Question: plot state wise revenue in map
+2025-06-13 08:11:14 [INFO] Running PandasAI with google LLM...
+2025-06-13 08:11:14 [INFO] Prompt ID: b1df97ac-88e5-438f-b3c4-b3ff4a54554d
+2025-06-13 08:11:14 [INFO] Executing Step 0: CacheLookup
+2025-06-13 08:11:14 [INFO] Executing Step 1: PromptGeneration
+2025-06-13 08:11:14 [INFO] Using prompt: <dataframe>
+dfs[0]:5000x19
+_input,_num,_widgetName,_source,_resultNumber,_pageUrl,id,rank,workers,company,url,state_l,state_s,city,metro,growth,revenue,industry,yrs_on_list
+,3,Inc5000 Company List,Inc5000 Company List,3,http://www.inc.com/inc...,25643,3,145,Reliant Asset Management,reliant-asset-management,Virginia,VA,Arlington,Washington DC,55460.1646,85076502,Business Products & Se...,1
+,2,Inc5000 Company List,Inc5000 Company List,2,http://www.inc.com/inc...,25747,2,191,Quest Nutrition,quest-nutrition,California,CA,El Segundo,Los Angeles,57347.9246,82640563,Food & Beverage...,1
+,1,Inc5000 Company List,Inc5000 Company List,1,http://www.inc.com/inc...,22890,1,227,Fuhu,fuhu,California,CA,El Segundo,Los Angeles,158956.9106,195640000,Consumer Products & Se...,2
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: plot state wise revenue in map
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-06-13 08:11:14 [INFO] Executing Step 2: CodeGenerator
+2025-06-13 08:11:18 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+import plotly.express as px
+
+# Assuming dfs is a list of DataFrames and you want to use the first one
+df = dfs[0]
+
+# Group by state and sum the revenue
+state_revenue = df.groupby('state_s')['revenue'].sum().reset_index()
+
+# Create the choropleth map
+fig = px.choropleth(state_revenue,
+                    locations='state_s',
+                    locationmode="USA-states",
+                    color='revenue',
+                    scope="usa",
+                    color_continuous_scale="Viridis",
+                    title='State-wise Revenue')
+
+# Save the plot to a file
+plot_file = "state_revenue_map.png"
+fig.write_image(plot_file)
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+result = { "type": "plot", "value": plot_file }
+            ```
+            
+2025-06-13 08:11:18 [INFO] Executing Step 3: CachePopulation
+2025-06-13 08:11:18 [INFO] Executing Step 4: CodeExecution
+2025-06-13 08:11:18 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-13 08:11:18 [INFO] 
+Code running:
+```
+df = dfs[0]
+state_revenue = df.groupby('state_s')['revenue'].sum().reset_index()
+fig = px.choropleth(state_revenue, locations='state_s', locationmode='USA-states', color='revenue', scope='usa', color_continuous_scale='Viridis', title='State-wise Revenue')
+plot_file = 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'
+fig.write_image(plot_file)
+result = {'type': 'plot', 'value': plot_file}
+        ```
+2025-06-13 08:11:18 [WARNING] Failed to execute code with a correction framework [retry number: 1]
+2025-06-13 08:11:18 [ERROR] Failed with error: Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\pipelines\smart_datalake_chat\code_execution.py", line 52, in execute
+    result = pipeline_context.query_exec_tracker.execute_func(
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\query_exec_tracker.py", line 128, in execute_func
+    result = function(*args, **kwargs)
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\code_manager.py", line 207, in execute_code
+    exec(code_to_run, environment)
+  File "<string>", line 5, in <module>
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\plotly\basedatatypes.py", line 3841, in write_image
+    return pio.write_image(self, *args, **kwargs)
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\plotly\io\_kaleido.py", line 266, in write_image
+    img_data = to_image(
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\plotly\io\_kaleido.py", line 132, in to_image
+    raise ValueError(
+ValueError: 
+Image export using the "kaleido" engine requires the kaleido package,
+which can be installed using pip:
+    $ pip install -U kaleido
+
+. Retrying
+2025-06-13 08:11:18 [INFO] Using prompt: <dataframe>
+dfs[0]:5000x19
+_input,_num,_widgetName,_source,_resultNumber,_pageUrl,id,rank,workers,company,url,state_l,state_s,city,metro,growth,revenue,industry,yrs_on_list
+,3,Inc5000 Company List,Inc5000 Company List,3,http://www.inc.com/inc...,25643,3,145,Reliant Asset Management,reliant-asset-management,Virginia,VA,Arlington,Washington DC,55460.1646,85076502,Business Products & Se...,1
+,2,Inc5000 Company List,Inc5000 Company List,2,http://www.inc.com/inc...,25747,2,191,Quest Nutrition,quest-nutrition,California,CA,El Segundo,Los Angeles,57347.9246,82640563,Food & Beverage...,1
+,1,Inc5000 Company List,Inc5000 Company List,1,http://www.inc.com/inc...,22890,1,227,Fuhu,fuhu,California,CA,El Segundo,Los Angeles,158956.9106,195640000,Consumer Products & Se...,2
+</dataframe>
+
+The user asked the following question:
+Q: plot state wise revenue in map
+
+You generated this python code:
+# TODO: import the required dependencies
+import pandas as pd
+import plotly.express as px
+
+# Assuming dfs is a list of DataFrames and you want to use the first one
+df = dfs[0]
+
+# Group by state and sum the revenue
+state_revenue = df.groupby('state_s')['revenue'].sum().reset_index()
+
+# Create the choropleth map
+fig = px.choropleth(state_revenue,
+                    locations='state_s',
+                    locationmode="USA-states",
+                    color='revenue',
+                    scope="usa",
+                    color_continuous_scale="Viridis",
+                    title='State-wise Revenue')
+
+# Save the plot to a file
+plot_file = "state_revenue_map.png"
+fig.write_image(plot_file)
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+result = { "type": "plot", "value": plot_file }
+
+It fails with the following error:
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\pipelines\smart_datalake_chat\code_execution.py", line 52, in execute
+    result = pipeline_context.query_exec_tracker.execute_func(
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\query_exec_tracker.py", line 128, in execute_func
+    result = function(*args, **kwargs)
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\code_manager.py", line 207, in execute_code
+    exec(code_to_run, environment)
+  File "<string>", line 5, in <module>
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\plotly\basedatatypes.py", line 3841, in write_image
+    return pio.write_image(self, *args, **kwargs)
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\plotly\io\_kaleido.py", line 266, in write_image
+    img_data = to_image(
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\plotly\io\_kaleido.py", line 132, in to_image
+    raise ValueError(
+ValueError: 
+Image export using the "kaleido" engine requires the kaleido package,
+which can be installed using pip:
+    $ pip install -U kaleido
+
+
+
+Fix the python code above and return the new python code:
+2025-06-13 08:11:20 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-13 08:11:20 [INFO] 
+Code running:
+```
+df = dfs[0]
+state_revenue = df.groupby('state_s')['revenue'].sum().reset_index()
+fig = px.choropleth(state_revenue, locations='state_s', locationmode='USA-states', color='revenue', scope='usa', color_continuous_scale='Viridis', title='State-wise Revenue')
+plot_file = 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'
+try:
+    fig.write_image(plot_file)
+    result = {'type': 'plot', 'value': plot_file}
+except ValueError as e:
+    print(f'Error writing image: {e}')
+    result = {'type': 'string', 'value': 'Could not generate plot.  Ensure kaleido is installed.'}
+        ```
+2025-06-13 08:11:20 [WARNING] Failed to execute code with a correction framework [retry number: 2]
+2025-06-13 08:11:20 [ERROR] Failed with error: Traceback (most recent call last):
+  File "<string>", line 6, in <module>
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\plotly\basedatatypes.py", line 3841, in write_image
+    return pio.write_image(self, *args, **kwargs)
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\plotly\io\_kaleido.py", line 266, in write_image
+    img_data = to_image(
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\plotly\io\_kaleido.py", line 132, in to_image
+    raise ValueError(
+ValueError: 
+Image export using the "kaleido" engine requires the kaleido package,
+which can be installed using pip:
+    $ pip install -U kaleido
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\pipelines\smart_datalake_chat\code_execution.py", line 52, in execute
+    result = pipeline_context.query_exec_tracker.execute_func(
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\query_exec_tracker.py", line 128, in execute_func
+    result = function(*args, **kwargs)
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\code_manager.py", line 207, in execute_code
+    exec(code_to_run, environment)
+  File "<string>", line 8, in <module>
+NameError: name 'ValueError' is not defined
+. Retrying
+2025-06-13 08:11:20 [INFO] Using prompt: <dataframe>
+dfs[0]:5000x19
+_input,_num,_widgetName,_source,_resultNumber,_pageUrl,id,rank,workers,company,url,state_l,state_s,city,metro,growth,revenue,industry,yrs_on_list
+,3,Inc5000 Company List,Inc5000 Company List,3,http://www.inc.com/inc...,25643,3,145,Reliant Asset Management,reliant-asset-management,Virginia,VA,Arlington,Washington DC,55460.1646,85076502,Business Products & Se...,1
+,2,Inc5000 Company List,Inc5000 Company List,2,http://www.inc.com/inc...,25747,2,191,Quest Nutrition,quest-nutrition,California,CA,El Segundo,Los Angeles,57347.9246,82640563,Food & Beverage...,1
+,1,Inc5000 Company List,Inc5000 Company List,1,http://www.inc.com/inc...,22890,1,227,Fuhu,fuhu,California,CA,El Segundo,Los Angeles,158956.9106,195640000,Consumer Products & Se...,2
+</dataframe>
+
+The user asked the following question:
+Q: plot state wise revenue in map
+
+You generated this python code:
+# TODO: import the required dependencies
+import pandas as pd
+import plotly.express as px
+
+# Assuming dfs is a list of DataFrames and you want to use the first one
+df = dfs[0]
+
+# Group by state and sum the revenue
+state_revenue = df.groupby('state_s')['revenue'].sum().reset_index()
+
+# Create the choropleth map
+fig = px.choropleth(state_revenue,
+                    locations='state_s',
+                    locationmode="USA-states",
+                    color='revenue',
+                    scope="usa",
+                    color_continuous_scale="Viridis",
+                    title='State-wise Revenue')
+
+# Save the plot to a file
+plot_file = "state_revenue_map.png"
+fig.write_image(plot_file)
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+result = { "type": "plot", "value": plot_file }
+
+It fails with the following error:
+Traceback (most recent call last):
+  File "<string>", line 6, in <module>
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\plotly\basedatatypes.py", line 3841, in write_image
+    return pio.write_image(self, *args, **kwargs)
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\plotly\io\_kaleido.py", line 266, in write_image
+    img_data = to_image(
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\plotly\io\_kaleido.py", line 132, in to_image
+    raise ValueError(
+ValueError: 
+Image export using the "kaleido" engine requires the kaleido package,
+which can be installed using pip:
+    $ pip install -U kaleido
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\pipelines\smart_datalake_chat\code_execution.py", line 52, in execute
+    result = pipeline_context.query_exec_tracker.execute_func(
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\query_exec_tracker.py", line 128, in execute_func
+    result = function(*args, **kwargs)
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\code_manager.py", line 207, in execute_code
+    exec(code_to_run, environment)
+  File "<string>", line 8, in <module>
+NameError: name 'ValueError' is not defined
+
+
+Fix the python code above and return the new python code:
+2025-06-13 08:11:21 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-13 08:11:21 [INFO] 
+Code running:
+```
+df = dfs[0]
+state_revenue = df.groupby('state_s')['revenue'].sum().reset_index()
+fig = px.choropleth(state_revenue, locations='state_s', locationmode='USA-states', color='revenue', scope='usa', color_continuous_scale='Viridis', title='State-wise Revenue')
+plot_file = 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'
+try:
+    fig.write_image(plot_file)
+    result = {'type': 'plot', 'value': plot_file}
+except Exception as e:
+    result = {'type': 'string', 'value': str(e)}
+        ```
+2025-06-13 08:11:21 [ERROR] Pipeline failed on step 4: name 'Exception' is not defined
+2025-06-13 08:11:30 [INFO] Question: plot state wise revenue
+2025-06-13 08:11:30 [INFO] Running PandasAI with google LLM...
+2025-06-13 08:11:30 [INFO] Prompt ID: 3eac607c-3ab4-408c-8394-cce749c3166c
+2025-06-13 08:11:30 [INFO] Executing Step 0: CacheLookup
+2025-06-13 08:11:30 [INFO] Executing Step 1: PromptGeneration
+2025-06-13 08:11:30 [INFO] Using prompt: <dataframe>
+dfs[0]:5000x19
+_input,_num,_widgetName,_source,_resultNumber,_pageUrl,id,rank,workers,company,url,state_l,state_s,city,metro,growth,revenue,industry,yrs_on_list
+,2,Inc5000 Company List,Inc5000 Company List,2,http://www.inc.com/inc...,25747,2,191,Quest Nutrition,quest-nutrition,California,CA,El Segundo,Los Angeles,57347.9246,82640563,Food & Beverage,1
+,3,Inc5000 Company List,Inc5000 Company List,3,http://www.inc.com/inc...,25643,3,145,Reliant Asset Management,reliant-asset-management,Virginia,VA,Arlington,Washington DC,55460.1646,85076502,Business Products & Services,1
+,1,Inc5000 Company List,Inc5000 Company List,1,http://www.inc.com/inc...,22890,1,227,Fuhu,fuhu,California,CA,El Segundo,Los Angeles,158956.9106,195640000,Consumer Products & Services,2
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: plot state wise revenue
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-06-13 08:11:30 [INFO] Executing Step 2: CodeGenerator
+2025-06-13 08:11:33 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Write code here
+
+df = dfs[0].copy()
+
+state_revenue = df.groupby('state_l')['revenue'].sum().sort_values(ascending=False)
+
+plt.figure(figsize=(12, 6))
+state_revenue.plot(kind='bar')
+plt.title('State Wise Revenue')
+plt.xlabel('State')
+plt.ylabel('Revenue')
+plt.xticks(rotation=45, ha='right')
+plt.tight_layout()
+plt.savefig('state_revenue.png')
+plt.close()
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+result = { "type": "plot", "value": "state_revenue.png" }
+            ```
+            
+2025-06-13 08:11:33 [INFO] Executing Step 3: CachePopulation
+2025-06-13 08:11:33 [INFO] Executing Step 4: CodeExecution
+2025-06-13 08:11:33 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-13 08:11:33 [INFO] 
+Code running:
+```
+df = dfs[0].copy()
+state_revenue = df.groupby('state_l')['revenue'].sum().sort_values(ascending=False)
+plt.figure(figsize=(12, 6))
+state_revenue.plot(kind='bar')
+plt.title('State Wise Revenue')
+plt.xlabel('State')
+plt.ylabel('Revenue')
+plt.xticks(rotation=45, ha='right')
+plt.tight_layout()
+plt.savefig('C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png')
+plt.close()
+result = {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+        ```
+2025-06-13 08:11:33 [INFO] Executing Step 5: ResultValidation
+2025-06-13 08:11:33 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+2025-06-13 08:11:33 [INFO] Executed in: 3.3094053268432617s
+2025-06-13 08:11:33 [INFO] Executing Step 6: ResultParsing
+2025-06-13 08:18:20 [INFO] Question: plot state wise revenue
+2025-06-13 08:18:20 [INFO] Running PandasAI with google LLM...
+2025-06-13 08:18:20 [INFO] Prompt ID: f5b396cd-e339-4bf8-bc1c-afc6e1beca24
+2025-06-13 08:18:20 [INFO] Executing Step 0: CacheLookup
+2025-06-13 08:18:20 [INFO] Using cached response
+2025-06-13 08:18:20 [INFO] Executing Step 1: PromptGeneration
+2025-06-13 08:18:20 [INFO] Executing Step 2: CodeGenerator
+2025-06-13 08:18:20 [INFO] Executing Step 3: CachePopulation
+2025-06-13 08:18:20 [INFO] Executing Step 4: CodeExecution
+2025-06-13 08:18:20 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-13 08:18:20 [INFO] 
+Code running:
+```
+df = dfs[0].copy()
+state_revenue = df.groupby('state_l')['revenue'].sum().sort_values(ascending=False)
+plt.figure(figsize=(12, 6))
+state_revenue.plot(kind='bar')
+plt.title('State Wise Revenue')
+plt.xlabel('State')
+plt.ylabel('Revenue')
+plt.xticks(rotation=45, ha='right')
+plt.tight_layout()
+plt.savefig('C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png')
+plt.close()
+result = {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+        ```
+2025-06-13 08:18:21 [INFO] Executing Step 5: ResultValidation
+2025-06-13 08:18:21 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+2025-06-13 08:18:21 [INFO] Executed in: 0.664909839630127s
+2025-06-13 08:18:21 [INFO] Executing Step 6: ResultParsing

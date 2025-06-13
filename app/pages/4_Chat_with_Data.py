@@ -18,8 +18,11 @@ if "chat_history" not in st.session_state:
 # Load data sources from session_state
 data_sources = {}
 
-if "df" in st.session_state:
-    data_sources["Uploaded CSV"] = st.session_state["df"]
+# --- Load uploaded CSVs ---
+if "csv_dataframes" in st.session_state:
+    for name, df in st.session_state["csv_dataframes"].items():
+        data_sources[f"Uploaded CSV: {name}"] = df
+
 
 if "engine" in st.session_state:
     inspector = inspect(st.session_state["engine"])
@@ -40,6 +43,11 @@ if not selected_keys:
     st.stop()
 
 dfs = [(key.replace("DB Table: ", ""), data_sources[key]) for key in selected_keys]
+for name, df in dfs:
+    with st.expander(f"🔍 Preview: {name}"):
+        st.dataframe(df.head())
+# Ensure at least one DataFrame is selected
+
 
 # Show preview of selected data
 if len(dfs) == 1:
@@ -49,6 +57,8 @@ else:
 
 # Choose LLM backend: pandasai or lotus
 llm_backend = st.selectbox("LLM Backend", ["pandasai", "lotus"])
+user_token = st.text_input("🔑 Enter your API Token (optional)", type="password")
+# Initialize model name and backend
 
 model_name = None
 model_backend = None
