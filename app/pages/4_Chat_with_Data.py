@@ -29,11 +29,11 @@ st.set_page_config(
 # --- Header Section with Navigation ---
 col_nav1, col_nav2, col_nav3 = st.columns([1, 4, 1])
 with col_nav1:
-    st.page_link("app/pages/3_Profile_Tables.py", label="⬅ Profile Tables", icon="📊")
+    st.page_link("pages/3_Profile_Tables.py", label="⬅ Profile Tables", icon="📊")
 with col_nav2:
     st.markdown("## 💬 Chat with Data")
 with col_nav3:
-    st.page_link("app/Home.py", label="Home 🏠", icon="🏠")
+    st.page_link("Home.py", label="Home 🏠", icon="🏠")
 
 st.markdown("---")
 
