@@ -230,9 +230,13 @@ def save_chat_image(fig_obj, base_name, export_base_folder="export"):
         st.error(f"❌ Error saving chart to `{file_path}`: {e}")
         return None
 
+# ... (rest of your imports and initial setup)
+
 # Handle question submission
 if submit_button and user_question: # Check if button was pressed AND question is not empty
     response = None
+    generated_chart_path = None # Initialize a variable to hold the path of a generated chart
+
     with st.spinner("Thinking... Generating response..."):
         if llm_backend == "pandasai":
             try:
@@ -243,9 +247,53 @@ if submit_button and user_question: # Check if button was pressed AND question i
                     model_name,
                     user_token
                 )
-                
-                # Now, call chat() on the instance
-                response = smart_chat_instance.chat(user_question)
+
+                # Get the raw response from PandasAI
+                raw_pandasai_response = smart_chat_instance.chat(user_question)
+
+                # Check if the response contains plot code
+                if isinstance(raw_pandasai_response, str) and "fig =" in raw_pandasai_response:
+                    try:
+                        local_env = {"pd": pd, "px": px, "plt": plt} # Add plt to local_env
+
+                        # Provide a DataFrame context for plotting
+                        if dfs:
+                            if len(dfs) == 1:
+                                local_env["df"] = dfs[0][1]
+                            else:
+                                local_env["df"] = pd.concat([df_item for _, df_item in dfs], ignore_index=True)
+
+                        # Execute the generated plot code
+                        exec(raw_pandasai_response, {"_builtins_": None}, local_env)
+
+                        fig = local_env.get("fig") # Get the figure object from the executed code
+
+                        if fig:
+                            # Save the chart to the export folder with a unique name
+                            saved_chart_path = save_chat_image(fig, selected_base_name)
+                            if saved_chart_path:
+                                # If a chart was saved, store its path as the response
+                                response = saved_chart_path
+                                # You can also display it immediately if you like
+                                # if hasattr(fig, 'to_json'): st.plotly_chart(fig, use_container_width=True)
+                                # elif isinstance(fig, plt.Figure):
+                                #     img_buffer = io.BytesIO()
+                                #     fig.savefig(img_buffer, format='png', bbox_inches='tight')
+                                #     img_buffer.seek(0)
+                                #     st.image(img_buffer, caption="📊 Generated Chart", use_column_width=True)
+                                #     plt.close(fig)
+                            else:
+                                # Fallback if saving failed, store raw code
+                                response = raw_pandasai_response
+                        else:
+                            # If 'fig' was not found after execution, store raw code
+                            response = raw_pandasai_response
+                    except Exception as plot_e:
+                        response = f"Error generating or saving plot: {plot_e}\nRaw code:\n```python\n{raw_pandasai_response}\n```"
+                else:
+                    # If it's not plot code, store the raw response directly
+                    response = raw_pandasai_response
+
             except Exception as e:
                 response = f"Error from PandasAI: {e}"
 
@@ -273,6 +321,8 @@ if submit_button and user_question: # Check if button was pressed AND question i
                 )
                 if result.returncode == 0:
                     response = result.stdout.decode("utf-8").strip()
+                    # TODO: If Lotus returns a path or plot object, you'd integrate similar logic here
+                    # For now, assuming Lotus returns text or code that's not directly a fig object.
                 else:
                     response = f"LOTUS Error (Code: {result.returncode}): {result.stderr.decode('utf-8')}"
 
@@ -280,11 +330,11 @@ if submit_button and user_question: # Check if button was pressed AND question i
                 response = "Error: Lotus environment or runner script not found. Please ensure it's set up correctly."
             except Exception as e:
                 response = f"LOTUS Exception: {e}"
-    
+
     # Save interaction to chat history
     st.session_state.chat_history.append({
         "question": user_question,
-        "response": response
+        "response": response # Now 'response' will contain the image path if a chart was generated
     })
     # Form's clear_on_submit=True handles clearing the input, no need to manually set session_state
 
@@ -297,7 +347,7 @@ if st.button("🗑 Clear Chat History", help="Removes all past questions and ans
     st.session_state.chat_history = []
     st.rerun() # Rerun to update the display (clear chat history)
 
-# --- Chat History Display ---
+# --- Chat History Display (Simplified) ---
 st.markdown("---")
 st.subheader("🧠 Chat History")
 
@@ -307,72 +357,32 @@ if not st.session_state.chat_history:
 with st.expander("View Full Chat History", expanded=True):
     for entry in reversed(st.session_state.chat_history):
         st.markdown(f"🧑 You:** {entry['question']}")
-        response_text = entry["response"]
+        response_content = entry["response"] # Renamed for clarity, but still the 'response' from session_state
 
-        # This block handles PandasAI generated plots (expected to be plotly or matplotlib objects)
-        if isinstance(response_text, str) and "fig =" in response_text:
+        # This block now primarily handles displaying the content,
+        # which will be an image path if a chart was generated and saved.
+        if isinstance(response_content, str) and re.match(r".*\.(png|jpg|jpeg|gif)$", response_content, re.IGNORECASE):
             try:
-                local_env = {"pd": pd, "px": px, "plt": plt} # Add plt to local_env
-                
-                # Provide a DataFrame context for plotting
-                if dfs:
-                    if len(dfs) == 1:
-                        local_env["df"] = dfs[0][1]
-                    else:
-                        # Simple concatenation for plotting context if multiple DFs are selected
-                        local_env["df"] = pd.concat([df_item for _, df_item in dfs], ignore_index=True)
-
-                # Execute the generated code
-                exec(response_text, {"_builtins_": None}, local_env)
-                
-                fig = local_env.get("fig") # Get the figure object from the executed code
-
-                if fig:
-                    # Save the chart to the export folder
-                    saved_path = save_chat_image(fig, selected_base_name)
-                    
-                    # Display the chart in Streamlit (Plotly or Matplotlib)
-                    if hasattr(fig, 'to_json'): # Check if it's a Plotly figure
-                        st.plotly_chart(fig, use_container_width=True)
-                    elif isinstance(fig, plt.Figure): # Check if it's a Matplotlib figure
-                        # To display Matplotlib figure in Streamlit without saving it again,
-                        # we can save it to an in-memory buffer and then use st.image
-                        img_buffer = io.BytesIO()
-                        fig.savefig(img_buffer, format='png', bbox_inches='tight')
-                        img_buffer.seek(0)
-                        st.image(img_buffer, caption="📊 Generated Chart", use_column_width=True)
-                        plt.close(fig) # Close the figure after displaying
-                else:
-                    st.markdown(f"🤖 Response (Code Generated):\n\n```python\n{response_text}\n```")
+                st.image(response_content, caption="📊 Generated Chart", use_column_width=True)
             except Exception as e:
-                st.error(f"⚠ Plot rendering error: {e}. Raw response: {response_text}")
-                st.code(response_text.strip(), language="python")
-        
-        # This block handles raw code responses
-        elif isinstance(response_text, str) and (
-            "def " in response_text or "import " in response_text or "" in response_text
+                st.error(f"⚠ Could not load image from path: {e}")
+                st.markdown(f"🤖 Response:** {response_content}")
+
+        # This block handles raw code responses (e.g., Python code output)
+        elif isinstance(response_content, str) and (
+            "def " in response_content or "import " in response_content or "```" in response_content
         ):
             # Clean the code blocks of markdown backticks (and optional 'python')
-            # This regex correctly targets blocks like ```python\n...\n``` or ```\n...\n```
-            code_block_match = re.search(r"```(?:python)?\s*\n(.*?)\n```", response_text, re.DOTALL)
+            code_block_match = re.search(r"```(?:python)?\s*\n(.*?)\n```", response_content, re.DOTALL)
             if code_block_match:
                 cleaned_code = code_block_match.group(1).strip()
                 st.code(cleaned_code, language="python")
             else:
                 # Fallback if no code block markers are found, assume it's just code
-                st.code(response_text.strip(), language="python")
-        
-        # This block handles direct image paths (if the LLM were to return a path, less common)
-        elif isinstance(response_text, str) and re.match(r".*\.(png|jpg|jpeg|gif)$", response_text, re.IGNORECASE):
-            try:
-                # If the LLM returns a direct image path, display it
-                st.image(response_text, caption="📊 Generated Chart", use_column_width=True)
-            except Exception as e:
-                st.error(f"⚠ Could not load image from path: {e}")
-                st.markdown(f"🤖 Response:** {response_text}")
-        
+                st.code(response_content.strip(), language="python")
+
         # This block handles plain text responses
         else:
-            st.markdown(f"🤖 Response:\n\n{response_text}")
+            st.markdown(f"🤖 Response:\n\n{response_content}")
 
         st.markdown("---")

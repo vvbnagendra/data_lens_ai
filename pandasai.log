@@ -8459,3 +8459,687 @@ result = {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/pres
 2025-06-14 07:59:37 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
 2025-06-14 07:59:37 [INFO] Executed in: 3.245591878890991s
 2025-06-14 07:59:37 [INFO] Executing Step 6: ResultParsing
+2025-06-14 15:32:41 [INFO] Question: plot yearwise changes
+2025-06-14 15:32:43 [INFO] Running PandasAI with google LLM...
+2025-06-14 15:32:43 [INFO] Prompt ID: e14cd851-29d3-486b-b0f8-43526a59bbfa
+2025-06-14 15:32:43 [INFO] Executing Step 0: CacheLookup
+2025-06-14 15:32:43 [INFO] Executing Step 1: PromptGeneration
+2025-06-14 15:32:43 [INFO] Using prompt: <dataframe>
+dfs[0]:68x3
+Year,Mean cumulative mass balance,Number of observations
+1957,-0.094,12.0
+1958,-0.963,12.0
+1956,0.0,
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: plot yearwise changes
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-06-14 15:32:43 [INFO] Executing Step 2: CodeGenerator
+2025-06-14 15:32:46 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Write code here
+
+df = dfs[0].copy()
+df = df.dropna()
+
+plt.figure(figsize=(10, 6))
+plt.plot(df['Year'], df['Mean cumulative mass balance'])
+plt.xlabel('Year')
+plt.ylabel('Mean Cumulative Mass Balance')
+plt.title('Yearwise Changes in Mean Cumulative Mass Balance')
+plt.grid(True)
+plt.savefig("temp_chart.png")
+plt.close()
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+result = { "type": "plot", "value": "temp_chart.png" }
+            ```
+            
+2025-06-14 15:32:46 [INFO] Executing Step 3: CachePopulation
+2025-06-14 15:32:46 [INFO] Executing Step 4: CodeExecution
+2025-06-14 15:32:46 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-14 15:32:46 [INFO] 
+Code running:
+```
+df = dfs[0].copy()
+df = df.dropna()
+plt.figure(figsize=(10, 6))
+plt.plot(df['Year'], df['Mean cumulative mass balance'])
+plt.xlabel('Year')
+plt.ylabel('Mean Cumulative Mass Balance')
+plt.title('Yearwise Changes in Mean Cumulative Mass Balance')
+plt.grid(True)
+plt.savefig('C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png')
+plt.close()
+result = {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+        ```
+2025-06-14 15:32:46 [INFO] Executing Step 5: ResultValidation
+2025-06-14 15:32:46 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+2025-06-14 15:32:47 [INFO] Executed in: 5.437476873397827s
+2025-06-14 15:32:47 [INFO] Executing Step 6: ResultParsing
+2025-06-14 15:38:12 [INFO] Question: plot yearwise changes
+2025-06-14 15:38:12 [INFO] Running PandasAI with google LLM...
+2025-06-14 15:38:12 [INFO] Prompt ID: f90d1f9e-2292-4221-b101-9005b87e18ac
+2025-06-14 15:38:12 [INFO] Executing Step 0: CacheLookup
+2025-06-14 15:38:12 [INFO] Using cached response
+2025-06-14 15:38:12 [INFO] Executing Step 1: PromptGeneration
+2025-06-14 15:38:12 [INFO] Executing Step 2: CodeGenerator
+2025-06-14 15:38:12 [INFO] Executing Step 3: CachePopulation
+2025-06-14 15:38:12 [INFO] Executing Step 4: CodeExecution
+2025-06-14 15:38:12 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-14 15:38:12 [INFO] 
+Code running:
+```
+df = dfs[0].copy()
+df = df.dropna()
+plt.figure(figsize=(10, 6))
+plt.plot(df['Year'], df['Mean cumulative mass balance'])
+plt.xlabel('Year')
+plt.ylabel('Mean Cumulative Mass Balance')
+plt.title('Yearwise Changes in Mean Cumulative Mass Balance')
+plt.grid(True)
+plt.savefig('C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png')
+plt.close()
+result = {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+        ```
+2025-06-14 15:38:12 [INFO] Executing Step 5: ResultValidation
+2025-06-14 15:38:12 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+2025-06-14 15:38:12 [INFO] Executed in: 0.5298528671264648s
+2025-06-14 15:38:12 [INFO] Executing Step 6: ResultParsing
+2025-06-14 15:38:26 [INFO] Question: average per year
+2025-06-14 15:38:26 [INFO] Running PandasAI with google LLM...
+2025-06-14 15:38:26 [INFO] Prompt ID: 2a46c119-5c6a-441e-a486-038e2f86d837
+2025-06-14 15:38:26 [INFO] Executing Step 0: CacheLookup
+2025-06-14 15:38:26 [INFO] Executing Step 1: PromptGeneration
+2025-06-14 15:38:26 [INFO] Using prompt: <dataframe>
+dfs[0]:68x3
+Year,Mean cumulative mass balance,Number of observations
+1957,-0.094,12.0
+1956,0.0,
+1958,-0.963,12.0
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: average per year
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-06-14 15:38:26 [INFO] Executing Step 2: CodeGenerator
+2025-06-14 15:38:29 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+df = dfs[0].copy()
+df = df.dropna()
+df['Year'] = df['Year'].astype(int)
+
+result_df = df.groupby('Year')['Mean cumulative mass balance'].mean().reset_index()
+result_df.rename(columns={'Mean cumulative mass balance': 'Average Mass Balance'}, inplace=True)
+result = { "type": "dataframe", "value": result_df }
+            ```
+            
+2025-06-14 15:38:29 [INFO] Executing Step 3: CachePopulation
+2025-06-14 15:38:29 [INFO] Executing Step 4: CodeExecution
+2025-06-14 15:38:29 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-14 15:38:29 [INFO] 
+Code running:
+```
+df = dfs[0].copy()
+df = df.dropna()
+df['Year'] = df['Year'].astype(int)
+result_df = df.groupby('Year')['Mean cumulative mass balance'].mean().reset_index()
+result_df.rename(columns={'Mean cumulative mass balance': 'Average Mass Balance'}, inplace=True)
+result = {'type': 'dataframe', 'value': result_df}
+        ```
+2025-06-14 15:38:29 [INFO] Executing Step 5: ResultValidation
+2025-06-14 15:38:29 [INFO] Answer: {'type': 'dataframe', 'value':     Year  Average Mass Balance
+0   1957                -0.094
+1   1958                -0.963
+2   1959                -1.431
+3   1960                -2.008
+4   1961                -2.445
+..   ...                   ...
+62  2019               -25.859
+63  2020               -26.742
+64  2021               -27.419
+65  2022               -28.509
+66  2023               -29.738
+
+[67 rows x 2 columns]}
+2025-06-14 15:38:29 [INFO] Executed in: 2.3871824741363525s
+2025-06-14 15:38:29 [INFO] Executing Step 6: ResultParsing
+2025-06-14 15:38:44 [INFO] Question: visualise average per year
+2025-06-14 15:38:44 [INFO] Running PandasAI with google LLM...
+2025-06-14 15:38:44 [INFO] Prompt ID: ce67d72e-3331-412a-8629-706b2088f0eb
+2025-06-14 15:38:44 [INFO] Executing Step 0: CacheLookup
+2025-06-14 15:38:44 [INFO] Executing Step 1: PromptGeneration
+2025-06-14 15:38:44 [INFO] Using prompt: <dataframe>
+dfs[0]:68x3
+Year,Mean cumulative mass balance,Number of observations
+1957,-0.094,12.0
+1956,0.0,
+1958,-0.963,12.0
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: visualise average per year
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-06-14 15:38:44 [INFO] Executing Step 2: CodeGenerator
+2025-06-14 15:38:46 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+df = dfs[0]
+df['Year'] = df['Year'].astype(int)
+df_grouped = df.groupby('Year')['Mean cumulative mass balance'].mean().reset_index()
+
+import matplotlib.pyplot as plt
+plt.figure(figsize=(10, 6))
+plt.plot(df_grouped['Year'], df_grouped['Mean cumulative mass balance'], marker='o')
+plt.xlabel('Year')
+plt.ylabel('Mean Cumulative Mass Balance')
+plt.title('Average Mean Cumulative Mass Balance per Year')
+plt.grid(True)
+plt.savefig("temp_chart.png")
+plt.close()
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+result = { "type": "plot", "value": "temp_chart.png" }
+            ```
+            
+2025-06-14 15:38:46 [INFO] Executing Step 3: CachePopulation
+2025-06-14 15:38:46 [INFO] Executing Step 4: CodeExecution
+2025-06-14 15:38:46 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-14 15:38:46 [INFO] 
+Code running:
+```
+df = dfs[0]
+df['Year'] = df['Year'].astype(int)
+df_grouped = df.groupby('Year')['Mean cumulative mass balance'].mean().reset_index()
+plt.figure(figsize=(10, 6))
+plt.plot(df_grouped['Year'], df_grouped['Mean cumulative mass balance'], marker='o')
+plt.xlabel('Year')
+plt.ylabel('Mean Cumulative Mass Balance')
+plt.title('Average Mean Cumulative Mass Balance per Year')
+plt.grid(True)
+plt.savefig('C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png')
+plt.close()
+result = {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+        ```
+2025-06-14 15:38:47 [INFO] Executing Step 5: ResultValidation
+2025-06-14 15:38:47 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+2025-06-14 15:38:47 [INFO] Executed in: 2.559328317642212s
+2025-06-14 15:38:47 [INFO] Executing Step 6: ResultParsing
+2025-06-14 15:39:10 [INFO] Question: visualise year over year changes per year 
+2025-06-14 15:39:10 [INFO] Running PandasAI with google LLM...
+2025-06-14 15:39:10 [INFO] Prompt ID: ce06187f-88e2-47ed-8756-f4329191b36c
+2025-06-14 15:39:10 [INFO] Executing Step 0: CacheLookup
+2025-06-14 15:39:10 [INFO] Executing Step 1: PromptGeneration
+2025-06-14 15:39:10 [INFO] Using prompt: <dataframe>
+dfs[0]:68x3
+Year,Mean cumulative mass balance,Number of observations
+1957,-0.094,12.0
+1956,0.0,
+1958,-0.963,12.0
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: visualise year over year changes per year 
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-06-14 15:39:10 [INFO] Executing Step 2: CodeGenerator
+2025-06-14 15:39:12 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Write code here
+df = dfs[0].copy()
+
+df.dropna(subset=['Number of observations'], inplace=True)
+
+df['Year'] = df['Year'].astype(int)
+
+plt.figure(figsize=(10, 6))
+plt.plot(df['Year'], df['Mean cumulative mass balance'], marker='o', linestyle='-')
+plt.xlabel('Year')
+plt.ylabel('Mean Cumulative Mass Balance')
+plt.title('Year over Year Changes in Mean Cumulative Mass Balance')
+plt.grid(True)
+plt.xticks(df['Year'].unique())
+
+plot_path = "temp_chart.png"
+plt.savefig(plot_path)
+plt.close()
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+result = { "type": "plot", "value": "temp_chart.png" }
+            ```
+            
+2025-06-14 15:39:12 [INFO] Executing Step 3: CachePopulation
+2025-06-14 15:39:12 [INFO] Executing Step 4: CodeExecution
+2025-06-14 15:39:12 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-14 15:39:12 [INFO] 
+Code running:
+```
+df = dfs[0].copy()
+df.dropna(subset=['Number of observations'], inplace=True)
+df['Year'] = df['Year'].astype(int)
+plt.figure(figsize=(10, 6))
+plt.plot(df['Year'], df['Mean cumulative mass balance'], marker='o', linestyle='-')
+plt.xlabel('Year')
+plt.ylabel('Mean Cumulative Mass Balance')
+plt.title('Year over Year Changes in Mean Cumulative Mass Balance')
+plt.grid(True)
+plt.xticks(df['Year'].unique())
+plot_path = 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'
+plt.savefig(plot_path)
+plt.close()
+result = {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+        ```
+2025-06-14 15:39:13 [INFO] Executing Step 5: ResultValidation
+2025-06-14 15:39:13 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+2025-06-14 15:39:13 [INFO] Executed in: 2.9817540645599365s
+2025-06-14 15:39:13 [INFO] Executing Step 6: ResultParsing
+2025-06-14 15:40:20 [INFO] Question: which year has more change 
+2025-06-14 15:40:20 [INFO] Running PandasAI with google LLM...
+2025-06-14 15:40:20 [INFO] Prompt ID: 189bb368-6982-485a-8ffb-90a1850dabda
+2025-06-14 15:40:20 [INFO] Executing Step 0: CacheLookup
+2025-06-14 15:40:20 [INFO] Executing Step 1: PromptGeneration
+2025-06-14 15:40:20 [INFO] Using prompt: <dataframe>
+dfs[0]:68x3
+Year,Mean cumulative mass balance,Number of observations
+1957,-0.094,12.0
+1956,0.0,
+1958,-0.963,12.0
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: which year has more change 
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-06-14 15:40:20 [INFO] Executing Step 2: CodeGenerator
+2025-06-14 15:40:21 [INFO] Code generated:
+            ```
+            import pandas as pd
+
+df = dfs[0].copy()
+
+df = df.dropna()
+
+df['Mean cumulative mass balance'] = pd.to_numeric(df['Mean cumulative mass balance'])
+df['Year'] = pd.to_numeric(df['Year'])
+
+df = df.sort_values(by='Year')
+df['Mass Balance Change'] = df['Mean cumulative mass balance'].diff().abs()
+
+year_max_change = df.loc[df['Mass Balance Change'].idxmax(), 'Year']
+
+result = { "type": "number", "value": year_max_change }
+            ```
+            
+2025-06-14 15:40:21 [INFO] Executing Step 3: CachePopulation
+2025-06-14 15:40:21 [INFO] Executing Step 4: CodeExecution
+2025-06-14 15:40:21 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-14 15:40:21 [INFO] 
+Code running:
+```
+df = dfs[0].copy()
+df = df.dropna()
+df['Mean cumulative mass balance'] = pd.to_numeric(df['Mean cumulative mass balance'])
+df['Year'] = pd.to_numeric(df['Year'])
+df = df.sort_values(by='Year')
+df['Mass Balance Change'] = df['Mean cumulative mass balance'].diff().abs()
+year_max_change = df.loc[df['Mass Balance Change'].idxmax(), 'Year']
+result = {'type': 'number', 'value': year_max_change}
+        ```
+2025-06-14 15:40:21 [INFO] Executing Step 5: ResultValidation
+2025-06-14 15:40:21 [INFO] Answer: {'type': 'number', 'value': 2023}
+2025-06-14 15:40:21 [INFO] Executed in: 1.339777946472168s
+2025-06-14 15:40:21 [INFO] Executing Step 6: ResultParsing
+2025-06-14 15:46:12 [INFO] Question: visualise yearover year changes
+2025-06-14 15:46:12 [INFO] Running PandasAI with google LLM...
+2025-06-14 15:46:12 [INFO] Prompt ID: da608a8e-44c1-4183-a53d-133e6ec897a6
+2025-06-14 15:46:12 [INFO] Executing Step 0: CacheLookup
+2025-06-14 15:46:12 [INFO] Executing Step 1: PromptGeneration
+2025-06-14 15:46:12 [INFO] Using prompt: <dataframe>
+dfs[0]:68x3
+Year,Mean cumulative mass balance,Number of observations
+1957,-0.094,12.0
+1958,-0.963,12.0
+1956,0.0,
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: visualise yearover year changes
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-06-14 15:46:12 [INFO] Executing Step 2: CodeGenerator
+2025-06-14 15:46:14 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Write code here
+
+df = dfs[0].copy()
+
+df = df.dropna()
+
+df['Year'] = df['Year'].astype(int)
+
+df = df.sort_values(by='Year')
+
+df['Mean cumulative mass balance Change'] = df['Mean cumulative mass balance'].diff()
+
+plt.figure(figsize=(10, 6))
+plt.plot(df['Year'], df['Mean cumulative mass balance Change'], marker='o', linestyle='-')
+plt.xlabel('Year')
+plt.ylabel('Year-over-year Change in Mean cumulative mass balance')
+plt.title('Year-over-year Change in Mean cumulative mass balance')
+plt.grid(True)
+plt.xticks(df['Year'].unique(), rotation=45)
+plt.tight_layout()
+plt.savefig('year_over_year_change.png')
+
+result = { "type": "plot", "value": "year_over_year_change.png" }
+            ```
+            
+2025-06-14 15:46:14 [INFO] Executing Step 3: CachePopulation
+2025-06-14 15:46:14 [INFO] Executing Step 4: CodeExecution
+2025-06-14 15:46:14 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-14 15:46:14 [INFO] 
+Code running:
+```
+df = dfs[0].copy()
+df = df.dropna()
+df['Year'] = df['Year'].astype(int)
+df = df.sort_values(by='Year')
+df['Mean cumulative mass balance Change'] = df['Mean cumulative mass balance'].diff()
+plt.figure(figsize=(10, 6))
+plt.plot(df['Year'], df['Mean cumulative mass balance Change'], marker='o', linestyle='-')
+plt.xlabel('Year')
+plt.ylabel('Year-over-year Change in Mean cumulative mass balance')
+plt.title('Year-over-year Change in Mean cumulative mass balance')
+plt.grid(True)
+plt.xticks(df['Year'].unique(), rotation=45)
+plt.tight_layout()
+plt.savefig('C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png')
+result = {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+        ```
+2025-06-14 15:46:16 [INFO] Executing Step 5: ResultValidation
+2025-06-14 15:46:16 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+2025-06-14 15:46:16 [INFO] Executed in: 4.123555660247803s
+2025-06-14 15:46:16 [INFO] Executing Step 6: ResultParsing
+2025-06-14 15:48:48 [INFO] Question: summarise the data
+2025-06-14 15:48:48 [INFO] Running PandasAI with google LLM...
+2025-06-14 15:48:48 [INFO] Prompt ID: 966100ac-bb6d-4c4f-8bc0-c10cecd540a1
+2025-06-14 15:48:48 [INFO] Executing Step 0: CacheLookup
+2025-06-14 15:48:48 [INFO] Executing Step 1: PromptGeneration
+2025-06-14 15:48:48 [INFO] Using prompt: <dataframe>
+dfs[0]:68x3
+Year,Mean cumulative mass balance,Number of observations
+1957,-0.094,12.0
+1958,-0.963,12.0
+1956,0.0,
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: summarise the data
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-06-14 15:48:48 [INFO] Executing Step 2: CodeGenerator
+2025-06-14 15:48:49 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+df = dfs[0].copy()
+
+summary = df.describe()
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+result = { "type": "dataframe", "value": summary }
+            ```
+            
+2025-06-14 15:48:49 [INFO] Executing Step 3: CachePopulation
+2025-06-14 15:48:49 [INFO] Executing Step 4: CodeExecution
+2025-06-14 15:48:49 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-14 15:48:49 [INFO] 
+Code running:
+```
+df = dfs[0].copy()
+summary = df.describe()
+result = {'type': 'dataframe', 'value': summary}
+        ```
+2025-06-14 15:48:49 [INFO] Executing Step 5: ResultValidation
+2025-06-14 15:48:49 [INFO] Answer: {'type': 'dataframe', 'value':              Year  Mean cumulative mass balance  Number of observations
+count    68.00000                     68.000000               67.000000
+mean   1989.50000                    -10.779529               45.865672
+std      19.77372                      8.073302               14.890403
+min    1956.00000                    -29.738000               12.000000
+25%    1972.75000                    -16.533000               35.000000
+50%    1989.50000                     -8.031500               53.000000
+75%    2006.25000                     -4.357750               58.500000
+max    2023.00000                      0.000000               61.000000}
+2025-06-14 15:48:49 [INFO] Executed in: 1.4293653964996338s
+2025-06-14 15:48:49 [INFO] Executing Step 6: ResultParsing
+2025-06-14 15:49:44 [INFO] Question: plot yearly summary after 2000
+2025-06-14 15:49:44 [INFO] Running PandasAI with google LLM...
+2025-06-14 15:49:44 [INFO] Prompt ID: ab115e8e-bd06-4123-a544-58ec908ecccf
+2025-06-14 15:49:44 [INFO] Executing Step 0: CacheLookup
+2025-06-14 15:49:44 [INFO] Executing Step 1: PromptGeneration
+2025-06-14 15:49:44 [INFO] Using prompt: <dataframe>
+dfs[0]:68x3
+Year,Mean cumulative mass balance,Number of observations
+1957,-0.094,12.0
+1958,-0.963,12.0
+1956,0.0,
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: plot yearly summary after 2000
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-06-14 15:49:44 [INFO] Executing Step 2: CodeGenerator
+2025-06-14 15:49:46 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Write code here
+
+df = dfs[0].copy()
+
+df = df.dropna()
+
+df['Year'] = df['Year'].astype(int)
+
+df_recent = df[df['Year'] > 2000]
+
+plt.figure(figsize=(10, 6))
+plt.plot(df_recent['Year'], df_recent['Mean cumulative mass balance'])
+plt.xlabel('Year')
+plt.ylabel('Mean cumulative mass balance')
+plt.title('Yearly Mean Cumulative Mass Balance (After 2000)')
+plt.grid(True)
+plt.savefig("temp_chart.png")
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+result = { "type": "plot", "value": "temp_chart.png" }
+            ```
+            
+2025-06-14 15:49:46 [INFO] Executing Step 3: CachePopulation
+2025-06-14 15:49:46 [INFO] Executing Step 4: CodeExecution
+2025-06-14 15:49:46 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-14 15:49:46 [INFO] 
+Code running:
+```
+df = dfs[0].copy()
+df = df.dropna()
+df['Year'] = df['Year'].astype(int)
+df_recent = df[df['Year'] > 2000]
+plt.figure(figsize=(10, 6))
+plt.plot(df_recent['Year'], df_recent['Mean cumulative mass balance'])
+plt.xlabel('Year')
+plt.ylabel('Mean cumulative mass balance')
+plt.title('Yearly Mean Cumulative Mass Balance (After 2000)')
+plt.grid(True)
+plt.savefig('C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png')
+result = {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+        ```
+2025-06-14 15:49:47 [INFO] Executing Step 5: ResultValidation
+2025-06-14 15:49:47 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+2025-06-14 15:49:47 [INFO] Executed in: 2.5221755504608154s
+2025-06-14 15:49:47 [INFO] Executing Step 6: ResultParsing
