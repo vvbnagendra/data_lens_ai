@@ -7465,3 +7465,997 @@ result = {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/pres
 2025-06-13 08:18:21 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
 2025-06-13 08:18:21 [INFO] Executed in: 0.664909839630127s
 2025-06-13 08:18:21 [INFO] Executing Step 6: ResultParsing
+2025-06-13 08:29:22 [INFO] Question: plot the yearwise timeline
+2025-06-13 08:29:23 [INFO] Running PandasAI with google LLM...
+2025-06-13 08:29:23 [INFO] Prompt ID: e4e3ce7e-dc76-40ac-a6ba-43ed76191db1
+2025-06-13 08:29:23 [INFO] Executing Step 0: CacheLookup
+2025-06-13 08:29:23 [INFO] Using cached response
+2025-06-13 08:29:23 [INFO] Executing Step 1: PromptGeneration
+2025-06-13 08:29:23 [INFO] Executing Step 2: CodeGenerator
+2025-06-13 08:29:23 [INFO] Executing Step 3: CachePopulation
+2025-06-13 08:29:23 [INFO] Executing Step 4: CodeExecution
+2025-06-13 08:29:23 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-13 08:29:23 [INFO] 
+Code running:
+```
+df = dfs[0]
+df['Year'] = pd.to_datetime(df['Year'], format='%Y')
+df = df.set_index('Year')
+plt.figure(figsize=(10, 6))
+plt.plot(df.index, df['Mean cumulative mass balance'])
+plt.xlabel('Year')
+plt.ylabel('Mean cumulative mass balance')
+plt.title('Yearwise Timeline of Mean Cumulative Mass Balance')
+plt.xticks(rotation=45)
+plt.grid(True)
+plt.savefig('C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png')
+result = {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+        ```
+2025-06-13 08:29:24 [INFO] Executing Step 5: ResultValidation
+2025-06-13 08:29:24 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+2025-06-13 08:29:24 [INFO] Executed in: 1.8741333484649658s
+2025-06-13 08:29:24 [INFO] Executing Step 6: ResultParsing
+2025-06-14 07:38:15 [INFO] Question: Plot yearwise data
+2025-06-14 07:38:16 [INFO] Running PandasAI with google LLM...
+2025-06-14 07:38:16 [INFO] Prompt ID: 066395b9-99aa-4f37-813f-7ce17b4b0583
+2025-06-14 07:38:16 [INFO] Executing Step 0: CacheLookup
+2025-06-14 07:38:16 [INFO] Executing Step 1: PromptGeneration
+2025-06-14 07:38:16 [INFO] Using prompt: <dataframe>
+dfs[0]:68x3
+Year,Mean cumulative mass balance,Number of observations
+1958,-0.963,12.0
+1957,-0.094,12.0
+1956,0.0,
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: Plot yearwise data
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-06-14 07:38:16 [INFO] Executing Step 2: CodeGenerator
+2025-06-14 07:38:19 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Write code here
+df = dfs[0]
+
+# Fill missing values in 'Number of observations' with 0
+df['Number of observations'] = df['Number of observations'].fillna(0)
+
+# Convert 'Year' to datetime objects
+df['Year'] = pd.to_datetime(df['Year'], format='%Y')
+
+# Set 'Year' as index
+df = df.set_index('Year')
+
+# Create the plot
+plt.figure(figsize=(10, 6))
+plt.plot(df.index, df['Mean cumulative mass balance'], marker='o', linestyle='-')
+plt.xlabel('Year')
+plt.ylabel('Mean Cumulative Mass Balance')
+plt.title('Yearwise Mean Cumulative Mass Balance')
+plt.grid(True)
+
+# Save the plot to a file
+plot_filename = "cumulative_mass_balance.png"
+plt.savefig(plot_filename)
+plt.close()
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+result = { "type": "plot", "value": plot_filename }
+            ```
+            
+2025-06-14 07:38:19 [INFO] Executing Step 3: CachePopulation
+2025-06-14 07:38:19 [INFO] Executing Step 4: CodeExecution
+2025-06-14 07:38:19 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-14 07:38:19 [INFO] 
+Code running:
+```
+df = dfs[0]
+df['Number of observations'] = df['Number of observations'].fillna(0)
+df['Year'] = pd.to_datetime(df['Year'], format='%Y')
+df = df.set_index('Year')
+plt.figure(figsize=(10, 6))
+plt.plot(df.index, df['Mean cumulative mass balance'], marker='o', linestyle='-')
+plt.xlabel('Year')
+plt.ylabel('Mean Cumulative Mass Balance')
+plt.title('Yearwise Mean Cumulative Mass Balance')
+plt.grid(True)
+plot_filename = 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'
+plt.savefig(plot_filename)
+plt.close()
+result = {'type': 'plot', 'value': plot_filename}
+        ```
+2025-06-14 07:38:20 [INFO] Executing Step 5: ResultValidation
+2025-06-14 07:38:20 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+2025-06-14 07:38:20 [INFO] Executed in: 4.903679132461548s
+2025-06-14 07:38:20 [INFO] Executing Step 6: ResultParsing
+2025-06-14 07:39:09 [INFO] Question: Plot yearwise data
+2025-06-14 07:39:09 [INFO] Running PandasAI with ollama LLM...
+2025-06-14 07:39:09 [INFO] Prompt ID: bcc20360-2a52-4d2d-b4a3-0d98f5e50306
+2025-06-14 07:39:09 [INFO] Executing Step 0: CacheLookup
+2025-06-14 07:39:09 [INFO] Using cached response
+2025-06-14 07:39:09 [INFO] Executing Step 1: PromptGeneration
+2025-06-14 07:39:09 [INFO] Executing Step 2: CodeGenerator
+2025-06-14 07:39:09 [INFO] Executing Step 3: CachePopulation
+2025-06-14 07:39:09 [INFO] Executing Step 4: CodeExecution
+2025-06-14 07:39:09 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-14 07:39:09 [INFO] 
+Code running:
+```
+df = dfs[0]
+df['Number of observations'] = df['Number of observations'].fillna(0)
+df['Year'] = pd.to_datetime(df['Year'], format='%Y')
+df = df.set_index('Year')
+plt.figure(figsize=(10, 6))
+plt.plot(df.index, df['Mean cumulative mass balance'], marker='o', linestyle='-')
+plt.xlabel('Year')
+plt.ylabel('Mean Cumulative Mass Balance')
+plt.title('Yearwise Mean Cumulative Mass Balance')
+plt.grid(True)
+plot_filename = 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'
+plt.savefig(plot_filename)
+plt.close()
+result = {'type': 'plot', 'value': plot_filename}
+        ```
+2025-06-14 07:39:09 [INFO] Executing Step 5: ResultValidation
+2025-06-14 07:39:09 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+2025-06-14 07:39:09 [INFO] Executed in: 0.26490092277526855s
+2025-06-14 07:39:09 [INFO] Executing Step 6: ResultParsing
+2025-06-14 07:39:32 [INFO] Question: how many records are there ?
+2025-06-14 07:39:32 [INFO] Running PandasAI with ollama LLM...
+2025-06-14 07:39:32 [INFO] Prompt ID: ccef06dc-c76e-496e-9a88-f3e4d1819301
+2025-06-14 07:39:32 [INFO] Executing Step 0: CacheLookup
+2025-06-14 07:39:32 [INFO] Executing Step 1: PromptGeneration
+2025-06-14 07:39:32 [INFO] Using prompt: <dataframe>
+dfs[0]:68x3
+Year,Mean cumulative mass balance,Number of observations
+1958,-0.963,12.0
+1957,-0.094,12.0
+1956,0.0,
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: how many records are there ?
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-06-14 07:39:32 [INFO] Executing Step 2: CodeGenerator
+2025-06-14 07:40:36 [INFO] Code generated:
+            ```
+            
+            ```
+            
+2025-06-14 07:40:36 [INFO] Executing Step 3: CachePopulation
+2025-06-14 07:40:36 [INFO] Executing Step 4: CodeExecution
+2025-06-14 07:40:36 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-14 07:40:36 [INFO] 
+Code running:
+```
+
+        ```
+2025-06-14 07:40:36 [WARNING] Failed to execute code with a correction framework [retry number: 1]
+2025-06-14 07:40:36 [ERROR] Failed with error: Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\pipelines\smart_datalake_chat\code_execution.py", line 52, in execute
+    result = pipeline_context.query_exec_tracker.execute_func(
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\query_exec_tracker.py", line 128, in execute_func
+    result = function(*args, **kwargs)
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\code_manager.py", line 211, in execute_code
+    raise NoResultFoundError("No result returned")
+pandasai.exceptions.NoResultFoundError: No result returned
+. Retrying
+2025-06-14 07:40:36 [INFO] Using prompt: <dataframe>
+dfs[0]:68x3
+Year,Mean cumulative mass balance,Number of observations
+1958,-0.963,12.0
+1957,-0.094,12.0
+1956,0.0,
+</dataframe>
+
+The user asked the following question:
+Q: how many records are there ?
+
+You generated this python code:
+
+
+It fails with the following error:
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\pipelines\smart_datalake_chat\code_execution.py", line 52, in execute
+    result = pipeline_context.query_exec_tracker.execute_func(
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\query_exec_tracker.py", line 128, in execute_func
+    result = function(*args, **kwargs)
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\code_manager.py", line 211, in execute_code
+    raise NoResultFoundError("No result returned")
+pandasai.exceptions.NoResultFoundError: No result returned
+
+
+Fix the python code above and return the new python code:
+2025-06-14 07:41:36 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-14 07:41:36 [INFO] 
+Code running:
+```
+
+        ```
+2025-06-14 07:41:36 [WARNING] Failed to execute code with a correction framework [retry number: 2]
+2025-06-14 07:41:36 [ERROR] Failed with error: Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\pipelines\smart_datalake_chat\code_execution.py", line 52, in execute
+    result = pipeline_context.query_exec_tracker.execute_func(
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\query_exec_tracker.py", line 128, in execute_func
+    result = function(*args, **kwargs)
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\code_manager.py", line 211, in execute_code
+    raise NoResultFoundError("No result returned")
+pandasai.exceptions.NoResultFoundError: No result returned
+. Retrying
+2025-06-14 07:41:36 [INFO] Using prompt: <dataframe>
+dfs[0]:68x3
+Year,Mean cumulative mass balance,Number of observations
+1958,-0.963,12.0
+1957,-0.094,12.0
+1956,0.0,
+</dataframe>
+
+The user asked the following question:
+Q: how many records are there ?
+
+You generated this python code:
+
+
+It fails with the following error:
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\pipelines\smart_datalake_chat\code_execution.py", line 52, in execute
+    result = pipeline_context.query_exec_tracker.execute_func(
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\query_exec_tracker.py", line 128, in execute_func
+    result = function(*args, **kwargs)
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\code_manager.py", line 211, in execute_code
+    raise NoResultFoundError("No result returned")
+pandasai.exceptions.NoResultFoundError: No result returned
+
+
+Fix the python code above and return the new python code:
+2025-06-14 07:42:09 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-14 07:42:09 [INFO] 
+Code running:
+```
+
+        ```
+2025-06-14 07:42:09 [ERROR] Pipeline failed on step 4: No result returned
+2025-06-14 07:46:50 [INFO] Question: how many records are there ?
+2025-06-14 07:46:50 [INFO] Running PandasAI with ollama LLM...
+2025-06-14 07:46:50 [INFO] Prompt ID: 5b682967-aef6-453f-89a2-7a50b44bd19e
+2025-06-14 07:46:50 [INFO] Executing Step 0: CacheLookup
+2025-06-14 07:46:50 [INFO] Executing Step 1: PromptGeneration
+2025-06-14 07:46:50 [INFO] Using prompt: <dataframe>
+dfs[0]:68x3
+Year,Mean cumulative mass balance,Number of observations
+1958,-0.963,12.0
+1957,-0.094,12.0
+1956,0.0,
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: how many records are there ?
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-06-14 07:46:50 [INFO] Executing Step 2: CodeGenerator
+2025-06-14 07:47:51 [INFO] Code generated:
+            ```
+            
+            ```
+            
+2025-06-14 07:47:51 [INFO] Executing Step 3: CachePopulation
+2025-06-14 07:47:51 [INFO] Executing Step 4: CodeExecution
+2025-06-14 07:47:51 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-14 07:47:51 [INFO] 
+Code running:
+```
+
+        ```
+2025-06-14 07:47:51 [WARNING] Failed to execute code with a correction framework [retry number: 1]
+2025-06-14 07:47:51 [ERROR] Failed with error: Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\pipelines\smart_datalake_chat\code_execution.py", line 52, in execute
+    result = pipeline_context.query_exec_tracker.execute_func(
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\query_exec_tracker.py", line 128, in execute_func
+    result = function(*args, **kwargs)
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\code_manager.py", line 211, in execute_code
+    raise NoResultFoundError("No result returned")
+pandasai.exceptions.NoResultFoundError: No result returned
+. Retrying
+2025-06-14 07:47:51 [INFO] Using prompt: <dataframe>
+dfs[0]:68x3
+Year,Mean cumulative mass balance,Number of observations
+1958,-0.963,12.0
+1957,-0.094,12.0
+1956,0.0,
+</dataframe>
+
+The user asked the following question:
+Q: how many records are there ?
+
+You generated this python code:
+
+
+It fails with the following error:
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\pipelines\smart_datalake_chat\code_execution.py", line 52, in execute
+    result = pipeline_context.query_exec_tracker.execute_func(
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\query_exec_tracker.py", line 128, in execute_func
+    result = function(*args, **kwargs)
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\code_manager.py", line 211, in execute_code
+    raise NoResultFoundError("No result returned")
+pandasai.exceptions.NoResultFoundError: No result returned
+
+
+Fix the python code above and return the new python code:
+2025-06-14 07:49:05 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-14 07:49:05 [INFO] 
+Code running:
+```
+
+        ```
+2025-06-14 07:49:05 [WARNING] Failed to execute code with a correction framework [retry number: 2]
+2025-06-14 07:49:05 [ERROR] Failed with error: Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\pipelines\smart_datalake_chat\code_execution.py", line 52, in execute
+    result = pipeline_context.query_exec_tracker.execute_func(
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\query_exec_tracker.py", line 128, in execute_func
+    result = function(*args, **kwargs)
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\code_manager.py", line 211, in execute_code
+    raise NoResultFoundError("No result returned")
+pandasai.exceptions.NoResultFoundError: No result returned
+. Retrying
+2025-06-14 07:49:05 [INFO] Using prompt: <dataframe>
+dfs[0]:68x3
+Year,Mean cumulative mass balance,Number of observations
+1958,-0.963,12.0
+1957,-0.094,12.0
+1956,0.0,
+</dataframe>
+
+The user asked the following question:
+Q: how many records are there ?
+
+You generated this python code:
+
+
+It fails with the following error:
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\pipelines\smart_datalake_chat\code_execution.py", line 52, in execute
+    result = pipeline_context.query_exec_tracker.execute_func(
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\query_exec_tracker.py", line 128, in execute_func
+    result = function(*args, **kwargs)
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\code_manager.py", line 211, in execute_code
+    raise NoResultFoundError("No result returned")
+pandasai.exceptions.NoResultFoundError: No result returned
+
+
+Fix the python code above and return the new python code:
+2025-06-14 07:49:47 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-14 07:49:47 [INFO] 
+Code running:
+```
+
+        ```
+2025-06-14 07:49:47 [ERROR] Pipeline failed on step 4: No result returned
+2025-06-14 07:51:52 [INFO] Question: How many records are there ?
+2025-06-14 07:51:52 [INFO] Running PandasAI with google LLM...
+2025-06-14 07:51:52 [INFO] Prompt ID: c0aca8c7-4721-4320-9e60-72d1f3554dbb
+2025-06-14 07:51:52 [INFO] Executing Step 0: CacheLookup
+2025-06-14 07:51:52 [INFO] Executing Step 1: PromptGeneration
+2025-06-14 07:51:52 [INFO] Using prompt: <dataframe>
+dfs[0]:68x3
+Year,Mean cumulative mass balance,Number of observations
+1958,-0.963,12.0
+1957,-0.094,12.0
+1956,0.0,
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: How many records are there ?
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-06-14 07:51:52 [INFO] Executing Step 2: CodeGenerator
+2025-06-14 07:51:54 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+df = dfs[0]
+
+result = { "type": "number", "value": len(df) }
+            ```
+            
+2025-06-14 07:51:54 [INFO] Executing Step 3: CachePopulation
+2025-06-14 07:51:54 [INFO] Executing Step 4: CodeExecution
+2025-06-14 07:51:54 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-14 07:51:54 [INFO] 
+Code running:
+```
+df = dfs[0]
+result = {'type': 'number', 'value': len(df)}
+        ```
+2025-06-14 07:51:54 [INFO] Executing Step 5: ResultValidation
+2025-06-14 07:51:54 [INFO] Answer: {'type': 'number', 'value': 68}
+2025-06-14 07:51:54 [INFO] Executed in: 1.9257915019989014s
+2025-06-14 07:51:54 [INFO] Executing Step 6: ResultParsing
+2025-06-14 07:52:29 [INFO] Question: summarise me the data\
+2025-06-14 07:52:29 [INFO] Running PandasAI with google LLM...
+2025-06-14 07:52:29 [INFO] Prompt ID: aaa1d98e-a3c2-4860-9828-7205119d1052
+2025-06-14 07:52:29 [INFO] Executing Step 0: CacheLookup
+2025-06-14 07:52:29 [INFO] Executing Step 1: PromptGeneration
+2025-06-14 07:52:29 [INFO] Using prompt: <dataframe>
+dfs[0]:68x3
+Year,Mean cumulative mass balance,Number of observations
+1958,-0.963,12.0
+1957,-0.094,12.0
+1956,0.0,
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: summarise me the data\
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-06-14 07:52:29 [INFO] Executing Step 2: CodeGenerator
+2025-06-14 07:52:30 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+df = dfs[0]
+result = { "type": "string", "value": df.describe().to_string() }
+            ```
+            
+2025-06-14 07:52:30 [INFO] Executing Step 3: CachePopulation
+2025-06-14 07:52:30 [INFO] Executing Step 4: CodeExecution
+2025-06-14 07:52:30 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-14 07:52:30 [INFO] 
+Code running:
+```
+df = dfs[0]
+result = {'type': 'string', 'value': df.describe().to_string()}
+        ```
+2025-06-14 07:52:30 [INFO] Executing Step 5: ResultValidation
+2025-06-14 07:52:30 [INFO] Answer: {'type': 'string', 'value': '             Year  Mean cumulative mass balance  Number of observations\ncount    68.00000                     68.000000               67.000000\nmean   1989.50000                    -10.779529               45.865672\nstd      19.77372                      8.073302               14.890403\nmin    1956.00000                    -29.738000               12.000000\n25%    1972.75000                    -16.533000               35.000000\n50%    1989.50000                     -8.031500               53.000000\n75%    2006.25000                     -4.357750               58.500000\nmax    2023.00000                      0.000000               61.000000'}
+2025-06-14 07:52:30 [INFO] Executed in: 0.8072812557220459s
+2025-06-14 07:52:30 [INFO] Executing Step 6: ResultParsing
+2025-06-14 07:52:44 [INFO] Question: expllain what kind of data is this ?
+2025-06-14 07:52:44 [INFO] Running PandasAI with google LLM...
+2025-06-14 07:52:44 [INFO] Prompt ID: ada5b387-5f54-4afe-a558-57a193fec3e5
+2025-06-14 07:52:44 [INFO] Executing Step 0: CacheLookup
+2025-06-14 07:52:44 [INFO] Executing Step 1: PromptGeneration
+2025-06-14 07:52:44 [INFO] Using prompt: <dataframe>
+dfs[0]:68x3
+Year,Mean cumulative mass balance,Number of observations
+1958,-0.963,12.0
+1957,-0.094,12.0
+1956,0.0,
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: expllain what kind of data is this ?
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-06-14 07:52:44 [INFO] Executing Step 2: CodeGenerator
+2025-06-14 07:52:46 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+df = dfs[0]
+
+df = df.fillna(0)
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+result = { "type": "dataframe", "value": df }
+            ```
+            
+2025-06-14 07:52:46 [INFO] Executing Step 3: CachePopulation
+2025-06-14 07:52:46 [INFO] Executing Step 4: CodeExecution
+2025-06-14 07:52:46 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-14 07:52:46 [INFO] 
+Code running:
+```
+df = dfs[0]
+df = df.fillna(0)
+result = {'type': 'dataframe', 'value': df}
+        ```
+2025-06-14 07:52:46 [INFO] Executing Step 5: ResultValidation
+2025-06-14 07:52:46 [INFO] Answer: {'type': 'dataframe', 'value':     Year  Mean cumulative mass balance  Number of observations
+0   1956                         0.000                     0.0
+1   1957                        -0.094                    12.0
+2   1958                        -0.963                    12.0
+3   1959                        -1.431                    13.0
+4   1960                        -2.008                    15.0
+..   ...                           ...                     ...
+63  2019                       -25.859                    61.0
+64  2020                       -26.742                    61.0
+65  2021                       -27.419                    61.0
+66  2022                       -28.509                    60.0
+67  2023                       -29.738                    53.0
+
+[68 rows x 3 columns]}
+2025-06-14 07:52:46 [INFO] Executed in: 1.4694709777832031s
+2025-06-14 07:52:46 [INFO] Executing Step 6: ResultParsing
+2025-06-14 07:53:15 [INFO] Question: give a high level understanding on the dataset
+2025-06-14 07:53:15 [INFO] Running PandasAI with google LLM...
+2025-06-14 07:53:15 [INFO] Prompt ID: f3aaf1ff-b90f-4d3c-9368-da754bb7b399
+2025-06-14 07:53:15 [INFO] Executing Step 0: CacheLookup
+2025-06-14 07:53:15 [INFO] Executing Step 1: PromptGeneration
+2025-06-14 07:53:15 [INFO] Using prompt: <dataframe>
+dfs[0]:68x3
+Year,Mean cumulative mass balance,Number of observations
+1958,-0.963,12.0
+1957,-0.094,12.0
+1956,0.0,
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: give a high level understanding on the dataset
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-06-14 07:53:15 [INFO] Executing Step 2: CodeGenerator
+2025-06-14 07:53:17 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+df = dfs[0]
+
+# Fill missing values in 'Number of observations' with 0
+df['Number of observations'] = df['Number of observations'].fillna(0)
+
+# Convert 'Number of observations' to integer type
+df['Number of observations'] = df['Number of observations'].astype(int)
+
+# Basic statistics
+num_rows = df.shape[0]
+num_cols = df.shape[1]
+column_names = df.columns.tolist()
+data_types = df.dtypes.to_dict()
+missing_values = df.isnull().sum().to_dict()
+
+description = f"The DataFrame has {num_rows} rows and {num_cols} columns. " \
+              f"The columns are: {', '.join(column_names)}. " \
+              f"Data types: {data_types}. " \
+              f"Missing values: {missing_values}."
+
+result = { "type": "string", "value": description }
+            ```
+            
+2025-06-14 07:53:17 [INFO] Executing Step 3: CachePopulation
+2025-06-14 07:53:17 [INFO] Executing Step 4: CodeExecution
+2025-06-14 07:53:17 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-14 07:53:17 [INFO] 
+Code running:
+```
+df = dfs[0]
+df['Number of observations'] = df['Number of observations'].fillna(0)
+df['Number of observations'] = df['Number of observations'].astype(int)
+num_rows = df.shape[0]
+num_cols = df.shape[1]
+column_names = df.columns.tolist()
+data_types = df.dtypes.to_dict()
+missing_values = df.isnull().sum().to_dict()
+description = f"The DataFrame has {num_rows} rows and {num_cols} columns. The columns are: {', '.join(column_names)}. Data types: {data_types}. Missing values: {missing_values}."
+result = {'type': 'string', 'value': description}
+        ```
+2025-06-14 07:53:17 [WARNING] Failed to execute code with a correction framework [retry number: 1]
+2025-06-14 07:53:17 [ERROR] Failed with error: Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\pipelines\smart_datalake_chat\code_execution.py", line 52, in execute
+    result = pipeline_context.query_exec_tracker.execute_func(
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\query_exec_tracker.py", line 128, in execute_func
+    result = function(*args, **kwargs)
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\code_manager.py", line 207, in execute_code
+    exec(code_to_run, environment)
+  File "<string>", line 9, in <module>
+KeyError: '__import__'
+. Retrying
+2025-06-14 07:53:17 [INFO] Using prompt: <dataframe>
+dfs[0]:68x3
+Year,Mean cumulative mass balance,Number of observations
+1958,-0.963,12.0
+1957,-0.094,12.0
+1956,0.0,
+</dataframe>
+
+The user asked the following question:
+Q: give a high level understanding on the dataset
+
+You generated this python code:
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+df = dfs[0]
+
+# Fill missing values in 'Number of observations' with 0
+df['Number of observations'] = df['Number of observations'].fillna(0)
+
+# Convert 'Number of observations' to integer type
+df['Number of observations'] = df['Number of observations'].astype(int)
+
+# Basic statistics
+num_rows = df.shape[0]
+num_cols = df.shape[1]
+column_names = df.columns.tolist()
+data_types = df.dtypes.to_dict()
+missing_values = df.isnull().sum().to_dict()
+
+description = f"The DataFrame has {num_rows} rows and {num_cols} columns. " \
+              f"The columns are: {', '.join(column_names)}. " \
+              f"Data types: {data_types}. " \
+              f"Missing values: {missing_values}."
+
+result = { "type": "string", "value": description }
+
+It fails with the following error:
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\pipelines\smart_datalake_chat\code_execution.py", line 52, in execute
+    result = pipeline_context.query_exec_tracker.execute_func(
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\query_exec_tracker.py", line 128, in execute_func
+    result = function(*args, **kwargs)
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\code_manager.py", line 207, in execute_code
+    exec(code_to_run, environment)
+  File "<string>", line 9, in <module>
+KeyError: '__import__'
+
+
+Fix the python code above and return the new python code:
+2025-06-14 07:53:17 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-14 07:53:17 [INFO] 
+Code running:
+```
+df = dfs[0].copy()
+df.fillna(0, inplace=True)
+print(df.head())
+print(df.describe())
+print(df.info())
+        ```
+2025-06-14 07:53:17 [WARNING] Failed to execute code with a correction framework [retry number: 2]
+2025-06-14 07:53:17 [ERROR] Failed with error: Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\pipelines\smart_datalake_chat\code_execution.py", line 52, in execute
+    result = pipeline_context.query_exec_tracker.execute_func(
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\query_exec_tracker.py", line 128, in execute_func
+    result = function(*args, **kwargs)
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\code_manager.py", line 211, in execute_code
+    raise NoResultFoundError("No result returned")
+pandasai.exceptions.NoResultFoundError: No result returned
+. Retrying
+2025-06-14 07:53:17 [INFO] Using prompt: <dataframe>
+dfs[0]:68x3
+Year,Mean cumulative mass balance,Number of observations
+1958,-0.963,12.0
+1957,-0.094,12.0
+1956,0.0,
+</dataframe>
+
+The user asked the following question:
+Q: give a high level understanding on the dataset
+
+You generated this python code:
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+df = dfs[0]
+
+# Fill missing values in 'Number of observations' with 0
+df['Number of observations'] = df['Number of observations'].fillna(0)
+
+# Convert 'Number of observations' to integer type
+df['Number of observations'] = df['Number of observations'].astype(int)
+
+# Basic statistics
+num_rows = df.shape[0]
+num_cols = df.shape[1]
+column_names = df.columns.tolist()
+data_types = df.dtypes.to_dict()
+missing_values = df.isnull().sum().to_dict()
+
+description = f"The DataFrame has {num_rows} rows and {num_cols} columns. " \
+              f"The columns are: {', '.join(column_names)}. " \
+              f"Data types: {data_types}. " \
+              f"Missing values: {missing_values}."
+
+result = { "type": "string", "value": description }
+
+It fails with the following error:
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\pipelines\smart_datalake_chat\code_execution.py", line 52, in execute
+    result = pipeline_context.query_exec_tracker.execute_func(
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\query_exec_tracker.py", line 128, in execute_func
+    result = function(*args, **kwargs)
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\code_manager.py", line 211, in execute_code
+    raise NoResultFoundError("No result returned")
+pandasai.exceptions.NoResultFoundError: No result returned
+
+
+Fix the python code above and return the new python code:
+2025-06-14 07:53:19 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-14 07:53:19 [INFO] 
+Code running:
+```
+df = dfs[0].copy()
+df['Number of observations'] = df['Number of observations'].fillna(0)
+df['Number of observations'] = df['Number of observations'].astype(int)
+description = f"The DataFrame has {df.shape[0]} rows and {df.shape[1]} columns. It contains data on '{df.columns[0]}', '{df.columns[1]}', and '{df.columns[2]}'.Missing values were filled with 0 in 'Number of observations'."
+print(description)
+        ```
+2025-06-14 07:53:19 [ERROR] Pipeline failed on step 4: No result returned
+2025-06-14 07:53:47 [INFO] Question: no of records
+2025-06-14 07:53:47 [INFO] Running PandasAI with google LLM...
+2025-06-14 07:53:47 [INFO] Prompt ID: 0961879c-ef9b-45c4-9f3b-869d23e43c08
+2025-06-14 07:53:47 [INFO] Executing Step 0: CacheLookup
+2025-06-14 07:53:47 [INFO] Executing Step 1: PromptGeneration
+2025-06-14 07:53:47 [INFO] Using prompt: <dataframe>
+dfs[0]:68x3
+Year,Mean cumulative mass balance,Number of observations
+1958,-0.963,12.0
+1957,-0.094,12.0
+1956,0.0,
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: no of records
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-06-14 07:53:47 [INFO] Executing Step 2: CodeGenerator
+2025-06-14 07:53:48 [INFO] Code generated:
+            ```
+            import pandas as pd
+
+df = dfs[0].copy()
+
+df = df.dropna()
+
+result = { "type": "number", "value": len(df) }
+            ```
+            
+2025-06-14 07:53:48 [INFO] Executing Step 3: CachePopulation
+2025-06-14 07:53:48 [INFO] Executing Step 4: CodeExecution
+2025-06-14 07:53:48 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-14 07:53:48 [INFO] 
+Code running:
+```
+df = dfs[0].copy()
+df = df.dropna()
+result = {'type': 'number', 'value': len(df)}
+        ```
+2025-06-14 07:53:48 [INFO] Executing Step 5: ResultValidation
+2025-06-14 07:53:48 [INFO] Answer: {'type': 'number', 'value': 67}
+2025-06-14 07:53:48 [INFO] Executed in: 0.695422887802124s
+2025-06-14 07:53:48 [INFO] Executing Step 6: ResultParsing
+2025-06-14 07:59:34 [INFO] Question: plot top 10 companies by growth
+2025-06-14 07:59:34 [INFO] Running PandasAI with google LLM...
+2025-06-14 07:59:34 [INFO] Prompt ID: 17adffc1-40e5-47eb-ba74-82ced9f8f047
+2025-06-14 07:59:34 [INFO] Executing Step 0: CacheLookup
+2025-06-14 07:59:34 [INFO] Executing Step 1: PromptGeneration
+2025-06-14 07:59:34 [INFO] Using prompt: <dataframe>
+dfs[0]:68x3
+Year,Mean cumulative mass balance,Number of observations
+1958,-0.963,12.0
+1957,-0.094,12.0
+1956,0.0,
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: plot top 10 companies by growth
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-06-14 07:59:34 [INFO] Executing Step 2: CodeGenerator
+2025-06-14 07:59:37 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Write code here
+df = dfs[0].copy()
+
+df = df.dropna()
+
+df = df.sort_values(by='Mean cumulative mass balance', ascending=False)
+
+df_top10 = df.head(10)
+
+plt.figure(figsize=(10, 6))
+plt.bar(df_top10['Year'].astype(str), df_top10['Mean cumulative mass balance'])
+plt.xlabel('Year')
+plt.ylabel('Mean Cumulative Mass Balance')
+plt.title('Top 10 Years by Mean Cumulative Mass Balance')
+plt.xticks(rotation=45, ha='right')
+plt.tight_layout()
+plt.savefig("top_10_years.png")
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+result = { "type": "plot", "value": "top_10_years.png" }
+            ```
+            
+2025-06-14 07:59:37 [INFO] Executing Step 3: CachePopulation
+2025-06-14 07:59:37 [INFO] Executing Step 4: CodeExecution
+2025-06-14 07:59:37 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-14 07:59:37 [INFO] 
+Code running:
+```
+df = dfs[0].copy()
+df = df.dropna()
+df = df.sort_values(by='Mean cumulative mass balance', ascending=False)
+df_top10 = df.head(10)
+plt.figure(figsize=(10, 6))
+plt.bar(df_top10['Year'].astype(str), df_top10['Mean cumulative mass balance'])
+plt.xlabel('Year')
+plt.ylabel('Mean Cumulative Mass Balance')
+plt.title('Top 10 Years by Mean Cumulative Mass Balance')
+plt.xticks(rotation=45, ha='right')
+plt.tight_layout()
+plt.savefig('C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png')
+result = {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+        ```
+2025-06-14 07:59:37 [INFO] Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-06-14 07:59:37 [INFO] Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-06-14 07:59:37 [INFO] Executing Step 5: ResultValidation
+2025-06-14 07:59:37 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+2025-06-14 07:59:37 [INFO] Executed in: 3.245591878890991s
+2025-06-14 07:59:37 [INFO] Executing Step 6: ResultParsing

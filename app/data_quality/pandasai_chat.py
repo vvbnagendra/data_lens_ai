@@ -7,7 +7,7 @@ import pandas as pd
 
 SUPPORTED_BACKENDS = ["ollama", "huggingface", "lotus"]
 
-def get_llm_model(backend: str, model_name: str = None, **kwargs):
+def get_llm_model(backend: str, model_name: str = None, api_key: str=None):
     backend = backend.lower()
 
     if backend == "ollama":
@@ -15,19 +15,19 @@ def get_llm_model(backend: str, model_name: str = None, **kwargs):
     elif backend == "huggingface":
         if not model_name:
             raise ValueError("Model name is required for Hugging Face backend.")
-        return HuggingFaceLLM(model=model_name)
+        return HuggingFaceLLM(model=model_name, api_key=api_key)
     elif backend == "google":
         if not model_name:
             raise ValueError("Model name is required for Google backend.")
-        return GoogleLLM(model=model_name)
+        return GoogleLLM(model=model_name, api_key=api_key)
 
     elif backend == "lotus":
         return LotusLLM(model=model_name or "lotus-mixtral")
     else:
         raise ValueError(f"Unknown backend: {backend}")
 
-def get_smart_chat(dataframes, backend, model_name=None, **kwargs):
-    llm_model = get_llm_model(backend, model_name=model_name, **kwargs)
+def get_smart_chat(dataframes, backend, model_name=None, api_key=None, **kwargs):
+    llm_model = get_llm_model(backend, model_name=model_name,api_key=api_key, **kwargs)
 
     config = {
         "llm": llm_model,
