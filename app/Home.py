@@ -67,7 +67,7 @@ st.markdown("<br>", unsafe_allow_html=True) # Add some space
 col_btn1, col_btn2, col_btn3 = st.columns([1, 2, 1])
 with col_btn2:
     st.page_link(
-        "pages/2_Load_Data_CSV_or_Database.py",
+        "app/pages/2_Load_Data_CSV_or_Database.py",
         label="🚀 Get Started: Load Your Data",
         icon="👉",
         help="Click to start by loading your data from CSV or a database."
