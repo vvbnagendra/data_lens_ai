@@ -34,7 +34,7 @@ with col_nav1:
 with col_nav2:
     st.markdown("## 📊 Profile Tables")
 with col_nav3:
-    st.page_link("pages/4_Chat_with_data.py", label="Chat with Data ➡", icon="💬")
+    st.page_link("pages/4_Chat_with_Data.py", label="Chat with Data ➡", icon="💬")
 
 st.markdown("---")
 
@@ -247,4 +247,4 @@ col_bottom_nav1, col_bottom_nav2 = st.columns([1, 1])
 with col_bottom_nav1:
     st.page_link("pages/2_Load_Data_CSV_or_Database.py", label="⬅ Load More Data", icon="📂")
 with col_bottom_nav2:
-    st.page_link("pages/4_Chat_with_data.py", label="Proceed to Chat with Data➡",icon="💬")
+    st.page_link("pages/4_Chat_with_Data.py", label="Proceed to Chat with Data➡",icon="💬")
