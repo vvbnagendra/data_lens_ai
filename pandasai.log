@@ -9143,3 +9143,32 @@ result = {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/pres
 2025-06-14 15:49:47 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
 2025-06-14 15:49:47 [INFO] Executed in: 2.5221755504608154s
 2025-06-14 15:49:47 [INFO] Executing Step 6: ResultParsing
+2025-06-14 16:50:47 [INFO] Question: summarise the data
+2025-06-14 16:50:51 [INFO] Running PandasAI with google LLM...
+2025-06-14 16:50:51 [INFO] Prompt ID: 190322ed-9b38-405f-902f-7bcb899c96bd
+2025-06-14 16:50:51 [INFO] Executing Step 0: CacheLookup
+2025-06-14 16:50:51 [INFO] Using cached response
+2025-06-14 16:50:51 [INFO] Executing Step 1: PromptGeneration
+2025-06-14 16:50:51 [INFO] Executing Step 2: CodeGenerator
+2025-06-14 16:50:51 [INFO] Executing Step 3: CachePopulation
+2025-06-14 16:50:51 [INFO] Executing Step 4: CodeExecution
+2025-06-14 16:50:51 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-14 16:50:51 [INFO] 
+Code running:
+```
+df = dfs[0].copy()
+summary = df.describe()
+result = {'type': 'dataframe', 'value': summary}
+        ```
+2025-06-14 16:50:51 [INFO] Executing Step 5: ResultValidation
+2025-06-14 16:50:51 [INFO] Answer: {'type': 'dataframe', 'value':              Year  Mean cumulative mass balance  Number of observations
+count    68.00000                     68.000000               67.000000
+mean   1989.50000                    -10.779529               45.865672
+std      19.77372                      8.073302               14.890403
+min    1956.00000                    -29.738000               12.000000
+25%    1972.75000                    -16.533000               35.000000
+50%    1989.50000                     -8.031500               53.000000
+75%    2006.25000                     -4.357750               58.500000
+max    2023.00000                      0.000000               61.000000}
+2025-06-14 16:50:51 [INFO] Executed in: 4.133585453033447s
+2025-06-14 16:50:51 [INFO] Executing Step 6: ResultParsing

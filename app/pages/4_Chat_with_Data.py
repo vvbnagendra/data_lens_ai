@@ -347,7 +347,7 @@ if st.button("🗑 Clear Chat History", help="Removes all past questions and ans
     st.session_state.chat_history = []
     st.rerun() # Rerun to update the display (clear chat history)
 
-# --- Chat History Display (Simplified) ---
+# --- Chat History Display ---
 st.markdown("---")
 st.subheader("🧠 Chat History")
 
@@ -357,32 +357,41 @@ if not st.session_state.chat_history:
 with st.expander("View Full Chat History", expanded=True):
     for entry in reversed(st.session_state.chat_history):
         st.markdown(f"🧑 You:** {entry['question']}")
-        response_content = entry["response"] # Renamed for clarity, but still the 'response' from session_state
+        response_data = entry["response"] # This is now the dictionary: {"type": ..., "content": ...}
 
-        # This block now primarily handles displaying the content,
-        # which will be an image path if a chart was generated and saved.
-        if isinstance(response_content, str) and re.match(r".*\.(png|jpg|jpeg|gif)$", response_content, re.IGNORECASE):
-            try:
-                st.image(response_content, caption="📊 Generated Chart", use_column_width=True)
-            except Exception as e:
-                st.error(f"⚠ Could not load image from path: {e}")
-                st.markdown(f"🤖 Response:** {response_content}")
+        if isinstance(response_data, dict) and "type" in response_data and "content" in response_data:
+            response_type = response_data["type"]
+            response_content = response_data["content"]
 
-        # This block handles raw code responses (e.g., Python code output)
-        elif isinstance(response_content, str) and (
-            "def " in response_content or "import " in response_content or "```" in response_content
-        ):
-            # Clean the code blocks of markdown backticks (and optional 'python')
-            code_block_match = re.search(r"```(?:python)?\s*\n(.*?)\n```", response_content, re.DOTALL)
-            if code_block_match:
-                cleaned_code = code_block_match.group(1).strip()
-                st.code(cleaned_code, language="python")
-            else:
-                # Fallback if no code block markers are found, assume it's just code
+            if response_type == "image":
+                try:
+                    st.image(response_content, caption="📊 Generated Chart", use_column_width=True)
+                except Exception as e:
+                    st.error(f"⚠ Could not load image from path: {e}")
+                    st.markdown(f"🤖 Response Path (Error):** {response_content}")
+
+            elif response_type == "dataframe":
+                st.markdown("🤖 Response (Data Table):")
+                st.dataframe(response_content, use_container_width=True) # Display DataFrame directly
+                # If you stored a markdown string instead:
+                # st.markdown(response_content)
+
+            elif response_type == "summary_text":
+                st.markdown("🤖 Response (Data Summary):")
+                st.info(response_content) # Use st.info or st.success for highlighted text
+
+            elif response_type == "code":
+                st.markdown("🤖 Response (Code Generated):")
                 st.code(response_content.strip(), language="python")
 
-        # This block handles plain text responses
+            elif response_type == "error":
+                st.error(f"🤖 Error: {response_content}")
+
+            elif response_type == "text": # Default for general text responses
+                st.markdown(f"🤖 Response:\n\n{response_content}")
+
         else:
-            st.markdown(f"🤖 Response:\n\n{response_content}")
+            # Fallback for older entries or unexpected formats (e.g., if response was just a string before)
+            st.markdown(f"🤖 Response:\n\n{str(response_data)}") # Convert to string just in case
 
         st.markdown("---")
