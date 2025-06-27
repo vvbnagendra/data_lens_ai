@@ -10159,3 +10159,250 @@ plt.close()
 result = {'type': 'plot', 'value': plot_filename}
         ```
 2025-06-27 19:13:50 [ERROR] Pipeline failed on step 4: name 'df' is not defined
+2025-06-27 19:15:07 [INFO] Question: top 10 lead owners
+2025-06-27 19:15:08 [INFO] Running PandasAI with google LLM...
+2025-06-27 19:15:08 [INFO] Prompt ID: a0667ec4-aa44-4df8-9be8-109f33cd1b93
+2025-06-27 19:15:08 [INFO] Executing Step 0: CacheLookup
+2025-06-27 19:15:08 [INFO] Executing Step 1: PromptGeneration
+2025-06-27 19:15:08 [INFO] Using prompt: <dataframe>
+dfs[0]:1000x14
+Index,Account Id,Lead Owner,First Name,Last Name,Company,Phone 1,Phone 2,Email 1,Email 2,Website,Source,Deal Stage,Notes
+2,B1B9fa4B9A41f10,Alexander Mccall,Phyllis,Wade,"Woodward, Everett and ...",2644009693,583.518.0548,3-qf--uen@icloud.com,q5n5d6zsyr-0@protonmai...,https://nash.com/,Other,Closed Lost,Affect activity everyb...
+1,862d63fBE445C3B,Antonio Savage,Cameron,Price,"Dean, Daniels and Char...",5923243346,+1-942-704-6437x07516,0sij-6e@zoho.com,y9rm92iimoj@yahoo.com...,http://www.moody-colon.com/,Facebook Ads,Qualified,Be mind picture to....
+3,1c2a1d1Ef8dDEFa,Nancy Grant,Matthew,Villegas,Mcfarland-Moore...,9721782336,652-505-2127,id4_u75xy@protonmail.com,izn_cb0dp@protonmail.c...,https://www.bradley-stanley.com/,Organic Search (SEO),Closed Lost,Strong cost together t...
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: top 10 lead owners
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-06-27 19:15:08 [INFO] Executing Step 2: CodeGenerator
+2025-06-27 19:15:10 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+lead_owner_counts = df['Lead Owner'].value_counts().nlargest(10)
+result = {
+    "type": "dataframe",
+    "value": lead_owner_counts.to_frame()
+}
+            ```
+            
+2025-06-27 19:15:10 [INFO] Executing Step 3: CachePopulation
+2025-06-27 19:15:10 [INFO] Executing Step 4: CodeExecution
+2025-06-27 19:15:10 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-27 19:15:10 [INFO] 
+Code running:
+```
+lead_owner_counts = df['Lead Owner'].value_counts().nlargest(10)
+result = {'type': 'dataframe', 'value': lead_owner_counts.to_frame()}
+        ```
+2025-06-27 19:15:10 [WARNING] Failed to execute code with a correction framework [retry number: 1]
+2025-06-27 19:15:10 [ERROR] Failed with error: Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\pipelines\smart_datalake_chat\code_execution.py", line 52, in execute
+    result = pipeline_context.query_exec_tracker.execute_func(
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\query_exec_tracker.py", line 128, in execute_func
+    result = function(*args, **kwargs)
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\code_manager.py", line 207, in execute_code
+    exec(code_to_run, environment)
+  File "<string>", line 1, in <module>
+NameError: name 'df' is not defined
+. Retrying
+2025-06-27 19:15:10 [INFO] Using prompt: <dataframe>
+dfs[0]:1000x14
+Index,Account Id,Lead Owner,First Name,Last Name,Company,Phone 1,Phone 2,Email 1,Email 2,Website,Source,Deal Stage,Notes
+2,B1B9fa4B9A41f10,Alexander Mccall,Phyllis,Wade,"Woodward, Everett and ...",2644009693,583.518.0548,3-qf--uen@icloud.com,q5n5d6zsyr-0@protonmai...,https://nash.com/,Other,Closed Lost,Affect activity everyb...
+1,862d63fBE445C3B,Antonio Savage,Cameron,Price,"Dean, Daniels and Char...",5923243346,+1-942-704-6437x07516,0sij-6e@zoho.com,y9rm92iimoj@yahoo.com...,http://www.moody-colon.com/,Facebook Ads,Qualified,Be mind picture to....
+3,1c2a1d1Ef8dDEFa,Nancy Grant,Matthew,Villegas,Mcfarland-Moore...,9721782336,652-505-2127,id4_u75xy@protonmail.com,izn_cb0dp@protonmail.c...,https://www.bradley-stanley.com/,Organic Search (SEO),Closed Lost,Strong cost together t...
+</dataframe>
+
+The user asked the following question:
+Q: top 10 lead owners
+
+You generated this python code:
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+lead_owner_counts = df['Lead Owner'].value_counts().nlargest(10)
+result = {
+    "type": "dataframe",
+    "value": lead_owner_counts.to_frame()
+}
+
+It fails with the following error:
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\pipelines\smart_datalake_chat\code_execution.py", line 52, in execute
+    result = pipeline_context.query_exec_tracker.execute_func(
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\query_exec_tracker.py", line 128, in execute_func
+    result = function(*args, **kwargs)
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\code_manager.py", line 207, in execute_code
+    exec(code_to_run, environment)
+  File "<string>", line 1, in <module>
+NameError: name 'df' is not defined
+
+
+Fix the python code above and return the new python code:
+2025-06-27 19:15:11 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-27 19:15:11 [INFO] 
+Code running:
+```
+lead_owner_counts = df['Lead Owner'].value_counts().nlargest(10)
+print(lead_owner_counts)
+        ```
+2025-06-27 19:15:11 [WARNING] Failed to execute code with a correction framework [retry number: 2]
+2025-06-27 19:15:11 [ERROR] Failed with error: Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\pipelines\smart_datalake_chat\code_execution.py", line 52, in execute
+    result = pipeline_context.query_exec_tracker.execute_func(
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\query_exec_tracker.py", line 128, in execute_func
+    result = function(*args, **kwargs)
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\code_manager.py", line 207, in execute_code
+    exec(code_to_run, environment)
+  File "<string>", line 1, in <module>
+NameError: name 'df' is not defined
+. Retrying
+2025-06-27 19:15:11 [INFO] Using prompt: <dataframe>
+dfs[0]:1000x14
+Index,Account Id,Lead Owner,First Name,Last Name,Company,Phone 1,Phone 2,Email 1,Email 2,Website,Source,Deal Stage,Notes
+2,B1B9fa4B9A41f10,Alexander Mccall,Phyllis,Wade,"Woodward, Everett and ...",2644009693,583.518.0548,3-qf--uen@icloud.com,q5n5d6zsyr-0@protonmai...,https://nash.com/,Other,Closed Lost,Affect activity everyb...
+1,862d63fBE445C3B,Antonio Savage,Cameron,Price,"Dean, Daniels and Char...",5923243346,+1-942-704-6437x07516,0sij-6e@zoho.com,y9rm92iimoj@yahoo.com...,http://www.moody-colon.com/,Facebook Ads,Qualified,Be mind picture to....
+3,1c2a1d1Ef8dDEFa,Nancy Grant,Matthew,Villegas,Mcfarland-Moore...,9721782336,652-505-2127,id4_u75xy@protonmail.com,izn_cb0dp@protonmail.c...,https://www.bradley-stanley.com/,Organic Search (SEO),Closed Lost,Strong cost together t...
+</dataframe>
+
+The user asked the following question:
+Q: top 10 lead owners
+
+You generated this python code:
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+lead_owner_counts = df['Lead Owner'].value_counts().nlargest(10)
+result = {
+    "type": "dataframe",
+    "value": lead_owner_counts.to_frame()
+}
+
+It fails with the following error:
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\pipelines\smart_datalake_chat\code_execution.py", line 52, in execute
+    result = pipeline_context.query_exec_tracker.execute_func(
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\query_exec_tracker.py", line 128, in execute_func
+    result = function(*args, **kwargs)
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\code_manager.py", line 207, in execute_code
+    exec(code_to_run, environment)
+  File "<string>", line 1, in <module>
+NameError: name 'df' is not defined
+
+
+Fix the python code above and return the new python code:
+2025-06-27 19:15:12 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-27 19:15:12 [INFO] 
+Code running:
+```
+lead_owner_counts = df['Lead Owner'].value_counts().nlargest(10)
+print(lead_owner_counts)
+        ```
+2025-06-27 19:15:12 [ERROR] Pipeline failed on step 4: name 'df' is not defined
+2025-06-27 19:15:34 [INFO] Question: plot lead owners by count
+2025-06-27 19:15:34 [INFO] Running PandasAI with google LLM...
+2025-06-27 19:15:34 [INFO] Prompt ID: 776d8407-805d-41a8-9142-17a8e515bce6
+2025-06-27 19:15:34 [INFO] Executing Step 0: CacheLookup
+2025-06-27 19:15:34 [INFO] Executing Step 1: PromptGeneration
+2025-06-27 19:15:34 [INFO] Using prompt: <dataframe>
+dfs[0]:1000x14
+Index,Account Id,Lead Owner,First Name,Last Name,Company,Phone 1,Phone 2,Email 1,Email 2,Website,Source,Deal Stage,Notes
+2,B1B9fa4B9A41f10,Alexander Mccall,Phyllis,Wade,"Woodward, Everett and ...",2644009693,583.518.0548,3-qf--uen@icloud.com,q5n5d6zsyr-0@protonmai...,https://nash.com/,Other,Closed Lost,Affect activity everyb...
+1,862d63fBE445C3B,Antonio Savage,Cameron,Price,"Dean, Daniels and Char...",5923243346,+1-942-704-6437x07516,0sij-6e@zoho.com,y9rm92iimoj@yahoo.com...,http://www.moody-colon.com/,Facebook Ads,Qualified,Be mind picture to....
+3,1c2a1d1Ef8dDEFa,Nancy Grant,Matthew,Villegas,Mcfarland-Moore...,9721782336,652-505-2127,id4_u75xy@protonmail.com,izn_cb0dp@protonmail.c...,https://www.bradley-stanley.com/,Organic Search (SEO),Closed Lost,Strong cost together t...
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: plot lead owners by count
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-06-27 19:15:34 [INFO] Executing Step 2: CodeGenerator
+2025-06-27 19:15:36 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Assuming dfs is a list containing your DataFrame
+df = dfs[0].copy()
+
+# Plot lead owners by count
+lead_owner_counts = df['Lead Owner'].value_counts()
+plt.figure(figsize=(10, 6))
+lead_owner_counts.plot(kind='bar')
+plt.title('Lead Owners by Count')
+plt.xlabel('Lead Owner')
+plt.ylabel('Count')
+plt.xticks(rotation=45, ha='right')
+plt.tight_layout()
+plt.savefig('lead_owner_counts.png')
+plt.close()
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+result = { "type": "plot", "value": "lead_owner_counts.png" }
+            ```
+            
+2025-06-27 19:15:36 [INFO] Executing Step 3: CachePopulation
+2025-06-27 19:15:36 [INFO] Executing Step 4: CodeExecution
+2025-06-27 19:15:36 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-27 19:15:36 [INFO] 
+Code running:
+```
+df = dfs[0].copy()
+lead_owner_counts = df['Lead Owner'].value_counts()
+plt.figure(figsize=(10, 6))
+lead_owner_counts.plot(kind='bar')
+plt.title('Lead Owners by Count')
+plt.xlabel('Lead Owner')
+plt.ylabel('Count')
+plt.xticks(rotation=45, ha='right')
+plt.tight_layout()
+plt.savefig('C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png')
+plt.close()
+result = {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+        ```
+2025-06-27 19:15:47 [INFO] Executing Step 5: ResultValidation
+2025-06-27 19:15:47 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+2025-06-27 19:15:47 [INFO] Executed in: 13.47920298576355s
+2025-06-27 19:15:47 [INFO] Executing Step 6: ResultParsing
