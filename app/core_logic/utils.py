@@ -14,10 +14,6 @@ def get_huggingface_models():
     return [
         "bigcode/starcoder2-15b",
         "gpt2",
-        "gpt2-medium",
-        "distilgpt2",
-        "EleutherAI/gpt-neo-125M",
-        "google/flan-t5-base",
         # add more models you want to support
     ]
 
