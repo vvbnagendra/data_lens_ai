@@ -10406,3 +10406,309 @@ result = {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/pres
 2025-06-27 19:15:47 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
 2025-06-27 19:15:47 [INFO] Executed in: 13.47920298576355s
 2025-06-27 19:15:47 [INFO] Executing Step 6: ResultParsing
+2025-06-28 10:18:13 [INFO] Question: plot
+2025-06-28 10:18:15 [INFO] Running PandasAI with google LLM...
+2025-06-28 10:18:15 [INFO] Prompt ID: fe0d1caa-fc68-47c1-8176-29f1f59dafc9
+2025-06-28 10:18:15 [INFO] Executing Step 0: CacheLookup
+2025-06-28 10:18:15 [INFO] Executing Step 1: PromptGeneration
+2025-06-28 10:18:15 [INFO] Using prompt: <dataframe>
+dfs[0]:1000x14
+Index,Account Id,Lead Owner,First Name,Last Name,Company,Phone 1,Phone 2,Email 1,Email 2,Website,Source,Deal Stage,Notes
+1,862d63fBE445C3B,Antonio Savage,Cameron,Price,"Dean, Daniels and Charles",8463336189,+1-942-704-6437x07516,8yf_nt@zoho.com,9-msf9n778@protonmail.com,http://www.moody-colon...,Facebook Ads,Qualified,Be mind picture to.
+3,1c2a1d1Ef8dDEFa,Nancy Grant,Matthew,Villegas,Mcfarland-Moore,5847391978,652-505-2127,21dci7z7ay1@zoho.com,knc_plwfk_zd@zoho.com,https://www.bradley-st...,Organic Search (SEO),Closed Lost,Strong cost together thought.
+2,B1B9fa4B9A41f10,Alexander Mccall,Phyllis,Wade,"Woodward, Everett and Doyle",1733078158,583.518.0548,g89t3g@protonmail.com,dfe0gb3u@protonmail.com,https://nash.com/...,Other,Closed Lost,Affect activity everybody cause sense close anything.
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: plot
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-06-28 10:18:15 [INFO] Executing Step 2: CodeGenerator
+2025-06-28 10:18:18 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Write code here
+df = dfs[0]
+
+deal_stage_counts = df['Deal Stage'].value_counts()
+
+plt.figure(figsize=(10, 6))
+deal_stage_counts.plot(kind='bar')
+plt.title('Deal Stage Distribution')
+plt.xlabel('Deal Stage')
+plt.ylabel('Number of Deals')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.savefig('deal_stage_distribution.png')
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+result = { "type": "plot", "value": "deal_stage_distribution.png" }
+            ```
+            
+2025-06-28 10:18:19 [INFO] Executing Step 3: CachePopulation
+2025-06-28 10:18:19 [INFO] Executing Step 4: CodeExecution
+2025-06-28 10:18:19 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-28 10:18:19 [INFO] 
+Code running:
+```
+df = dfs[0]
+deal_stage_counts = df['Deal Stage'].value_counts()
+plt.figure(figsize=(10, 6))
+deal_stage_counts.plot(kind='bar')
+plt.title('Deal Stage Distribution')
+plt.xlabel('Deal Stage')
+plt.ylabel('Number of Deals')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.savefig('C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png')
+result = {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+        ```
+2025-06-28 10:18:19 [INFO] Executing Step 5: ResultValidation
+2025-06-28 10:18:19 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+2025-06-28 10:18:19 [INFO] Executed in: 6.04478907585144s
+2025-06-28 10:18:19 [INFO] Executing Step 6: ResultParsing
+2025-06-28 10:18:33 [INFO] Question: record count ?
+2025-06-28 10:18:33 [INFO] Running PandasAI with google LLM...
+2025-06-28 10:18:33 [INFO] Prompt ID: 7aac26e4-920f-49c3-a14f-a598a174c3e6
+2025-06-28 10:18:33 [INFO] Executing Step 0: CacheLookup
+2025-06-28 10:18:33 [INFO] Executing Step 1: PromptGeneration
+2025-06-28 10:18:33 [INFO] Using prompt: <dataframe>
+dfs[0]:1000x14
+Index,Account Id,Lead Owner,First Name,Last Name,Company,Phone 1,Phone 2,Email 1,Email 2,Website,Source,Deal Stage,Notes
+1,862d63fBE445C3B,Antonio Savage,Cameron,Price,"Dean, Daniels and Charles",8463336189,+1-942-704-6437x07516,8yf_nt@zoho.com,9-msf9n778@protonmail.com,http://www.moody-colon...,Facebook Ads,Qualified,Be mind picture to.
+3,1c2a1d1Ef8dDEFa,Nancy Grant,Matthew,Villegas,Mcfarland-Moore,5847391978,652-505-2127,21dci7z7ay1@zoho.com,knc_plwfk_zd@zoho.com,https://www.bradley-st...,Organic Search (SEO),Closed Lost,Strong cost together thought.
+2,B1B9fa4B9A41f10,Alexander Mccall,Phyllis,Wade,"Woodward, Everett and Doyle",1733078158,583.518.0548,g89t3g@protonmail.com,dfe0gb3u@protonmail.com,https://nash.com/...,Other,Closed Lost,Affect activity everybody cause sense close anything.
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: record count ?
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-06-28 10:18:33 [INFO] Executing Step 2: CodeGenerator
+2025-06-28 10:18:34 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+df = dfs[0]
+record_count = len(df)
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+result = { "type": "number", "value": record_count }
+            ```
+            
+2025-06-28 10:18:34 [INFO] Executing Step 3: CachePopulation
+2025-06-28 10:18:34 [INFO] Executing Step 4: CodeExecution
+2025-06-28 10:18:34 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-28 10:18:34 [INFO] 
+Code running:
+```
+df = dfs[0]
+record_count = len(df)
+result = {'type': 'number', 'value': record_count}
+        ```
+2025-06-28 10:18:34 [INFO] Executing Step 5: ResultValidation
+2025-06-28 10:18:34 [INFO] Answer: {'type': 'number', 'value': 1000}
+2025-06-28 10:18:34 [INFO] Executed in: 1.3133668899536133s
+2025-06-28 10:18:34 [INFO] Executing Step 6: ResultParsing
+2025-06-28 10:18:44 [INFO] Question: summarise
+2025-06-28 10:18:44 [INFO] Running PandasAI with google LLM...
+2025-06-28 10:18:44 [INFO] Prompt ID: b12ddc8e-45c9-4bbf-9374-16c27da92c2a
+2025-06-28 10:18:44 [INFO] Executing Step 0: CacheLookup
+2025-06-28 10:18:44 [INFO] Executing Step 1: PromptGeneration
+2025-06-28 10:18:44 [INFO] Using prompt: <dataframe>
+dfs[0]:1000x14
+Index,Account Id,Lead Owner,First Name,Last Name,Company,Phone 1,Phone 2,Email 1,Email 2,Website,Source,Deal Stage,Notes
+1,862d63fBE445C3B,Antonio Savage,Cameron,Price,"Dean, Daniels and Charles",8463336189,+1-942-704-6437x07516,8yf_nt@zoho.com,9-msf9n778@protonmail.com,http://www.moody-colon...,Facebook Ads,Qualified,Be mind picture to.
+3,1c2a1d1Ef8dDEFa,Nancy Grant,Matthew,Villegas,Mcfarland-Moore,5847391978,652-505-2127,21dci7z7ay1@zoho.com,knc_plwfk_zd@zoho.com,https://www.bradley-st...,Organic Search (SEO),Closed Lost,Strong cost together thought.
+2,B1B9fa4B9A41f10,Alexander Mccall,Phyllis,Wade,"Woodward, Everett and Doyle",1733078158,583.518.0548,g89t3g@protonmail.com,dfe0gb3u@protonmail.com,https://nash.com/...,Other,Closed Lost,Affect activity everybody cause sense close anything.
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: summarise
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-06-28 10:18:44 [INFO] Executing Step 2: CodeGenerator
+2025-06-28 10:18:45 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+summary = df.describe(include='all')
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+result = { "type": "dataframe", "value": summary }
+            ```
+            
+2025-06-28 10:18:45 [INFO] Executing Step 3: CachePopulation
+2025-06-28 10:18:45 [INFO] Executing Step 4: CodeExecution
+2025-06-28 10:18:45 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-28 10:18:45 [INFO] 
+Code running:
+```
+summary = df.describe(include='all')
+result = {'type': 'dataframe', 'value': summary}
+        ```
+2025-06-28 10:18:45 [WARNING] Failed to execute code with a correction framework [retry number: 1]
+2025-06-28 10:18:45 [ERROR] Failed with error: Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\pipelines\smart_datalake_chat\code_execution.py", line 52, in execute
+    result = pipeline_context.query_exec_tracker.execute_func(
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\query_exec_tracker.py", line 128, in execute_func
+    result = function(*args, **kwargs)
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\code_manager.py", line 207, in execute_code
+    exec(code_to_run, environment)
+  File "<string>", line 1, in <module>
+NameError: name 'df' is not defined
+. Retrying
+2025-06-28 10:18:45 [INFO] Using prompt: <dataframe>
+dfs[0]:1000x14
+Index,Account Id,Lead Owner,First Name,Last Name,Company,Phone 1,Phone 2,Email 1,Email 2,Website,Source,Deal Stage,Notes
+1,862d63fBE445C3B,Antonio Savage,Cameron,Price,"Dean, Daniels and Charles",8463336189,+1-942-704-6437x07516,8yf_nt@zoho.com,9-msf9n778@protonmail.com,http://www.moody-colon...,Facebook Ads,Qualified,Be mind picture to.
+3,1c2a1d1Ef8dDEFa,Nancy Grant,Matthew,Villegas,Mcfarland-Moore,5847391978,652-505-2127,21dci7z7ay1@zoho.com,knc_plwfk_zd@zoho.com,https://www.bradley-st...,Organic Search (SEO),Closed Lost,Strong cost together thought.
+2,B1B9fa4B9A41f10,Alexander Mccall,Phyllis,Wade,"Woodward, Everett and Doyle",1733078158,583.518.0548,g89t3g@protonmail.com,dfe0gb3u@protonmail.com,https://nash.com/...,Other,Closed Lost,Affect activity everybody cause sense close anything.
+</dataframe>
+
+The user asked the following question:
+Q: summarise
+
+You generated this python code:
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+summary = df.describe(include='all')
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+result = { "type": "dataframe", "value": summary }
+
+It fails with the following error:
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\pipelines\smart_datalake_chat\code_execution.py", line 52, in execute
+    result = pipeline_context.query_exec_tracker.execute_func(
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\query_exec_tracker.py", line 128, in execute_func
+    result = function(*args, **kwargs)
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\code_manager.py", line 207, in execute_code
+    exec(code_to_run, environment)
+  File "<string>", line 1, in <module>
+NameError: name 'df' is not defined
+
+
+Fix the python code above and return the new python code:
+2025-06-28 10:18:46 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-28 10:18:46 [INFO] 
+Code running:
+```
+summary = df.describe(include='all')
+result = {'type': 'dataframe', 'value': summary}
+        ```
+2025-06-28 10:18:46 [WARNING] Failed to execute code with a correction framework [retry number: 2]
+2025-06-28 10:18:46 [ERROR] Failed with error: Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\pipelines\smart_datalake_chat\code_execution.py", line 52, in execute
+    result = pipeline_context.query_exec_tracker.execute_func(
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\query_exec_tracker.py", line 128, in execute_func
+    result = function(*args, **kwargs)
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\code_manager.py", line 207, in execute_code
+    exec(code_to_run, environment)
+  File "<string>", line 1, in <module>
+NameError: name 'df' is not defined
+. Retrying
+2025-06-28 10:18:46 [INFO] Using prompt: <dataframe>
+dfs[0]:1000x14
+Index,Account Id,Lead Owner,First Name,Last Name,Company,Phone 1,Phone 2,Email 1,Email 2,Website,Source,Deal Stage,Notes
+1,862d63fBE445C3B,Antonio Savage,Cameron,Price,"Dean, Daniels and Charles",8463336189,+1-942-704-6437x07516,8yf_nt@zoho.com,9-msf9n778@protonmail.com,http://www.moody-colon...,Facebook Ads,Qualified,Be mind picture to.
+3,1c2a1d1Ef8dDEFa,Nancy Grant,Matthew,Villegas,Mcfarland-Moore,5847391978,652-505-2127,21dci7z7ay1@zoho.com,knc_plwfk_zd@zoho.com,https://www.bradley-st...,Organic Search (SEO),Closed Lost,Strong cost together thought.
+2,B1B9fa4B9A41f10,Alexander Mccall,Phyllis,Wade,"Woodward, Everett and Doyle",1733078158,583.518.0548,g89t3g@protonmail.com,dfe0gb3u@protonmail.com,https://nash.com/...,Other,Closed Lost,Affect activity everybody cause sense close anything.
+</dataframe>
+
+The user asked the following question:
+Q: summarise
+
+You generated this python code:
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+summary = df.describe(include='all')
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+result = { "type": "dataframe", "value": summary }
+
+It fails with the following error:
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\pipelines\smart_datalake_chat\code_execution.py", line 52, in execute
+    result = pipeline_context.query_exec_tracker.execute_func(
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\query_exec_tracker.py", line 128, in execute_func
+    result = function(*args, **kwargs)
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\code_manager.py", line 207, in execute_code
+    exec(code_to_run, environment)
+  File "<string>", line 1, in <module>
+NameError: name 'df' is not defined
+
+
+Fix the python code above and return the new python code:
+2025-06-28 10:18:47 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-06-28 10:18:47 [INFO] 
+Code running:
+```
+summary = pd.DataFrame()
+if 'df' in locals() or 'df' in globals():
+    summary = df.describe(include='all')
+result = {'type': 'dataframe', 'value': summary}
+        ```
+2025-06-28 10:18:47 [ERROR] Pipeline failed on step 4: name 'globals' is not defined

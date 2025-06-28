@@ -5,7 +5,7 @@ from data_quality.quality_checks import run_quality_checks
 from data_quality.profiler import generate_profile
 from data_quality.convert_dates import convert_dates
 from data_quality.pandasai_chat import get_smart_chat
-from data_quality.utils import get_ollama_models, get_huggingface_models
+from app.core_logic.utils import get_ollama_models, get_huggingface_models
 
 df = pd.read_csv(r'C:\Users\LENOVO\Downloads\glaciers.csv', low_memory=False)
 df = convert_dates(df)

@@ -20,3 +20,9 @@ python -m venv venv
 
 # (Optional) Reinstall dependencies from requirements.txt
 pip install -r requirements.txt
+
+
+git checkout main
+git pull origin main
+git merge dev
+git push origin main
