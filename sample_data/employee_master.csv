@@ -1,0 +1,11 @@
+employee_id,first_name,last_name,email,hire_date,department
+101,Alice,Smith,alice.smith@example.com,2020-01-15,Engineering
+102,Bob,Johnson,bob.j@example.com,2019-07-01,Human Resources
+103,Carol,Williams,carol.w@example.com,2021-03-20,Marketing
+104,David,Brown,david.b@example.com,2018-11-10,Sales
+105,Emily,Davis,emily.d@example.com,2022-05-01,Engineering
+106,Frank,Miller,frank.m@example.com,2020-09-12,Finance
+107,Grace,Wilson,grace.w@example.com,2017-04-25,Legal
+108,Henry,Moore,henry.m@example.com,2023-01-05,Human Resources
+109,Ivy,Taylor,ivy.t@example.com,2019-02-18,Marketing
+110,Jack,Anderson,jack.a@example.com,2021-08-30,Sales

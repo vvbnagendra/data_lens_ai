@@ -37,6 +37,7 @@ def display_chat_history():
 
             response_type = response_data["type"]
             response_content = response_data["content"]
+            print(f"DEBUG: Response Type: {response_type}, Content: {response_content}")
 
             if response_type == "image":
                 try:
@@ -70,8 +71,19 @@ def display_chat_history():
             elif response_type == "error":
                 st.error(f"🤖 Error: {response_content}")
 
+            elif isinstance(response_content, (int, float)):
+                st.markdown("🤖 **Response: Integer Value**")
+                st.write(f"**Value:** {response_content}")
+                
+
             elif response_type == "text":
-                st.markdown(f"🤖 Response:\n\n{response_content}")
+                    st.markdown("🤖 **Response: Statistical Summary**")
+                    # You might need to iterate through rows/columns to format
+                    # This is a simplified example; full formatting would be more complex
+                    formatted_output = "```\n" # Use a code block for preformatted text
+                    formatted_output += response_content.to_string()
+                    formatted_output += "\n```"
+                    st.markdown(formatted_output)
 
             st.markdown("---")
 

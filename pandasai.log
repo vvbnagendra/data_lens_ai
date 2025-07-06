@@ -10712,3 +10712,953 @@ if 'df' in locals() or 'df' in globals():
 result = {'type': 'dataframe', 'value': summary}
         ```
 2025-06-28 10:18:47 [ERROR] Pipeline failed on step 4: name 'globals' is not defined
+2025-07-06 22:01:10 [INFO] Question: plot no of leads by stage
+2025-07-06 22:01:12 [INFO] Running PandasAI with google LLM...
+2025-07-06 22:01:12 [INFO] Prompt ID: 7d0da352-6056-4f61-a65d-c81d5438cafd
+2025-07-06 22:01:12 [INFO] Executing Step 0: CacheLookup
+2025-07-06 22:01:12 [INFO] Using cached response
+2025-07-06 22:01:12 [INFO] Executing Step 1: PromptGeneration
+2025-07-06 22:01:12 [INFO] Executing Step 2: CodeGenerator
+2025-07-06 22:01:12 [INFO] Executing Step 3: CachePopulation
+2025-07-06 22:01:12 [INFO] Executing Step 4: CodeExecution
+2025-07-06 22:01:12 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-07-06 22:01:12 [INFO] 
+Code running:
+```
+df = dfs[0]
+lead_counts = df['Deal Stage'].value_counts()
+plt.figure(figsize=(10, 6))
+lead_counts.plot(kind='bar')
+plt.title('Number of Leads by Deal Stage')
+plt.xlabel('Deal Stage')
+plt.ylabel('Number of Leads')
+plt.xticks(rotation=45, ha='right')
+plt.tight_layout()
+plot_path = 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'
+plt.savefig(plot_path)
+result = {'type': 'plot', 'value': plot_path}
+        ```
+2025-07-06 22:01:12 [INFO] Executing Step 5: ResultValidation
+2025-07-06 22:01:12 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+2025-07-06 22:01:12 [INFO] Executed in: 1.820270299911499s
+2025-07-06 22:01:12 [INFO] Executing Step 6: ResultParsing
+2025-07-06 22:01:22 [INFO] Question: summarise the data
+2025-07-06 22:01:22 [INFO] Running PandasAI with google LLM...
+2025-07-06 22:01:22 [INFO] Prompt ID: f96b5ea7-89c3-432d-880e-9a2164e6a57f
+2025-07-06 22:01:22 [INFO] Executing Step 0: CacheLookup
+2025-07-06 22:01:22 [INFO] Using cached response
+2025-07-06 22:01:22 [INFO] Executing Step 1: PromptGeneration
+2025-07-06 22:01:22 [INFO] Executing Step 2: CodeGenerator
+2025-07-06 22:01:22 [INFO] Executing Step 3: CachePopulation
+2025-07-06 22:01:22 [INFO] Executing Step 4: CodeExecution
+2025-07-06 22:01:22 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-07-06 22:01:22 [INFO] 
+Code running:
+```
+df = dfs[0].copy()
+summary = df.describe(include='all')
+result = {'type': 'dataframe', 'value': summary}
+        ```
+2025-07-06 22:01:22 [INFO] Executing Step 5: ResultValidation
+2025-07-06 22:01:22 [INFO] Answer: {'type': 'dataframe', 'value':               Index       Account Id Lead Owner First Name Last Name  ...                         Email 2              Website   Source Deal Stage                Notes
+count   1000.000000             1000       1000       1000      1000  ...                            1000                 1000     1000       1000                 1000
+unique          NaN             1000        998        538       640  ...                            1000                  980       20         10                 1000
+top             NaN  862d63fBE445C3B  Jodi Wolf      Bryan  Gallegos  ...  howardtamara@malone-zamora.com  https://werner.com/  Podcast    On Hold  Be mind picture to.
+freq            NaN                1          2          6         6  ...                               1                    3       64        108                    1
+mean     500.500000              NaN        NaN        NaN       NaN  ...                             NaN                  NaN      NaN        NaN                  NaN
+std      288.819436              NaN        NaN        NaN       NaN  ...                             NaN                  NaN      NaN        NaN                  NaN
+min        1.000000              NaN        NaN        NaN       NaN  ...                             NaN                  NaN      NaN        NaN                  NaN
+25%      250.750000              NaN        NaN        NaN       NaN  ...                             NaN                  NaN      NaN        NaN                  NaN
+50%      500.500000              NaN        NaN        NaN       NaN  ...                             NaN                  NaN      NaN        NaN                  NaN
+75%      750.250000              NaN        NaN        NaN       NaN  ...                             NaN                  NaN      NaN        NaN                  NaN
+max     1000.000000              NaN        NaN        NaN       NaN  ...                             NaN                  NaN      NaN        NaN                  NaN
+
+[11 rows x 14 columns]}
+2025-07-06 22:01:22 [INFO] Executed in: 0.11838936805725098s
+2025-07-06 22:01:22 [INFO] Executing Step 6: ResultParsing
+2025-07-06 22:09:09 [INFO] Question: plot the data quality of columns
+2025-07-06 22:09:09 [INFO] Running PandasAI with google LLM...
+2025-07-06 22:09:09 [INFO] Prompt ID: b0694b8a-d8be-4cf9-9837-052a17a8a947
+2025-07-06 22:09:09 [INFO] Executing Step 0: CacheLookup
+2025-07-06 22:09:09 [INFO] Executing Step 1: PromptGeneration
+2025-07-06 22:09:09 [INFO] Using prompt: <dataframe>
+dfs[0]:1000x14
+Index,Account Id,Lead Owner,First Name,Last Name,Company,Phone 1,Phone 2,Email 1,Email 2,Website,Source,Deal Stage,Notes
+1,862d63fBE445C3B,Antonio Savage,Cameron,Price,"Dean, Daniels and Charles",8576052426,+1-942-704-6437x07516,q0eh3pn6@yahoo.com,76035gz635@zoho.com,http://www.moody-colon...,Facebook Ads,Qualified,Be mind picture to.
+3,1c2a1d1Ef8dDEFa,Nancy Grant,Matthew,Villegas,Mcfarland-Moore,0026891645,652-505-2127,wjrv0o65zzz@hotmail.com,rqrqxk7@gmail.com,https://www.bradley-st...,Organic Search (SEO),Closed Lost,Strong cost together thought.
+2,B1B9fa4B9A41f10,Alexander Mccall,Phyllis,Wade,"Woodward, Everett and Doyle",6125276314,583.518.0548,8hlql-r05z2@yahoo.com,xw1ly3@yahoo.com,https://nash.com/...,Other,Closed Lost,Affect activity everybody cause sense close anything.
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: plot the data quality of columns
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-07-06 22:09:09 [INFO] Executing Step 2: CodeGenerator
+2025-07-06 22:09:13 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Write code here
+df = dfs[0]
+
+# Calculate missing values percentage for each column
+missing_percentage = (df.isnull().sum() / len(df)) * 100
+
+# Create a bar plot of missing values percentage
+plt.figure(figsize=(10, 6))
+missing_percentage.sort_values().plot(kind='barh')
+plt.title('Missing Values Percentage per Column')
+plt.xlabel('Percentage')
+plt.ylabel('Columns')
+plt.tight_layout()
+
+# Save the plot to a file
+plot_filename = "missing_values_plot.png"
+plt.savefig(plot_filename)
+plt.close()
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+result = { "type": "plot", "value": plot_filename }
+            ```
+            
+2025-07-06 22:09:13 [INFO] Executing Step 3: CachePopulation
+2025-07-06 22:09:13 [INFO] Executing Step 4: CodeExecution
+2025-07-06 22:09:13 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-07-06 22:09:13 [INFO] 
+Code running:
+```
+df = dfs[0]
+missing_percentage = df.isnull().sum() / len(df) * 100
+plt.figure(figsize=(10, 6))
+missing_percentage.sort_values().plot(kind='barh')
+plt.title('Missing Values Percentage per Column')
+plt.xlabel('Percentage')
+plt.ylabel('Columns')
+plt.tight_layout()
+plot_filename = 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'
+plt.savefig(plot_filename)
+plt.close()
+result = {'type': 'plot', 'value': plot_filename}
+        ```
+2025-07-06 22:09:13 [INFO] Executing Step 5: ResultValidation
+2025-07-06 22:09:13 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+2025-07-06 22:09:13 [INFO] Executed in: 3.903564929962158s
+2025-07-06 22:09:13 [INFO] Executing Step 6: ResultParsing
+2025-07-06 22:32:16 [INFO] Question: plot department wise salaries
+2025-07-06 22:32:16 [INFO] Running PandasAI with google LLM...
+2025-07-06 22:32:16 [INFO] Prompt ID: 2ee5934f-7cee-4715-896d-0332d48c7206
+2025-07-06 22:32:16 [INFO] Executing Step 0: CacheLookup
+2025-07-06 22:32:16 [INFO] Executing Step 1: PromptGeneration
+2025-07-06 22:32:16 [INFO] Using prompt: <dataframe>
+dfs[0]:10x6
+employee_id,first_name,last_name,email,hire_date,department
+101,Alice,Smith,4mkf2pcb@protonmail.com,2020-01-15,Engineering
+102,Bob,Johnson,yw374hy@protonmail.com,2019-07-01,Human Resources
+103,Carol,Williams,9bve0dgvueh@aol.com,2021-03-20,Marketing
+</dataframe>
+<dataframe>
+dfs[1]:10x3
+employee_id,salary,effective_date
+103,70000,2024-03-01
+101,95000,2024-01-01
+102,60000,2023-07-01
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: plot department wise salaries
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-07-06 22:32:16 [INFO] Executing Step 2: CodeGenerator
+2025-07-06 22:32:18 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Write code here
+
+df1 = dfs[0]
+df2 = dfs[1]
+
+merged_df = pd.merge(df1, df2, on='employee_id', how='inner')
+
+dept_salary = merged_df.groupby('department')['salary'].mean().reset_index()
+
+plt.figure(figsize=(10, 6))
+plt.bar(dept_salary['department'], dept_salary['salary'])
+plt.xlabel('Department')
+plt.ylabel('Average Salary')
+plt.title('Average Salary by Department')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.savefig('department_salaries.png')
+plt.close()
+
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+result = { "type": "plot", "value": "department_salaries.png" }
+            ```
+            
+2025-07-06 22:32:18 [INFO] Executing Step 3: CachePopulation
+2025-07-06 22:32:18 [INFO] Executing Step 4: CodeExecution
+2025-07-06 22:32:18 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-07-06 22:32:18 [INFO] 
+Code running:
+```
+df1 = dfs[0]
+df2 = dfs[1]
+merged_df = pd.merge(df1, df2, on='employee_id', how='inner')
+dept_salary = merged_df.groupby('department')['salary'].mean().reset_index()
+plt.figure(figsize=(10, 6))
+plt.bar(dept_salary['department'], dept_salary['salary'])
+plt.xlabel('Department')
+plt.ylabel('Average Salary')
+plt.title('Average Salary by Department')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.savefig('C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png')
+plt.close()
+result = {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+        ```
+2025-07-06 22:32:19 [INFO] Executing Step 5: ResultValidation
+2025-07-06 22:32:19 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+2025-07-06 22:32:19 [INFO] Executed in: 3.317225217819214s
+2025-07-06 22:32:19 [INFO] Executing Step 6: ResultParsing
+2025-07-06 22:34:32 [INFO] Question: how many employees salary greater than 70000?
+2025-07-06 22:34:32 [INFO] Running PandasAI with google LLM...
+2025-07-06 22:34:32 [INFO] Prompt ID: ab0e1213-7c2b-47b6-99c8-5c2743bb7466
+2025-07-06 22:34:32 [INFO] Executing Step 0: CacheLookup
+2025-07-06 22:34:32 [INFO] Executing Step 1: PromptGeneration
+2025-07-06 22:34:32 [INFO] Using prompt: <dataframe>
+dfs[0]:10x6
+employee_id,first_name,last_name,email,hire_date,department
+101,Alice,Smith,4mkf2pcb@protonmail.com,2020-01-15,Engineering
+102,Bob,Johnson,yw374hy@protonmail.com,2019-07-01,Human Resources
+103,Carol,Williams,9bve0dgvueh@aol.com,2021-03-20,Marketing
+</dataframe>
+<dataframe>
+dfs[1]:10x3
+employee_id,salary,effective_date
+103,70000,2024-03-01
+101,95000,2024-01-01
+102,60000,2023-07-01
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: how many employees salary greater than 70000?
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-07-06 22:34:32 [INFO] Executing Step 2: CodeGenerator
+2025-07-06 22:34:34 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+df1 = dfs[0].copy()
+df2 = dfs[1].copy()
+
+df = pd.merge(df1, df2, on='employee_id', how='inner')
+
+count = len(df[df['salary'] > 70000])
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+result = { "type": "number", "value": count }
+            ```
+            
+2025-07-06 22:34:34 [INFO] Executing Step 3: CachePopulation
+2025-07-06 22:34:34 [INFO] Executing Step 4: CodeExecution
+2025-07-06 22:34:34 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-07-06 22:34:34 [INFO] 
+Code running:
+```
+df1 = dfs[0].copy()
+df2 = dfs[1].copy()
+df = pd.merge(df1, df2, on='employee_id', how='inner')
+count = len(df[df['salary'] > 70000])
+result = {'type': 'number', 'value': count}
+        ```
+2025-07-06 22:34:34 [INFO] Executing Step 5: ResultValidation
+2025-07-06 22:34:34 [INFO] Answer: {'type': 'number', 'value': 7}
+2025-07-06 22:34:34 [INFO] Executed in: 2.0683135986328125s
+2025-07-06 22:34:34 [INFO] Executing Step 6: ResultParsing
+2025-07-06 22:42:27 [INFO] Question: how many number of employees having salary greater than 70000?
+2025-07-06 22:42:27 [INFO] Running PandasAI with google LLM...
+2025-07-06 22:42:27 [INFO] Prompt ID: 24a16de0-f1c1-4cda-9373-2002bbe49f2d
+2025-07-06 22:42:27 [INFO] Executing Step 0: CacheLookup
+2025-07-06 22:42:27 [INFO] Executing Step 1: PromptGeneration
+2025-07-06 22:42:27 [INFO] Using prompt: <dataframe>
+dfs[0]:10x6
+employee_id,first_name,last_name,email,hire_date,department
+101,Alice,Smith,4mkf2pcb@protonmail.com,2020-01-15,Engineering
+102,Bob,Johnson,yw374hy@protonmail.com,2019-07-01,Human Resources
+103,Carol,Williams,9bve0dgvueh@aol.com,2021-03-20,Marketing
+</dataframe>
+<dataframe>
+dfs[1]:10x3
+employee_id,salary,effective_date
+103,70000,2024-03-01
+101,95000,2024-01-01
+102,60000,2023-07-01
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: how many number of employees having salary greater than 70000?
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-07-06 22:42:27 [INFO] Executing Step 2: CodeGenerator
+2025-07-06 22:42:29 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+df1 = dfs[0]
+df2 = dfs[1]
+
+df = pd.merge(df1, df2, on='employee_id', how='inner')
+
+count = len(df[df['salary'] > 70000])
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+result = { "type": "number", "value": count }
+            ```
+            
+2025-07-06 22:42:29 [INFO] Executing Step 3: CachePopulation
+2025-07-06 22:42:29 [INFO] Executing Step 4: CodeExecution
+2025-07-06 22:42:29 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-07-06 22:42:29 [INFO] 
+Code running:
+```
+df1 = dfs[0]
+df2 = dfs[1]
+df = pd.merge(df1, df2, on='employee_id', how='inner')
+count = len(df[df['salary'] > 70000])
+result = {'type': 'number', 'value': count}
+        ```
+2025-07-06 22:42:29 [INFO] Executing Step 5: ResultValidation
+2025-07-06 22:42:29 [INFO] Answer: {'type': 'number', 'value': 7}
+2025-07-06 22:42:29 [INFO] Executed in: 2.3709218502044678s
+2025-07-06 22:42:29 [INFO] Executing Step 6: ResultParsing
+2025-07-06 22:45:53 [INFO] Question: how many number of employees having salary greater than 70000?
+2025-07-06 22:45:53 [INFO] Running PandasAI with google LLM...
+2025-07-06 22:45:53 [INFO] Prompt ID: 26da28de-5b05-4e48-ad75-88b56022a93c
+2025-07-06 22:45:53 [INFO] Executing Step 0: CacheLookup
+2025-07-06 22:45:53 [INFO] Using cached response
+2025-07-06 22:45:53 [INFO] Executing Step 1: PromptGeneration
+2025-07-06 22:45:53 [INFO] Executing Step 2: CodeGenerator
+2025-07-06 22:45:53 [INFO] Executing Step 3: CachePopulation
+2025-07-06 22:45:53 [INFO] Executing Step 4: CodeExecution
+2025-07-06 22:45:53 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-07-06 22:45:53 [INFO] 
+Code running:
+```
+df1 = dfs[0]
+df2 = dfs[1]
+df = pd.merge(df1, df2, on='employee_id', how='inner')
+count = len(df[df['salary'] > 70000])
+result = {'type': 'number', 'value': count}
+        ```
+2025-07-06 22:45:53 [INFO] Executing Step 5: ResultValidation
+2025-07-06 22:45:53 [INFO] Answer: {'type': 'number', 'value': 7}
+2025-07-06 22:45:53 [INFO] Executed in: 0.04285430908203125s
+2025-07-06 22:45:53 [INFO] Executing Step 6: ResultParsing
+2025-07-06 22:49:30 [INFO] Question: how many number of employees having salary greater than 70000?
+2025-07-06 22:49:32 [INFO] Running PandasAI with google LLM...
+2025-07-06 22:49:32 [INFO] Prompt ID: ec9b06b9-a32d-4d7c-b2fd-f62678a16bc9
+2025-07-06 22:49:32 [INFO] Executing Step 0: CacheLookup
+2025-07-06 22:49:32 [INFO] Using cached response
+2025-07-06 22:49:32 [INFO] Executing Step 1: PromptGeneration
+2025-07-06 22:49:32 [INFO] Executing Step 2: CodeGenerator
+2025-07-06 22:49:32 [INFO] Executing Step 3: CachePopulation
+2025-07-06 22:49:32 [INFO] Executing Step 4: CodeExecution
+2025-07-06 22:49:32 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-07-06 22:49:32 [INFO] 
+Code running:
+```
+df1 = dfs[0]
+df2 = dfs[1]
+df = pd.merge(df1, df2, on='employee_id', how='inner')
+count = len(df[df['salary'] > 70000])
+result = {'type': 'number', 'value': count}
+        ```
+2025-07-06 22:49:32 [INFO] Executing Step 5: ResultValidation
+2025-07-06 22:49:32 [INFO] Answer: {'type': 'number', 'value': 7}
+2025-07-06 22:49:32 [INFO] Executed in: 2.0013625621795654s
+2025-07-06 22:49:32 [INFO] Executing Step 6: ResultParsing
+2025-07-06 22:53:20 [INFO] Question: summarise the data
+2025-07-06 22:53:20 [INFO] Running PandasAI with google LLM...
+2025-07-06 22:53:20 [INFO] Prompt ID: ff0c73f1-3813-4fa7-ae53-0c9a4a1055d6
+2025-07-06 22:53:20 [INFO] Executing Step 0: CacheLookup
+2025-07-06 22:53:20 [INFO] Executing Step 1: PromptGeneration
+2025-07-06 22:53:20 [INFO] Using prompt: <dataframe>
+dfs[0]:10x6
+employee_id,first_name,last_name,email,hire_date,department
+103,Carol,Williams,zjeeme@aol.com,2021-03-20,Marketing
+102,Bob,Johnson,qzh8p6vt@outlook.com,2019-07-01,Human Resources
+101,Alice,Smith,-o1luzb-v@zoho.com,2020-01-15,Engineering
+</dataframe>
+<dataframe>
+dfs[1]:10x3
+employee_id,salary,effective_date
+101,95000,2024-01-01
+103,70000,2024-03-01
+102,60000,2023-07-01
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: summarise the data
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-07-06 22:53:20 [INFO] Executing Step 2: CodeGenerator
+2025-07-06 22:53:22 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+df1 = dfs[0]
+df2 = dfs[1]
+
+summary1 = df1.describe(include='all')
+summary2 = df2.describe(include='all')
+
+result = { "type": "dataframe", "value": pd.concat([summary1, summary2], axis=1) }
+            ```
+            
+2025-07-06 22:53:22 [INFO] Executing Step 3: CachePopulation
+2025-07-06 22:53:22 [INFO] Executing Step 4: CodeExecution
+2025-07-06 22:53:22 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-07-06 22:53:22 [INFO] 
+Code running:
+```
+df1 = dfs[0]
+df2 = dfs[1]
+summary1 = df1.describe(include='all')
+summary2 = df2.describe(include='all')
+result = {'type': 'dataframe', 'value': pd.concat([summary1, summary2], axis=1)}
+        ```
+2025-07-06 22:53:22 [INFO] Executing Step 5: ResultValidation
+2025-07-06 22:53:22 [INFO] Answer: {'type': 'dataframe', 'value':         employee_id first_name last_name                    email   hire_date   department  employee_id         salary effective_date
+count      10.00000         10        10                       10          10           10     10.00000      10.000000             10
+unique          NaN         10        10                       10          10            6          NaN            NaN             10
+top             NaN      Alice     Smith  alice.smith@example.com  2020-01-15  Engineering          NaN            NaN     2024-01-01
+freq            NaN          1         1                        1           1            2          NaN            NaN              1
+mean      105.50000        NaN       NaN                      NaN         NaN          NaN    105.50000   83500.000000            NaN
+std         3.02765        NaN       NaN                      NaN         NaN          NaN      3.02765   20549.398477            NaN
+min       101.00000        NaN       NaN                      NaN         NaN          NaN    101.00000   58000.000000            NaN
+25%       103.25000        NaN       NaN                      NaN         NaN          NaN    103.25000   70500.000000            NaN
+50%       105.50000        NaN       NaN                      NaN         NaN          NaN    105.50000   80000.000000            NaN
+75%       107.75000        NaN       NaN                      NaN         NaN          NaN    107.75000   93750.000000            NaN
+max       110.00000        NaN       NaN                      NaN         NaN          NaN    110.00000  120000.000000            NaN}
+2025-07-06 22:53:22 [INFO] Executed in: 2.1809096336364746s
+2025-07-06 22:53:22 [INFO] Executing Step 6: ResultParsing
+2025-07-06 22:55:35 [INFO] Question: summarise the data
+2025-07-06 22:55:37 [INFO] Running PandasAI with google LLM...
+2025-07-06 22:55:37 [INFO] Prompt ID: 18b4db79-0da9-41d1-bc14-745209176f48
+2025-07-06 22:55:37 [INFO] Executing Step 0: CacheLookup
+2025-07-06 22:55:37 [INFO] Using cached response
+2025-07-06 22:55:37 [INFO] Executing Step 1: PromptGeneration
+2025-07-06 22:55:37 [INFO] Executing Step 2: CodeGenerator
+2025-07-06 22:55:37 [INFO] Executing Step 3: CachePopulation
+2025-07-06 22:55:37 [INFO] Executing Step 4: CodeExecution
+2025-07-06 22:55:37 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-07-06 22:55:37 [INFO] 
+Code running:
+```
+df1 = dfs[0]
+df2 = dfs[1]
+summary1 = df1.describe(include='all')
+summary2 = df2.describe(include='all')
+result = {'type': 'dataframe', 'value': pd.concat([summary1, summary2], axis=1)}
+        ```
+2025-07-06 22:55:37 [INFO] Executing Step 5: ResultValidation
+2025-07-06 22:55:37 [INFO] Answer: {'type': 'dataframe', 'value':         employee_id first_name last_name                    email   hire_date   department  employee_id         salary effective_date
+count      10.00000         10        10                       10          10           10     10.00000      10.000000             10
+unique          NaN         10        10                       10          10            6          NaN            NaN             10
+top             NaN      Alice     Smith  alice.smith@example.com  2020-01-15  Engineering          NaN            NaN     2024-01-01
+freq            NaN          1         1                        1           1            2          NaN            NaN              1
+mean      105.50000        NaN       NaN                      NaN         NaN          NaN    105.50000   83500.000000            NaN
+std         3.02765        NaN       NaN                      NaN         NaN          NaN      3.02765   20549.398477            NaN
+min       101.00000        NaN       NaN                      NaN         NaN          NaN    101.00000   58000.000000            NaN
+25%       103.25000        NaN       NaN                      NaN         NaN          NaN    103.25000   70500.000000            NaN
+50%       105.50000        NaN       NaN                      NaN         NaN          NaN    105.50000   80000.000000            NaN
+75%       107.75000        NaN       NaN                      NaN         NaN          NaN    107.75000   93750.000000            NaN
+max       110.00000        NaN       NaN                      NaN         NaN          NaN    110.00000  120000.000000            NaN}
+2025-07-06 22:55:37 [INFO] Executed in: 1.384563684463501s
+2025-07-06 22:55:37 [INFO] Executing Step 6: ResultParsing
+2025-07-06 22:57:24 [INFO] Question: how many employees are having salary greater than 70000?
+2025-07-06 22:57:24 [INFO] Running PandasAI with google LLM...
+2025-07-06 22:57:24 [INFO] Prompt ID: 97f13c27-ef87-41fc-b183-21675313c44f
+2025-07-06 22:57:24 [INFO] Executing Step 0: CacheLookup
+2025-07-06 22:57:24 [INFO] Executing Step 1: PromptGeneration
+2025-07-06 22:57:24 [INFO] Using prompt: <dataframe>
+dfs[0]:10x6
+employee_id,first_name,last_name,email,hire_date,department
+102,Bob,Johnson,u9cq7mau@icloud.com,2019-07-01,Human Resources
+101,Alice,Smith,n6rk__cxt@zoho.com,2020-01-15,Engineering
+103,Carol,Williams,tgo_-pleyrm5@aol.com,2021-03-20,Marketing
+</dataframe>
+<dataframe>
+dfs[1]:10x3
+employee_id,salary,effective_date
+102,60000,2023-07-01
+103,70000,2024-03-01
+101,95000,2024-01-01
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: how many employees are having salary greater than 70000?
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-07-06 22:57:24 [INFO] Executing Step 2: CodeGenerator
+2025-07-06 22:57:27 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+df = pd.merge(dfs[0], dfs[1], on='employee_id', how='inner')
+
+num_employees = len(df[df['salary'] > 70000])
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+result = { "type": "number", "value": num_employees }
+            ```
+            
+2025-07-06 22:57:27 [INFO] Executing Step 3: CachePopulation
+2025-07-06 22:57:27 [INFO] Executing Step 4: CodeExecution
+2025-07-06 22:57:27 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-07-06 22:57:27 [INFO] 
+Code running:
+```
+df = pd.merge(dfs[0], dfs[1], on='employee_id', how='inner')
+num_employees = len(df[df['salary'] > 70000])
+result = {'type': 'number', 'value': num_employees}
+        ```
+2025-07-06 22:57:27 [INFO] Executing Step 5: ResultValidation
+2025-07-06 22:57:27 [INFO] Answer: {'type': 'number', 'value': 7}
+2025-07-06 22:57:27 [INFO] Executed in: 2.7148303985595703s
+2025-07-06 22:57:27 [INFO] Executing Step 6: ResultParsing
+2025-07-06 23:00:08 [INFO] Question: summarise the data
+2025-07-06 23:00:09 [INFO] Running PandasAI with google LLM...
+2025-07-06 23:00:09 [INFO] Prompt ID: 977eff20-4898-47cf-a904-426f78a872ff
+2025-07-06 23:00:09 [INFO] Executing Step 0: CacheLookup
+2025-07-06 23:00:09 [INFO] Executing Step 1: PromptGeneration
+2025-07-06 23:00:09 [INFO] Using prompt: <dataframe>
+dfs[0]:10x6
+employee_id,first_name,last_name,email,hire_date,department
+101,Alice,Smith,d1-mnrn34@gmail.com,2020-01-15,Engineering
+102,Bob,Johnson,3uu3na899y@protonmail.com,2019-07-01,Human Resources
+103,Carol,Williams,bd0-8o277q2l@outlook.com,2021-03-20,Marketing
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: summarise the data
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-07-06 23:00:09 [INFO] Executing Step 2: CodeGenerator
+2025-07-06 23:00:11 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+df = dfs[0]
+description = df.describe(include='all')
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+result = { "type": "dataframe", "value": description }
+            ```
+            
+2025-07-06 23:00:11 [INFO] Executing Step 3: CachePopulation
+2025-07-06 23:00:11 [INFO] Executing Step 4: CodeExecution
+2025-07-06 23:00:11 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-07-06 23:00:11 [INFO] 
+Code running:
+```
+df = dfs[0]
+description = df.describe(include='all')
+result = {'type': 'dataframe', 'value': description}
+        ```
+2025-07-06 23:00:11 [INFO] Executing Step 5: ResultValidation
+2025-07-06 23:00:11 [INFO] Answer: {'type': 'dataframe', 'value':         employee_id first_name last_name                    email   hire_date   department
+count      10.00000         10        10                       10          10           10
+unique          NaN         10        10                       10          10            6
+top             NaN      Alice     Smith  alice.smith@example.com  2020-01-15  Engineering
+freq            NaN          1         1                        1           1            2
+mean      105.50000        NaN       NaN                      NaN         NaN          NaN
+std         3.02765        NaN       NaN                      NaN         NaN          NaN
+min       101.00000        NaN       NaN                      NaN         NaN          NaN
+25%       103.25000        NaN       NaN                      NaN         NaN          NaN
+50%       105.50000        NaN       NaN                      NaN         NaN          NaN
+75%       107.75000        NaN       NaN                      NaN         NaN          NaN
+max       110.00000        NaN       NaN                      NaN         NaN          NaN}
+2025-07-06 23:00:11 [INFO] Executed in: 2.897888660430908s
+2025-07-06 23:00:11 [INFO] Executing Step 6: ResultParsing
+2025-07-06 23:00:25 [INFO] Question: how many number of employees having salary greater than 70000?
+2025-07-06 23:00:25 [INFO] Running PandasAI with google LLM...
+2025-07-06 23:00:25 [INFO] Prompt ID: f945a812-acae-41bd-8ac9-75bebc10e0c0
+2025-07-06 23:00:25 [INFO] Executing Step 0: CacheLookup
+2025-07-06 23:00:25 [INFO] Using cached response
+2025-07-06 23:00:25 [INFO] Executing Step 1: PromptGeneration
+2025-07-06 23:00:25 [INFO] Executing Step 2: CodeGenerator
+2025-07-06 23:00:25 [INFO] Executing Step 3: CachePopulation
+2025-07-06 23:00:25 [INFO] Executing Step 4: CodeExecution
+2025-07-06 23:00:25 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-07-06 23:00:25 [INFO] 
+Code running:
+```
+df1 = dfs[0]
+df2 = dfs[1]
+df = pd.merge(df1, df2, on='employee_id', how='inner')
+count = len(df[df['salary'] > 70000])
+result = {'type': 'number', 'value': count}
+        ```
+2025-07-06 23:00:25 [INFO] Executing Step 5: ResultValidation
+2025-07-06 23:00:25 [INFO] Answer: {'type': 'number', 'value': 7}
+2025-07-06 23:00:25 [INFO] Executed in: 0.06668472290039062s
+2025-07-06 23:00:25 [INFO] Executing Step 6: ResultParsing
+2025-07-06 23:05:44 [INFO] Question: how many number of employees having salary greater than 70000?
+2025-07-06 23:05:45 [INFO] Running PandasAI with google LLM...
+2025-07-06 23:05:45 [INFO] Prompt ID: a82d83a0-1237-4492-a8c3-17476b0237f4
+2025-07-06 23:05:45 [INFO] Executing Step 0: CacheLookup
+2025-07-06 23:05:45 [INFO] Using cached response
+2025-07-06 23:05:45 [INFO] Executing Step 1: PromptGeneration
+2025-07-06 23:05:45 [INFO] Executing Step 2: CodeGenerator
+2025-07-06 23:05:45 [INFO] Executing Step 3: CachePopulation
+2025-07-06 23:05:45 [INFO] Executing Step 4: CodeExecution
+2025-07-06 23:05:45 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-07-06 23:05:45 [INFO] 
+Code running:
+```
+df1 = dfs[0]
+df2 = dfs[1]
+df = pd.merge(df1, df2, on='employee_id', how='inner')
+count = len(df[df['salary'] > 70000])
+result = {'type': 'number', 'value': count}
+        ```
+2025-07-06 23:05:45 [INFO] Executing Step 5: ResultValidation
+2025-07-06 23:05:45 [INFO] Answer: {'type': 'number', 'value': 7}
+2025-07-06 23:05:45 [INFO] Executed in: 1.2778964042663574s
+2025-07-06 23:05:45 [INFO] Executing Step 6: ResultParsing
+2025-07-06 23:06:13 [INFO] Question: list the employees having salary greater than 70000?
+2025-07-06 23:06:13 [INFO] Running PandasAI with google LLM...
+2025-07-06 23:06:13 [INFO] Prompt ID: d7c5f34f-4786-49c5-b7ab-549ecc408bc3
+2025-07-06 23:06:13 [INFO] Executing Step 0: CacheLookup
+2025-07-06 23:06:13 [INFO] Executing Step 1: PromptGeneration
+2025-07-06 23:06:13 [INFO] Using prompt: <dataframe>
+dfs[0]:10x6
+employee_id,first_name,last_name,email,hire_date,department
+101,Alice,Smith,_8zhcj_gpiwx@icloud.com,2020-01-15,Engineering
+102,Bob,Johnson,v-wd-57@aol.com,2019-07-01,Human Resources
+103,Carol,Williams,vc441b6o@hotmail.com,2021-03-20,Marketing
+</dataframe>
+<dataframe>
+dfs[1]:10x3
+employee_id,salary,effective_date
+102,60000,2023-07-01
+103,70000,2024-03-01
+101,95000,2024-01-01
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: list the employees having salary greater than 70000?
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-07-06 23:06:13 [INFO] Executing Step 2: CodeGenerator
+2025-07-06 23:06:16 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Assuming dfs[0] is the employee information DataFrame and dfs[1] is the salary information DataFrame
+employee_info = dfs[0]
+salary_info = dfs[1]
+
+# Merge the two DataFrames on 'employee_id'
+merged_df = pd.merge(employee_info, salary_info, on='employee_id', how='inner')
+
+# Filter for employees with salary greater than 70000
+high_earners = merged_df[merged_df['salary'] > 70000]
+
+# Select relevant columns for the result
+result_df = high_earners[['employee_id', 'first_name', 'last_name', 'salary']]
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+result = { "type": "dataframe", "value": result_df }
+            ```
+            
+2025-07-06 23:06:16 [INFO] Executing Step 3: CachePopulation
+2025-07-06 23:06:16 [INFO] Executing Step 4: CodeExecution
+2025-07-06 23:06:16 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-07-06 23:06:16 [INFO] 
+Code running:
+```
+employee_info = dfs[0]
+salary_info = dfs[1]
+merged_df = pd.merge(employee_info, salary_info, on='employee_id', how='inner')
+high_earners = merged_df[merged_df['salary'] > 70000]
+result_df = high_earners[['employee_id', 'first_name', 'last_name', 'salary']]
+result = {'type': 'dataframe', 'value': result_df}
+        ```
+2025-07-06 23:06:16 [INFO] Executing Step 5: ResultValidation
+2025-07-06 23:06:16 [INFO] Answer: {'type': 'dataframe', 'value':    employee_id first_name last_name  salary
+0          101      Alice     Smith   95000
+3          104      David     Brown   85000
+4          105      Emily     Davis  110000
+5          106      Frank    Miller   75000
+6          107      Grace    Wilson  120000
+8          109        Ivy    Taylor   72000
+9          110       Jack  Anderson   90000}
+2025-07-06 23:06:16 [INFO] Executed in: 2.668304204940796s
+2025-07-06 23:06:16 [INFO] Executing Step 6: ResultParsing
+2025-07-06 23:16:08 [INFO] Question: summarise the data
+2025-07-06 23:16:09 [INFO] Running PandasAI with google LLM...
+2025-07-06 23:16:09 [INFO] Prompt ID: 5f7d99d7-48c3-4086-b3d4-8ba1dad53604
+2025-07-06 23:16:09 [INFO] Executing Step 0: CacheLookup
+2025-07-06 23:16:09 [INFO] Using cached response
+2025-07-06 23:16:09 [INFO] Executing Step 1: PromptGeneration
+2025-07-06 23:16:09 [INFO] Executing Step 2: CodeGenerator
+2025-07-06 23:16:09 [INFO] Executing Step 3: CachePopulation
+2025-07-06 23:16:09 [INFO] Executing Step 4: CodeExecution
+2025-07-06 23:16:09 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-07-06 23:16:09 [INFO] 
+Code running:
+```
+df1 = dfs[0]
+df2 = dfs[1]
+summary1 = df1.describe(include='all')
+summary2 = df2.describe(include='all')
+result = {'type': 'dataframe', 'value': pd.concat([summary1, summary2], axis=1)}
+        ```
+2025-07-06 23:16:09 [INFO] Executing Step 5: ResultValidation
+2025-07-06 23:16:09 [INFO] Answer: {'type': 'dataframe', 'value':         employee_id first_name last_name                    email   hire_date   department  employee_id         salary effective_date
+count      10.00000         10        10                       10          10           10     10.00000      10.000000             10
+unique          NaN         10        10                       10          10            6          NaN            NaN             10
+top             NaN      Alice     Smith  alice.smith@example.com  2020-01-15  Engineering          NaN            NaN     2024-01-01
+freq            NaN          1         1                        1           1            2          NaN            NaN              1
+mean      105.50000        NaN       NaN                      NaN         NaN          NaN    105.50000   83500.000000            NaN
+std         3.02765        NaN       NaN                      NaN         NaN          NaN      3.02765   20549.398477            NaN
+min       101.00000        NaN       NaN                      NaN         NaN          NaN    101.00000   58000.000000            NaN
+25%       103.25000        NaN       NaN                      NaN         NaN          NaN    103.25000   70500.000000            NaN
+50%       105.50000        NaN       NaN                      NaN         NaN          NaN    105.50000   80000.000000            NaN
+75%       107.75000        NaN       NaN                      NaN         NaN          NaN    107.75000   93750.000000            NaN
+max       110.00000        NaN       NaN                      NaN         NaN          NaN    110.00000  120000.000000            NaN}
+2025-07-06 23:16:09 [INFO] Executed in: 1.2851598262786865s
+2025-07-06 23:16:09 [INFO] Executing Step 6: ResultParsing
+2025-07-06 23:17:16 [INFO] Question: list all employees having salary greater than 90000
+2025-07-06 23:17:16 [INFO] Running PandasAI with google LLM...
+2025-07-06 23:17:16 [INFO] Prompt ID: 45edf35a-408f-40ce-b8be-3de26499b5a4
+2025-07-06 23:17:16 [INFO] Executing Step 0: CacheLookup
+2025-07-06 23:17:16 [INFO] Executing Step 1: PromptGeneration
+2025-07-06 23:17:16 [INFO] Using prompt: <dataframe>
+dfs[0]:10x6
+employee_id,first_name,last_name,email,hire_date,department
+102,Bob,Johnson,nghow3zig@gmail.com,2019-07-01,Human Resources
+103,Carol,Williams,q3az3pguu@protonmail.com,2021-03-20,Marketing
+101,Alice,Smith,jgktgj9z5@yahoo.com,2020-01-15,Engineering
+</dataframe>
+<dataframe>
+dfs[1]:10x3
+employee_id,salary,effective_date
+102,60000,2023-07-01
+101,95000,2024-01-01
+103,70000,2024-03-01
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: list all employees having salary greater than 90000
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-07-06 23:17:16 [INFO] Executing Step 2: CodeGenerator
+2025-07-06 23:17:18 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+df = pd.merge(dfs[0], dfs[1], on='employee_id', how='inner')
+df_filtered = df[df['salary'] > 90000]
+
+result = { "type": "dataframe", "value": df_filtered }
+            ```
+            
+2025-07-06 23:17:18 [INFO] Executing Step 3: CachePopulation
+2025-07-06 23:17:18 [INFO] Executing Step 4: CodeExecution
+2025-07-06 23:17:18 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-07-06 23:17:18 [INFO] 
+Code running:
+```
+df = pd.merge(dfs[0], dfs[1], on='employee_id', how='inner')
+df_filtered = df[df['salary'] > 90000]
+result = {'type': 'dataframe', 'value': df_filtered}
+        ```
+2025-07-06 23:17:18 [INFO] Executing Step 5: ResultValidation
+2025-07-06 23:17:18 [INFO] Answer: {'type': 'dataframe', 'value':    employee_id first_name last_name                    email   hire_date   department  salary effective_date
+0          101      Alice     Smith  alice.smith@example.com  2020-01-15  Engineering   95000     2024-01-01
+4          105      Emily     Davis      emily.d@example.com  2022-05-01  Engineering  110000     2024-05-01
+6          107      Grace    Wilson      grace.w@example.com  2017-04-25        Legal  120000     2024-02-01}
+2025-07-06 23:17:18 [INFO] Executed in: 2.07311749458313s
+2025-07-06 23:17:18 [INFO] Executing Step 6: ResultParsing
