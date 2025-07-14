@@ -1,250 +1,801 @@
-# Directory: app/pages/3_Profile_Tables.py
-# Profile CSV or DB Tables visually and via quality checks
-
+# app/pages/3_Profile_Tables.py
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 from sqlalchemy import inspect
 from data_quality.quality_checks import run_quality_checks
-# from data_quality.profiler import generate_profile # We will modify this or assume it uses ydata-profiling
 from data_quality.convert_dates import convert_dates
+import streamlit.components.v1 as components
+import os
 
-# Import ProfileReport directly to ensure we are using ydata-profiling
+# Import ProfileReport directly
 try:
     from ydata_profiling import ProfileReport
 except ImportError:
     st.error("Error: ydata-profiling not found. Please install it using pip install ydata-profiling.")
-    st.stop() # Stop the app if the crucial library is missing
-
-# Streamlit component for displaying HTML
-import streamlit.components.v1 as components
-import os # For path manipulation
+    st.stop()
 
 # --- Page Configuration ---
 st.set_page_config(
     page_title="Profile Tables",
-    page_icon="📊", # Icon for this page in the sidebar
+    page_icon="📊",
     layout="wide"
 )
 
-# --- Header Section with Navigation ---
-col_nav1, col_nav2, col_nav3 = st.columns([1, 4, 1])
-with col_nav1:
+# --- Enhanced CSS ---
+st.markdown("""
+<style>
+    .page-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 2rem;
+        border-radius: 15px;
+        margin-bottom: 2rem;
+        text-align: center;
+        color: white;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    .metric-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        border-left: 5px solid #667eea;
+        margin-bottom: 1rem;
+        transition: transform 0.3s ease;
+    }
+    
+    .metric-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+    
+    .quality-pass {
+        background: linear-gradient(135deg, #d4f5d4 0%, #b8e6b8 100%);
+        border-left-color: #28a745;
+    }
+    
+    .quality-warn {
+        background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+        border-left-color: #ffc107;
+    }
+    
+    .quality-fail {
+        background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+        border-left-color: #dc3545;
+    }
+    
+    .progress-step {
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        margin: 0.5rem 0;
+        border-radius: 10px;
+        background: white;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    
+    .progress-step.completed {
+        background: linear-gradient(135deg, #d4f5d4 0%, #b8e6b8 100%);
+    }
+    
+    .progress-step.active {
+        background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+    }
+    
+    .dataset-selector {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        margin-bottom: 2rem;
+    }
+    
+    .profile-container {
+        background: white;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        margin-bottom: 2rem;
+    }
+</style>
+""", unsafe_allow_html=True)
+
+# --- Header Section ---
+st.markdown("""
+<div class="page-header">
+    <h1>📊 Data Profiling & Quality Analysis</h1>
+    <p>Generate comprehensive insights and quality reports for your datasets</p>
+</div>
+""", unsafe_allow_html=True)
+
+# --- Navigation ---
+nav_col1, nav_col2, nav_col3 = st.columns([1, 3, 1])
+with nav_col1:
     st.page_link("pages/2_Load_Data_CSV_or_Database.py", label="⬅ Load Data", icon="📂")
-with col_nav2:
-    st.markdown("## 📊 Profile Tables")
-with col_nav3:
+with nav_col3:
     st.page_link("pages/4_Chat_with_Data.py", label="Chat with Data ➡", icon="💬")
+
+# --- Progress Indicator ---
+st.markdown("### 📍 Current Progress")
+progress_col1, progress_col2, progress_col3 = st.columns(3)
+
+with progress_col1:
+    st.markdown("""
+    <div class="progress-step completed">
+        <span style="font-size: 1.5rem; margin-right: 1rem;">✅</span>
+        <div>
+            <strong>Step 1: Load Data</strong><br>
+            <small>Completed</small>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with progress_col2:
+    st.markdown("""
+    <div class="progress-step active">
+        <span style="font-size: 1.5rem; margin-right: 1rem;">📊</span>
+        <div>
+            <strong>Step 2: Profile Data</strong><br>
+            <small>Currently active</small>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with progress_col3:
+    st.markdown("""
+    <div class="progress-step">
+        <span style="font-size: 1.5rem; margin-right: 1rem;">💬</span>
+        <div>
+            <strong>Step 3: Chat with Data</strong><br>
+            <small>Next up</small>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
 st.markdown("---")
 
-df_sources = []   # To hold dataframes from CSV or DB
+# --- Data Source Collection ---
+df_sources = []
 
-# --- 1. Check for uploaded CSV(s) ---
-st.subheader("Select Data to Profile")
+# Check for CSV data
 csv_dataframes_available = "csv_dataframes" in st.session_state and st.session_state["csv_dataframes"]
 db_engine_available = "engine" in st.session_state
 
 selected_sources_options = []
 if csv_dataframes_available:
-    # Ensure keys are consistently handled, e.g., 'csv_my_file.csv' vs 'my_file.csv'
-    selected_sources_options.extend([f"CSV: {name.replace('csv_', '')}" for name in st.session_state["csv_dataframes"].keys()])
+    selected_sources_options.extend([f"📁 {name.replace('csv_', '')}" for name in st.session_state["csv_dataframes"].keys()])
 if db_engine_available:
     try:
         inspector = inspect(st.session_state["engine"])
         db_tables = inspector.get_table_names()
-        selected_sources_options.extend([f"DB: {table}" for table in db_tables])
+        selected_sources_options.extend([f"🗄️ {table}" for table in db_tables])
     except Exception as e:
         st.warning(f"⚠ Could not retrieve DB tables: {e}")
+
+# --- Dataset Selection ---
+st.markdown("""
+<div class="dataset-selector">
+    <h3>🎯 Select Datasets to Profile</h3>
+    <p>Choose the datasets you want to analyze and generate comprehensive reports for</p>
+</div>
+""", unsafe_allow_html=True)
+
+if not selected_sources_options:
+    st.error("❌ No data sources found. Please go back to 'Load Data' and upload CSV files or connect to a database.")
+    st.stop()
 
 selected_sources = st.multiselect(
     "Choose datasets to profile:",
     selected_sources_options,
-    help="Select one or more CSV files or database tables that you have loaded in the previous step."
+    default=selected_sources_options[:3],  # Select first 3 by default
+    help="Select the datasets you want to profile. You can choose multiple datasets."
 )
+
+if not selected_sources:
+    st.warning("⚠️ Please select at least one dataset to profile.")
+    st.stop()
 
 # Populate df_sources based on selections
 for source_id in selected_sources:
-    if source_id.startswith("CSV:"):
-        # Reconstruct the key used in session_state from the display name
-        original_key = f"csv_{source_id.replace('CSV: ', '')}"
+    if source_id.startswith("📁"):
+        original_key = f"csv_{source_id.replace('📁 ', '')}"
         if original_key in st.session_state["csv_dataframes"]:
             df_sources.append((source_id, st.session_state["csv_dataframes"][original_key]))
         else:
-            st.error(f"❌ Error: CSV data for '{source_id}' not found in session state. Please re-upload.")
-    elif source_id.startswith("DB:"):
-        table_name = source_id.replace("DB: ", "")
+            st.error(f"❌ Error: CSV data for '{source_id}' not found.")
+    elif source_id.startswith("🗄️"):
+        table_name = source_id.replace("🗄️ ", "")
         try:
-            with st.spinner(f"Loading table '{table_name}'..."):
-                # Fetch only a sample for profiling to prevent memory issues with very large tables
+            with st.spinner(f"📥 Loading table '{table_name}'..."):
                 df = pd.read_sql(f"SELECT * FROM {table_name} LIMIT 10000", st.session_state["engine"])
                 df_sources.append((source_id, df))
         except Exception as e:
-            st.error(f"❌ Could not load DB table *{table_name}*: {e}")
+            st.error(f"❌ Could not load DB table **{table_name}**: {e}")
 
-if not df_sources:
-    st.warning("Please go back to 'Load Data' and ensure you've uploaded CSVs or successfully connected to a database and selected them here.")
-    st.stop()
+# --- Dataset Overview ---
+if df_sources:
+    st.markdown("### 📋 Dataset Overview")
+    
+    overview_data = []
+    total_rows = 0
+    total_cols = 0
+    
+    for name, df in df_sources:
+        overview_data.append({
+            "Dataset": name,
+            "Rows": f"{len(df):,}",
+            "Columns": len(df.columns),
+            "Memory (MB)": f"{df.memory_usage(deep=True).sum() / (1024*1024):.2f}",
+            "Missing %": f"{(df.isnull().sum().sum() / (len(df) * len(df.columns)) * 100):.1f}%"
+        })
+        total_rows += len(df)
+        total_cols += len(df.columns)
+    
+    # Display overview metrics
+    metric_col1, metric_col2, metric_col3, metric_col4 = st.columns(4)
+    
+    with metric_col1:
+        st.metric("Total Datasets", len(df_sources))
+    with metric_col2:
+        st.metric("Total Rows", f"{total_rows:,}")
+    with metric_col3:
+        st.metric("Total Columns", total_cols)
+    with metric_col4:
+        total_memory = sum(df.memory_usage(deep=True).sum() for _, df in df_sources) / (1024*1024)
+        st.metric("Total Memory", f"{total_memory:.1f} MB")
+    
+    # Overview table
+    st.dataframe(pd.DataFrame(overview_data), use_container_width=True)
 
 st.markdown("---")
 
-# --- Function to generate and display profile ---
-# @st.cache_resource is typically used for heavy objects like LLMs, not for generating reports
-# Since report generation can be slow and depends on user interaction, we won't cache the function directly,
-# but rather focus on caching the result (the report HTML) if needed, or re-generating on demand.
-# For simplicity, we will regenerate the report every time the page reruns (if the user selects a dataframe).
-def generate_and_display_profile(df_name, df_data):
-    st.header(f"📈 Profiling: {df_name}")
+# --- Enhanced Profiling Function ---
+def generate_enhanced_profile(df_name, df_data):
+    """Generate and display enhanced profile with better visualizations"""
     
-    # Set base name for report and ensure output directory exists
+    st.markdown(f"""
+    <div class="profile-container">
+        <h2>📈 Profiling: {df_name}</h2>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Basic info
+    info_col1, info_col2, info_col3, info_col4 = st.columns(4)
+    
+    with info_col1:
+        st.metric("Rows", f"{len(df_data):,}")
+    with info_col2:
+        st.metric("Columns", len(df_data.columns))
+    with info_col3:
+        st.metric("Memory", f"{df_data.memory_usage(deep=True).sum() / (1024*1024):.2f} MB")
+    with info_col4:
+        missing_pct = (df_data.isnull().sum().sum() / (len(df_data) * len(df_data.columns)) * 100)
+        st.metric("Missing %", f"{missing_pct:.1f}%")
+    
+    # Data preview with enhanced styling
+    with st.expander("🔍 Data Preview & Column Information", expanded=False):
+        preview_col1, preview_col2 = st.columns([2, 1])
+        
+        with preview_col1:
+            st.markdown("**Sample Data:**")
+            st.dataframe(df_data.head(10), use_container_width=True)
+        
+        with preview_col2:
+            st.markdown("**Column Details:**")
+            col_info = []
+            for col in df_data.columns:
+                dtype = str(df_data[col].dtype)  # Convert to string
+                null_count = int(df_data[col].isnull().sum())  # Convert to int
+                unique_count = int(df_data[col].nunique())  # Convert to int
+                col_info.append({
+                    "Column": str(col),  # Ensure string
+                    "Type": dtype,
+                    "Nulls": null_count,
+                    "Unique": unique_count
+                })
+            st.dataframe(pd.DataFrame(col_info), use_container_width=True)
+    
+    # Data processing
+    df_processed = convert_dates(df_data.copy())
+    df_cleaned = df_processed.copy()
+    
+    initial_columns = df_cleaned.shape[1]
+    df_cleaned.dropna(axis=1, how="all", inplace=True)
+    df_cleaned.replace([float("inf"), float("-inf")], pd.NA, inplace=True)
+    
+    if df_cleaned.shape[1] < initial_columns:
+        st.info(f"ℹ️ Dropped {initial_columns - df_cleaned.shape[1]} column(s) with all missing values")
+    
+    if df_cleaned.empty:
+        st.warning(f"⚠️ DataFrame '{df_name}' is empty after cleaning. Cannot generate profile.")
+        return
+    
+    # Enhanced Quality Checks
+    st.markdown("### ✅ Data Quality Assessment")
+    
+    with st.spinner("🔍 Running quality checks..."):
+        quality_results = run_quality_checks(df_processed)
+        
+        quality_col1, quality_col2, quality_col3 = st.columns(3)
+        
+        with quality_col1:
+            missing_vals = quality_results.get("Missing Values (%)", {})
+            avg_missing = sum(missing_vals.values()) / len(missing_vals) if missing_vals else 0
+            quality_class = "quality-pass" if avg_missing < 5 else "quality-warn" if avg_missing < 20 else "quality-fail"
+            
+            st.markdown(f"""
+            <div class="metric-card {quality_class}">
+                <h4>📊 Missing Values</h4>
+                <p><strong>{avg_missing:.1f}%</strong> average missing</p>
+                <small>{len([v for v in missing_vals.values() if v > 0])} columns affected</small>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        with quality_col2:
+            duplicate_count = quality_results.get("Duplicate Rows", 0)
+            duplicate_pct = (duplicate_count / len(df_data) * 100) if len(df_data) > 0 else 0
+            quality_class = "quality-pass" if duplicate_pct < 1 else "quality-warn" if duplicate_pct < 5 else "quality-fail"
+            
+            st.markdown(f"""
+            <div class="metric-card {quality_class}">
+                <h4>🔄 Duplicate Rows</h4>
+                <p><strong>{duplicate_count:,}</strong> duplicates</p>
+                <small>{duplicate_pct:.1f}% of total rows</small>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        with quality_col3:
+            constant_cols = quality_results.get("Constant Columns", [])
+            quality_class = "quality-pass" if len(constant_cols) == 0 else "quality-warn"
+            
+            st.markdown(f"""
+            <div class="metric-card {quality_class}">
+                <h4>📐 Constant Columns</h4>
+                <p><strong>{len(constant_cols)}</strong> constant</p>
+                <small>Columns with single value</small>
+            </div>
+            """, unsafe_allow_html=True)
+    
+    # Enhanced Visualizations
+    st.markdown("### 📈 Visual Analysis")
+    
+    # Data type distribution
+    viz_col1, viz_col2 = st.columns(2)
+    
+    with viz_col1:
+        try:
+            # Convert dtypes to string to avoid JSON serialization issues
+            dtype_counts = df_cleaned.dtypes.astype(str).value_counts()
+            
+            # Create labels and values for the pie chart
+            labels = [str(dtype) for dtype in dtype_counts.index]
+            values = dtype_counts.values.tolist()
+            
+            fig_dtype = px.pie(
+                values=values,
+                names=labels,
+                title="📊 Data Types Distribution",
+                color_discrete_sequence=px.colors.qualitative.Set3
+            )
+            fig_dtype.update_layout(height=400)
+            st.plotly_chart(fig_dtype, use_container_width=True)
+        except Exception as e:
+            st.warning(f"Could not create data types chart: {e}")
+            # Fallback display
+            dtype_df = pd.DataFrame({
+                'Data Type': [str(dtype) for dtype in df_cleaned.dtypes.astype(str).value_counts().index],
+                'Count': df_cleaned.dtypes.astype(str).value_counts().values
+            })
+            st.dataframe(dtype_df, use_container_width=True)
+    
+    with viz_col2:
+        # Missing values heatmap for top columns with missing data
+        missing_data = df_cleaned.isnull().sum().sort_values(ascending=False)
+        top_missing = missing_data.head(10)
+        
+        if top_missing.sum() > 0:
+            try:
+                # Convert to basic Python types to avoid serialization issues
+                column_names = [str(col) for col in top_missing.index]
+                missing_counts = [int(count) for count in top_missing.values]
+                
+                fig_missing = px.bar(
+                    x=column_names,
+                    y=missing_counts,
+                    title="🕳️ Top Columns with Missing Values",
+                    labels={'x': 'Columns', 'y': 'Missing Count'},
+                    color=missing_counts,
+                    color_continuous_scale='Reds'
+                )
+                fig_missing.update_layout(height=400, xaxis_tickangle=-45)
+                st.plotly_chart(fig_missing, use_container_width=True)
+            except Exception as e:
+                st.warning(f"Could not create missing values chart: {e}")
+                # Fallback display
+                missing_df = pd.DataFrame({
+                    'Column': [str(col) for col in top_missing.index],
+                    'Missing Count': [int(count) for count in top_missing.values]
+                })
+                st.dataframe(missing_df, use_container_width=True)
+        else:
+            st.success("✅ No missing values found!")
+    
+    # Numeric columns analysis
+    numeric_cols = df_cleaned.select_dtypes(include=['number']).columns
+    if len(numeric_cols) > 0:
+        st.markdown("#### 📊 Numeric Columns Analysis")
+        
+        # Create distribution plots for numeric columns
+        num_cols_to_show = min(4, len(numeric_cols))
+        if num_cols_to_show > 0:
+            cols = st.columns(num_cols_to_show)
+            
+            for i, col in enumerate(numeric_cols[:num_cols_to_show]):
+                with cols[i]:
+                    try:
+                        fig_hist = px.histogram(
+                            df_cleaned,
+                            x=col,
+                            title=f"📈 {col}",
+                            nbins=30,
+                            color_discrete_sequence=['#667eea']
+                        )
+                        fig_hist.update_layout(height=300, showlegend=False)
+                        st.plotly_chart(fig_hist, use_container_width=True)
+                        
+                        # Show basic stats
+                        stats = df_cleaned[col].describe()
+                        st.metric(f"Mean", f"{float(stats['mean']):.2f}")
+                        st.metric(f"Std", f"{float(stats['std']):.2f}")
+                        
+                    except Exception as e:
+                        st.warning(f"Could not plot {col}: {e}")
+    
+    # Categorical columns analysis
+    categorical_cols = df_cleaned.select_dtypes(include=['object', 'category']).columns
+    if len(categorical_cols) > 0:
+        st.markdown("#### 🏷️ Categorical Columns Analysis")
+        
+        cat_analysis_col1, cat_analysis_col2 = st.columns(2)
+        
+        with cat_analysis_col1:
+            # Show unique value counts for categorical columns
+            cat_stats = []
+            for col in categorical_cols[:10]:  # Show top 10
+                try:
+                    unique_count = int(df_cleaned[col].nunique())  # Convert to int
+                    most_common_series = df_cleaned[col].mode()
+                    most_common = str(most_common_series.iloc[0]) if not most_common_series.empty else "N/A"
+                    
+                    # Truncate long strings
+                    if len(most_common) > 20:
+                        most_common = most_common[:20] + "..."
+                    
+                    cat_stats.append({
+                        "Column": str(col),  # Ensure string
+                        "Unique Values": unique_count,
+                        "Most Common": most_common
+                    })
+                except Exception as e:
+                    # Skip problematic columns
+                    st.warning(f"Could not analyze column {col}: {e}")
+                    continue
+            
+            if cat_stats:
+                st.dataframe(pd.DataFrame(cat_stats), use_container_width=True)
+            else:
+                st.info("No categorical data to display")
+        
+        with cat_analysis_col2:
+            # Visualize top categorical column
+            if len(categorical_cols) > 0:
+                try:
+                    top_cat_col = categorical_cols[0]
+                    value_counts = df_cleaned[top_cat_col].value_counts().head(10)
+                    
+                    if len(value_counts) > 0:
+                        # Convert to basic Python types
+                        categories = [str(cat) for cat in value_counts.index]
+                        counts = [int(count) for count in value_counts.values]
+                        
+                        fig_cat = px.bar(
+                            x=categories,
+                            y=counts,
+                            title=f"🏷️ Top Values in {top_cat_col}",
+                            labels={'x': str(top_cat_col), 'y': 'Count'},
+                            color=counts,
+                            color_continuous_scale='Viridis'
+                        )
+                        fig_cat.update_layout(height=400, xaxis_tickangle=-45)
+                        st.plotly_chart(fig_cat, use_container_width=True)
+                    else:
+                        st.info("No categorical data to visualize")
+                except Exception as e:
+                    st.warning(f"Could not create categorical chart: {e}")
+                    # Show fallback table
+                    if len(categorical_cols) > 0:
+                        top_cat_col = categorical_cols[0]
+                        value_counts = df_cleaned[top_cat_col].value_counts().head(10)
+                        fallback_df = pd.DataFrame({
+                            'Category': [str(cat) for cat in value_counts.index],
+                            'Count': [int(count) for count in value_counts.values]
+                        })
+                        st.dataframe(fallback_df, use_container_width=True)
+    
+    # Correlation analysis for numeric data
+    if len(numeric_cols) > 1:
+        st.markdown("#### 🔗 Correlation Analysis")
+        
+        try:
+            correlation_matrix = df_cleaned[numeric_cols].corr()
+            
+            # Convert to basic types and handle any NaN values
+            correlation_matrix = correlation_matrix.fillna(0)
+            
+            fig_corr = px.imshow(
+                correlation_matrix,
+                title="🔗 Correlation Heatmap",
+                color_continuous_scale='RdBu',
+                aspect='auto',
+                text_auto=True
+            )
+            fig_corr.update_layout(height=500)
+            st.plotly_chart(fig_corr, use_container_width=True)
+        except Exception as e:
+            st.warning(f"Could not create correlation heatmap: {e}")
+            # Show correlation as a table instead
+            try:
+                correlation_matrix = df_cleaned[numeric_cols].corr().fillna(0)
+                st.dataframe(correlation_matrix, use_container_width=True)
+            except Exception as e2:
+                st.error(f"Could not display correlation data: {e2}")
+    
+    # Generate full profile report
+    st.markdown("### 📋 Comprehensive Profile Report")
+    
     base_name = df_name.replace(" ", "").replace(":", "").replace(".", "").strip()
     output_dir = "app/outputs"
-    os.makedirs(output_dir, exist_ok=True) # Ensure directory exists
+    os.makedirs(output_dir, exist_ok=True)
     report_path = os.path.join(output_dir, f"{base_name}_profile_report.html")
-
-    # Display source information and preview
-    st.subheader(f"Data Preview for {df_name}:")
-    with st.expander("Click to see raw data head", expanded=False):
-        st.dataframe(df_data.head())
-
-    # Convert date columns (if applicable) - use a copy to avoid modifying original df_data
-    df_processed = convert_dates(df_data.copy())
-    if not df_processed.equals(df_data): # Check if any dates were converted
-        st.info("ℹ Date columns have been converted for better profiling.")
     
-    # Clean DataFrame before profiling
-    df_cleaned = df_processed.copy()
-    initial_columns = df_cleaned.shape[1]
-    
-    # Drop columns with all NaNs - ensure it works on a copy
-    df_cleaned.dropna(axis=1, how="all", inplace=True)
-    if df_cleaned.shape[1] < initial_columns:
-        st.info(f"ℹ Dropped {initial_columns - df_cleaned.shape[1]} column(s) with all missing values for profiling.")
-    
-    # Replace infinities with NA for better profiling compatibility
-    df_cleaned.replace([float("inf"), float("-inf")], pd.NA, inplace=True)
-
-    # Check if DataFrame is empty after cleaning
-    if df_cleaned.empty:
-        st.warning(f"⚠ DataFrame '{df_name}' is empty after cleaning. Cannot generate profile.")
-        return # Exit the function if DataFrame is empty
-
-    # Generate profile and display results
-    st.subheader("Profiling Report")
-    with st.spinner(f"Generating detailed profile for {df_name}... This might take a moment."):
+    with st.spinner(f"📊 Generating comprehensive profile for {df_name}..."):
         try:
-            # Generate the profile using ydata_profiling.ProfileReport
-            # You can add more arguments to ProfileReport if needed, e.g., minimal=True for faster reports
-            profile = ProfileReport(df_cleaned, title=f"{df_name} Profile Report", html={"style":{"full_width":True}})
-
-            # Display overview data from the profile object
-            with st.expander("📋 Overview Summary", expanded=True):
-                # Accessing properties directly from the ProfileReport object or its description
-                # ydata-profiling 4.x has a more direct way to get summary statistics
-                
-                # These are attributes of the Report object after computation,
-                # or accessed via profile.get_description().table
-                try:
-                    summary_data = profile.get_description().table
-                    st.markdown(f"- *Rows*: {summary_data['n']} \n"
-                                f"- *Columns*: {summary_data['n_var']} \n"
-                                f"- *Missing cells*: {summary_data['n_cells_missing']} \n"
-                                f"- *Duplicate rows*: {summary_data['n_duplicates']}")
-
-                    st.markdown("*Data Types:*")
-                    # Convert to dictionary if it's a pandas Series
-                    types_counts = summary_data['types'].to_dict() if hasattr(summary_data['types'], 'to_dict') else summary_data['types']
-                    for dtype, count in types_counts.items():
-                        st.markdown(f"- *{dtype}*: {count}")
-                except Exception as e:
-                    st.warning(f"⚠ Failed to extract profiling summary: {e}. Raw description might be different. Error: {e}")
-                    st.json(profile.get_description()) # Show full description for debugging
-
-            # Run quality checks (using the df_processed before all-NaN column dropping)
-# Run quality checks
-            # Run quality checks
-            st.subheader("✅ Data Quality Checks:")
-            with st.expander("View Quality Check Results", expanded=False):
-                quality_results = run_quality_checks(df_processed) # Use df_processed for quality checks
-                
-                # --- Debugging Quality Results --- (Keep this for now!)
-                st.write("--- Debugging Quality Results ---")
-                st.write(f"Type of quality_results: {type(quality_results)}")
-                st.write("Content of quality_results:")
-                st.json(quality_results) # Show the full structure
-                st.write("--- End Debugging ---")
-
-                # Check if quality_results is a dictionary
-                if isinstance(quality_results, dict):
-                    all_checks_passed = True # Assume all pass initially
-                    for check_name, check_data in quality_results.items():
-                        if isinstance(check_data, dict) and "status" in check_data:
-                            # Check for "FAIL" or "WARN" statuses specifically
-                            if check_data["status"] == "FAIL" or check_data["status"] == "WARN":
-                                all_checks_passed = False
-                                # Do NOT break here, continue to find other warnings/failures
-                        else:
-                            st.warning(f"⚠ Quality check '{check_name}' has unexpected format (missing 'status' key or not a dict).")
-                            all_checks_passed = False # If format is wrong, consider overall status as "not passed"
-
-                    if all_checks_passed:
-                        st.success("All basic quality checks passed!")
-                    else:
-                        # This is the line that's printing now
-                        st.error("Some quality checks failed or had an unexpected format. Please review the results.")
-                else:
-                    st.error("❌ Quality check results are not in the expected dictionary format.")
-                    st.json(quality_results) # Display raw result if not a dict
-
-            # Save profiling report to HTML file
+            # Generate the profile with optimized settings
+            profile = ProfileReport(
+                df_cleaned,
+                title=f"{df_name} Profile Report",
+                explorative=True,
+                html={'style': {'full_width': True}},
+                progress_bar=False
+            )
+            
+            # Save the report
             profile.to_file(report_path)
-            st.success(f"Profiling report generated and saved to {report_path}")
-
-            # Read the HTML file and display it using Streamlit components
-            st.subheader("Interactive Profiling Report")
-            with st.expander("View Interactive Report", expanded=True):
-                with open(report_path, "r", encoding="utf-8") as f:
-                    html_report = f.read()
-                    # Use Streamlit components to embed the HTML
-                    components.html(html_report, height=800, scrolling=True)
-
-            # Download profiling report
+            
+            # Display summary statistics
+            with st.expander("📊 Profile Summary", expanded=True):
+                try:
+                    summary = profile.get_description()
+                    table_stats = summary.table
+                    
+                    summary_col1, summary_col2, summary_col3, summary_col4 = st.columns(4)
+                    
+                    with summary_col1:
+                        st.metric("Total Variables", table_stats['n_var'])
+                    with summary_col2:
+                        st.metric("Observations", f"{table_stats['n']:,}")
+                    with summary_col3:
+                        st.metric("Missing Cells", f"{table_stats['n_cells_missing']:,}")
+                    with summary_col4:
+                        st.metric("Duplicate Rows", f"{table_stats['n_duplicates']:,}")
+                    
+                    # Variable types breakdown
+                    st.markdown("**Variable Types:**")
+                    types_data = table_stats['types']
+                    for var_type, count in types_data.items():
+                        if count > 0:
+                            st.write(f"• **{var_type.title()}**: {count}")
+                            
+                except Exception as e:
+                    st.warning(f"Could not extract detailed summary: {e}")
+            
+            # Embed the interactive report
+            st.markdown("#### 🔍 Interactive Profile Report")
+            
+            with st.expander("View Full Interactive Report", expanded=False):
+                try:
+                    with open(report_path, "r", encoding="utf-8") as f:
+                        html_report = f.read()
+                        components.html(html_report, height=800, scrolling=True)
+                except Exception as e:
+                    st.error(f"Could not display interactive report: {e}")
+            
+            # Download option
             with open(report_path, "rb") as f:
                 st.download_button(
                     "📥 Download Full HTML Report",
                     f,
-                    f"{base_name}.html",
+                    f"{base_name}_profile_report.html",
                     "text/html",
-                    help="Download the complete interactive profiling report as an HTML file."
+                    help="Download the complete interactive profiling report"
                 )
-
+            
+            st.success(f"✅ Profile report generated successfully!")
+            
         except Exception as e:
-            st.error(f"❌ An error occurred during profiling for {df_name}: {e}")
-            st.info("Please ensure your data is correctly formatted and ydata-profiling is installed.")
-    
-    st.markdown("### 📈 Visual Distributions:")
-    # Show distribution charts (only for numeric columns for simplicity)
-    numeric_cols = df_cleaned.select_dtypes("number").columns
-    if not numeric_cols.empty:
-        for col in numeric_cols:
-            try:
-                fig = px.histogram(df_cleaned, x=col, title=f"Distribution of {col}")
-                st.plotly_chart(fig, use_container_width=True)
-            except Exception as e:
-                st.warning(f"Could not plot histogram for {col}: {e}")
-    else:
-        st.info("No numeric columns found to plot distributions.")
+            st.error(f"❌ Error generating profile for {df_name}: {e}")
+            st.info("💡 This might be due to data complexity. Try with a smaller sample or check data quality.")
 
-    st.markdown("---") # Separator between multiple profiled dataframes
+    st.markdown("---")
 
-# --- 4. Profile each DataFrame ---
+# --- Process Each Dataset with Error Handling ---
 for source_name, df in df_sources:
-    generate_and_display_profile(source_name, df)
+    try:
+        generate_enhanced_profile(source_name, df)
+    except Exception as e:
+        st.error(f"❌ Error profiling {source_name}: {str(e)}")
+        st.info("💡 Try with a smaller dataset or check data quality")
+        
+        # Show basic fallback information
+        with st.expander(f"Basic Info for {source_name}", expanded=True):
+            basic_col1, basic_col2, basic_col3 = st.columns(3)
+            with basic_col1:
+                st.metric("Rows", f"{len(df):,}")
+            with basic_col2:
+                st.metric("Columns", len(df.columns))
+            with basic_col3:
+                st.metric("Memory", f"{df.memory_usage(deep=True).sum() / (1024*1024):.2f} MB")
+            
+            st.dataframe(df.head(), use_container_width=True)
 
-# --- Navigation Buttons (Bottom of Page) ---
-st.markdown("<br>", unsafe_allow_html=True) # Add some space
-col_bottom_nav1, col_bottom_nav2 = st.columns([1, 1])
-with col_bottom_nav1:
+# --- Summary Dashboard ---
+if len(df_sources) > 1:
+    st.markdown("## 📊 Multi-Dataset Summary Dashboard")
+    
+    # Aggregate statistics
+    summary_stats = []
+    for name, df in df_sources:
+        try:
+            stats = {
+                "Dataset": str(name),
+                "Rows": int(len(df)),
+                "Columns": int(len(df.columns)),
+                "Numeric Cols": int(len(df.select_dtypes(include=['number']).columns)),
+                "Text Cols": int(len(df.select_dtypes(include=['object']).columns)),
+                "Missing %": f"{float(df.isnull().sum().sum() / (len(df) * len(df.columns)) * 100):.1f}%",
+                "Memory (MB)": f"{float(df.memory_usage(deep=True).sum() / (1024*1024)):.2f}"
+            }
+            summary_stats.append(stats)
+        except Exception as e:
+            st.warning(f"Could not generate summary for {name}: {e}")
+            continue
+    
+    if summary_stats:  # Only proceed if we have valid summary stats
+        summary_df = pd.DataFrame(summary_stats)
+        
+        # Display summary table
+        st.dataframe(summary_df, use_container_width=True)
+        
+        # Comparative visualizations
+        comp_col1, comp_col2 = st.columns(2)
+        
+        with comp_col1:
+            try:
+                # Dataset size comparison
+                fig_size = px.bar(
+                    summary_df,
+                    x="Dataset",
+                    y="Rows",
+                    title="📊 Dataset Size Comparison",
+                    color="Rows",
+                    color_continuous_scale="Blues"
+                )
+                fig_size.update_layout(height=400, xaxis_tickangle=-45)
+                st.plotly_chart(fig_size, use_container_width=True)
+            except Exception as e:
+                st.warning(f"Could not create size comparison chart: {e}")
+        
+        with comp_col2:
+            try:
+                # Column type distribution
+                fig_cols = px.bar(
+                    summary_df,
+                    x="Dataset",
+                    y=["Numeric Cols", "Text Cols"],
+                    title="🏷️ Column Types by Dataset",
+                    barmode="stack"
+                )
+                fig_cols.update_layout(height=400, xaxis_tickangle=-45)
+                st.plotly_chart(fig_cols, use_container_width=True)
+            except Exception as e:
+                st.warning(f"Could not create column types chart: {e}")
+    else:
+        st.warning("No valid summary statistics could be generated.")
+
+# --- Next Steps Section ---
+st.markdown("---")
+st.markdown("## 🚀 Next Steps")
+
+next_col1, next_col2, next_col3 = st.columns(3)
+
+with next_col1:
+    st.markdown("""
+    <div class="metric-card">
+        <h4>💬 Chat with Your Data</h4>
+        <p>Ask questions in natural language and get intelligent answers from your analyzed datasets.</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+with next_col2:
+    st.markdown("""
+    <div class="metric-card">
+        <h4>📊 Advanced Analysis</h4>
+        <p>Use the profiling insights to guide deeper statistical analysis and machine learning tasks.</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+with next_col3:
+    st.markdown("""
+    <div class="metric-card">
+        <h4>📁 Export Results</h4>
+        <p>Download your profiling reports and share insights with your team or stakeholders.</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+# --- Navigation Buttons ---
+st.markdown("### 🎯 Continue Your Analysis Journey")
+
+nav_button_col1, nav_button_col2, nav_button_col3 = st.columns([1, 2, 1])
+
+with nav_button_col1:
     st.page_link("pages/2_Load_Data_CSV_or_Database.py", label="⬅ Load More Data", icon="📂")
-with col_bottom_nav2:
-    st.page_link("pages/4_Chat_with_Data.py", label="Proceed to Chat with Data➡",icon="💬")
+
+with nav_button_col2:
+    # Update progress to show profiling completed
+    st.markdown("""
+    <div class="progress-step completed" style="justify-content: center;">
+        <span style="font-size: 1.5rem; margin-right: 1rem;">✅</span>
+        <div style="text-align: center;">
+            <strong>Data Profiling Completed!</strong><br>
+            <small>Ready for interactive analysis</small>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with nav_button_col3:
+    st.page_link("pages/4_Chat_with_Data.py", label="Chat with Data ➡", icon="💬")
+
+# --- Performance Tips ---
+with st.expander("⚡ Performance Tips & Insights", expanded=False):
+    st.markdown("""
+    ### 💡 Optimization Recommendations
+    
+    **For Large Datasets:**
+    - Consider sampling your data for faster profiling
+    - Focus on key columns for initial analysis
+    - Use database views to pre-filter data
+    
+    **Data Quality Improvements:**
+    - Address high missing value percentages
+    - Remove or investigate constant columns
+    - Consider data type optimizations
+    
+    **Next Analysis Steps:**
+    - Use chat functionality for specific questions
+    - Export reports for documentation
+    - Share insights with stakeholders
+    """)
+
+# --- Footer ---
+st.markdown("---")
+st.markdown("""
+<div style="text-align: center; padding: 2rem; background: #f8f9fa; border-radius: 10px; margin-top: 2rem;">
+    <h4>🎉 Profiling Complete!</h4>
+    <p style="margin: 0; color: #666;">
+        Your datasets have been thoroughly analyzed. Proceed to chat with your data for deeper insights!
+    </p>
+</div>
+""", unsafe_allow_html=True)

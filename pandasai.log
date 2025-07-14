@@ -11662,3 +11662,789 @@ result = {'type': 'dataframe', 'value': df_filtered}
 6          107      Grace    Wilson      grace.w@example.com  2017-04-25        Legal  120000     2024-02-01}
 2025-07-06 23:17:18 [INFO] Executed in: 2.07311749458313s
 2025-07-06 23:17:18 [INFO] Executing Step 6: ResultParsing
+2025-07-12 20:24:28 [INFO] Question: summarise this data
+2025-07-12 20:24:29 [INFO] Running PandasAI with huggingface LLM...
+2025-07-12 20:24:29 [INFO] Prompt ID: a26b8548-1f0f-4841-be73-2a3c981b1e55
+2025-07-12 20:24:29 [INFO] Executing Step 0: CacheLookup
+2025-07-12 20:24:29 [INFO] Executing Step 1: PromptGeneration
+2025-07-12 20:24:29 [INFO] Using prompt: <dataframe>
+dfs[0]:10x6
+employee_id,first_name,last_name,email,hire_date,department
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: summarise this data
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-07-12 20:24:29 [INFO] Executing Step 2: CodeGenerator
+2025-07-12 20:24:30 [ERROR] Pipeline failed on step 2: No code found in the response
+2025-07-12 20:24:40 [INFO] Question: record count
+2025-07-12 20:24:40 [INFO] Running PandasAI with huggingface LLM...
+2025-07-12 20:24:40 [INFO] Prompt ID: ae059ecc-b04e-437e-a801-73bc329c934f
+2025-07-12 20:24:40 [INFO] Executing Step 0: CacheLookup
+2025-07-12 20:24:40 [INFO] Executing Step 1: PromptGeneration
+2025-07-12 20:24:40 [INFO] Using prompt: <dataframe>
+dfs[0]:10x6
+employee_id,first_name,last_name,email,hire_date,department
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: record count
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-07-12 20:24:40 [INFO] Executing Step 2: CodeGenerator
+2025-07-12 20:24:40 [ERROR] Pipeline failed on step 2: No code found in the response
+2025-07-12 20:26:06 [INFO] Question: record count
+2025-07-12 20:26:06 [INFO] Running PandasAI with huggingface LLM...
+2025-07-12 20:26:06 [INFO] Prompt ID: 3571b6c0-b9d7-400a-90ce-2df6e1486200
+2025-07-12 20:26:06 [INFO] Executing Step 0: CacheLookup
+2025-07-12 20:26:06 [INFO] Executing Step 1: PromptGeneration
+2025-07-12 20:26:06 [INFO] Using prompt: <dataframe>
+dfs[0]:10x6
+employee_id,first_name,last_name,email,hire_date,department
+</dataframe>
+<dataframe>
+dfs[1]:10x3
+employee_id,salary,effective_date
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: record count
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-07-12 20:26:06 [INFO] Executing Step 2: CodeGenerator
+2025-07-12 20:26:07 [ERROR] Pipeline failed on step 2: No code found in the response
+2025-07-12 20:29:06 [INFO] Question: how many records are there ?
+2025-07-12 20:29:06 [INFO] Running PandasAI with google LLM...
+2025-07-12 20:29:06 [INFO] Prompt ID: bf18d931-c461-4fa5-b2f6-aafdccae0e16
+2025-07-12 20:29:06 [INFO] Executing Step 0: CacheLookup
+2025-07-12 20:29:06 [INFO] Executing Step 1: PromptGeneration
+2025-07-12 20:29:06 [INFO] Using prompt: <dataframe>
+dfs[0]:10x6
+employee_id,first_name,last_name,email,hire_date,department
+</dataframe>
+<dataframe>
+dfs[1]:10x3
+employee_id,salary,effective_date
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: how many records are there ?
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-07-12 20:29:06 [INFO] Executing Step 2: CodeGenerator
+2025-07-12 20:29:09 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+count_df1 = len(dfs[0])
+count_df2 = len(dfs[1])
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+result = { "type": "string", "value": f"The first dataframe has {count_df1} records and the second dataframe has {count_df2} records." }
+            ```
+            
+2025-07-12 20:29:09 [INFO] Executing Step 3: CachePopulation
+2025-07-12 20:29:09 [INFO] Executing Step 4: CodeExecution
+2025-07-12 20:29:09 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-07-12 20:29:09 [INFO] 
+Code running:
+```
+count_df1 = len(dfs[0])
+count_df2 = len(dfs[1])
+result = {'type': 'string', 'value': f'The first dataframe has {count_df1} records and the second dataframe has {count_df2} records.'}
+        ```
+2025-07-12 20:29:09 [INFO] Executing Step 5: ResultValidation
+2025-07-12 20:29:09 [INFO] Answer: {'type': 'string', 'value': 'The first dataframe has 10 records and the second dataframe has 10 records.'}
+2025-07-12 20:29:09 [INFO] Executed in: 2.6413767337799072s
+2025-07-12 20:29:09 [INFO] Executing Step 6: ResultParsing
+2025-07-12 20:29:29 [INFO] Question: plot department wise salary
+2025-07-12 20:29:29 [INFO] Running PandasAI with google LLM...
+2025-07-12 20:29:29 [INFO] Prompt ID: c6349bdc-a6dc-45a4-b7a1-8d4096be6857
+2025-07-12 20:29:29 [INFO] Executing Step 0: CacheLookup
+2025-07-12 20:29:29 [INFO] Executing Step 1: PromptGeneration
+2025-07-12 20:29:29 [INFO] Using prompt: <dataframe>
+dfs[0]:10x6
+employee_id,first_name,last_name,email,hire_date,department
+</dataframe>
+<dataframe>
+dfs[1]:10x3
+employee_id,salary,effective_date
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: plot department wise salary
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-07-12 20:29:29 [INFO] Executing Step 2: CodeGenerator
+2025-07-12 20:29:31 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Write code here
+df1 = dfs[0]
+df2 = dfs[1]
+
+df = pd.merge(df1, df2, on='employee_id', how='inner')
+
+department_salary = df.groupby('department')['salary'].mean()
+
+plt.figure(figsize=(10, 6))
+department_salary.plot(kind='bar')
+plt.title('Average Salary by Department')
+plt.xlabel('Department')
+plt.ylabel('Average Salary')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.savefig("department_salary.png")
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+result = { "type": "plot", "value": "department_salary.png" }
+            ```
+            
+2025-07-12 20:29:31 [INFO] Executing Step 3: CachePopulation
+2025-07-12 20:29:31 [INFO] Executing Step 4: CodeExecution
+2025-07-12 20:29:31 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-07-12 20:29:31 [INFO] 
+Code running:
+```
+df1 = dfs[0]
+df2 = dfs[1]
+df = pd.merge(df1, df2, on='employee_id', how='inner')
+department_salary = df.groupby('department')['salary'].mean()
+plt.figure(figsize=(10, 6))
+department_salary.plot(kind='bar')
+plt.title('Average Salary by Department')
+plt.xlabel('Department')
+plt.ylabel('Average Salary')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.savefig('C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png')
+result = {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+        ```
+2025-07-12 20:29:31 [INFO] Executing Step 5: ResultValidation
+2025-07-12 20:29:31 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+2025-07-12 20:29:31 [INFO] Executed in: 2.3900513648986816s
+2025-07-12 20:29:31 [INFO] Executing Step 6: ResultParsing
+2025-07-13 00:47:41 [INFO] Question: record count
+2025-07-13 00:47:43 [INFO] Running PandasAI with ollama LLM...
+2025-07-13 00:47:43 [INFO] Prompt ID: 07b0ffae-d47a-46ca-98f1-5db876e54a15
+2025-07-13 00:47:43 [INFO] Executing Step 0: CacheLookup
+2025-07-13 00:47:43 [INFO] Executing Step 1: PromptGeneration
+2025-07-13 00:47:43 [INFO] Using prompt: <dataframe>
+dfs[0]:10x6
+employee_id,first_name,last_name,email,hire_date,department
+</dataframe>
+<dataframe>
+dfs[1]:10x3
+employee_id,salary,effective_date
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: record count
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-07-13 00:47:43 [INFO] Executing Step 2: CodeGenerator
+2025-07-13 00:48:17 [INFO] Code generated:
+            ```
+            # Import pandas
+import pandas as pd
+# Create a function to count unique values in a column
+def count_unique_values(df, column):
+    return {"type": "dataframe", "value": df[column].nunique()}
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+result = count_unique_values(df, 'department')
+            ```
+            
+2025-07-13 00:48:17 [INFO] Executing Step 3: CachePopulation
+2025-07-13 00:48:17 [INFO] Executing Step 4: CodeExecution
+2025-07-13 00:48:17 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-07-13 00:48:17 [INFO] 
+Code running:
+```
+def count_unique_values(df, column):
+    return {'type': 'dataframe', 'value': df[column].nunique()}
+
+
+result = count_unique_values(df, 'department')
+        ```
+2025-07-13 00:48:17 [WARNING] Failed to execute code with a correction framework [retry number: 1]
+2025-07-13 00:48:17 [ERROR] Failed with error: Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\pipelines\smart_datalake_chat\code_execution.py", line 52, in execute
+    result = pipeline_context.query_exec_tracker.execute_func(
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\query_exec_tracker.py", line 128, in execute_func
+    result = function(*args, **kwargs)
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\code_manager.py", line 207, in execute_code
+    exec(code_to_run, environment)
+  File "<string>", line 5, in <module>
+NameError: name 'df' is not defined
+. Retrying
+2025-07-13 00:48:17 [INFO] Using prompt: <dataframe>
+dfs[0]:10x6
+employee_id,first_name,last_name,email,hire_date,department
+</dataframe>
+<dataframe>
+dfs[1]:10x3
+employee_id,salary,effective_date
+</dataframe>
+
+The user asked the following question:
+Q: record count
+
+You generated this python code:
+# Import pandas
+import pandas as pd
+# Create a function to count unique values in a column
+def count_unique_values(df, column):
+    return {"type": "dataframe", "value": df[column].nunique()}
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+result = count_unique_values(df, 'department')
+
+It fails with the following error:
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\pipelines\smart_datalake_chat\code_execution.py", line 52, in execute
+    result = pipeline_context.query_exec_tracker.execute_func(
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\query_exec_tracker.py", line 128, in execute_func
+    result = function(*args, **kwargs)
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\code_manager.py", line 207, in execute_code
+    exec(code_to_run, environment)
+  File "<string>", line 5, in <module>
+NameError: name 'df' is not defined
+
+
+Fix the python code above and return the new python code:
+2025-07-13 00:49:05 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-07-13 00:49:05 [INFO] 
+Code running:
+```
+def count_unique_values(df, column):
+    return {'type': 'dataframe', 'value': df[column].nunique()}
+
+
+result = count_unique_values(df, 'department')
+        ```
+2025-07-13 00:49:05 [WARNING] Failed to execute code with a correction framework [retry number: 2]
+2025-07-13 00:49:05 [ERROR] Failed with error: Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\pipelines\smart_datalake_chat\code_execution.py", line 52, in execute
+    result = pipeline_context.query_exec_tracker.execute_func(
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\query_exec_tracker.py", line 128, in execute_func
+    result = function(*args, **kwargs)
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\code_manager.py", line 207, in execute_code
+    exec(code_to_run, environment)
+  File "<string>", line 5, in <module>
+NameError: name 'df' is not defined
+. Retrying
+2025-07-13 00:49:05 [INFO] Using prompt: <dataframe>
+dfs[0]:10x6
+employee_id,first_name,last_name,email,hire_date,department
+</dataframe>
+<dataframe>
+dfs[1]:10x3
+employee_id,salary,effective_date
+</dataframe>
+
+The user asked the following question:
+Q: record count
+
+You generated this python code:
+# Import pandas
+import pandas as pd
+# Create a function to count unique values in a column
+def count_unique_values(df, column):
+    return {"type": "dataframe", "value": df[column].nunique()}
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+result = count_unique_values(df, 'department')
+
+It fails with the following error:
+Traceback (most recent call last):
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\pipelines\smart_datalake_chat\code_execution.py", line 52, in execute
+    result = pipeline_context.query_exec_tracker.execute_func(
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\query_exec_tracker.py", line 128, in execute_func
+    result = function(*args, **kwargs)
+  File "C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\.venv\lib\site-packages\pandasai\helpers\code_manager.py", line 207, in execute_code
+    exec(code_to_run, environment)
+  File "<string>", line 5, in <module>
+NameError: name 'df' is not defined
+
+
+Fix the python code above and return the new python code:
+2025-07-13 00:49:40 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-07-13 00:49:40 [INFO] 
+Code running:
+```
+def count_unique_values(df, column=None, default_value=None):
+    if column is None:
+        column = 'department'
+    return {'type': 'dataframe', 'value': df[column].nunique() if default_value is None else {'type': 'string', 'value': str(default_value)}}
+
+
+result = count_unique_values(df, 'department')
+        ```
+2025-07-13 00:49:40 [ERROR] Pipeline failed on step 4: name 'df' is not defined
+2025-07-13 00:51:42 [INFO] Question: plot maximum and minimum salary per department
+2025-07-13 00:51:42 [INFO] Running PandasAI with google LLM...
+2025-07-13 00:51:42 [INFO] Prompt ID: 292cf40e-c01e-4ad0-b3d4-199d65090e89
+2025-07-13 00:51:42 [INFO] Executing Step 0: CacheLookup
+2025-07-13 00:51:42 [INFO] Executing Step 1: PromptGeneration
+2025-07-13 00:51:42 [INFO] Using prompt: <dataframe>
+dfs[0]:10x6
+employee_id,first_name,last_name,email,hire_date,department
+</dataframe>
+<dataframe>
+dfs[1]:10x3
+employee_id,salary,effective_date
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: plot maximum and minimum salary per department
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-07-13 00:51:42 [INFO] Executing Step 2: CodeGenerator
+2025-07-13 00:51:45 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Assuming dfs[0] is employee_info and dfs[1] is salary_info
+employee_info = dfs[0]
+salary_info = dfs[1]
+
+# Merge the two dataframes on employee_id
+df = pd.merge(employee_info, salary_info, on='employee_id', how='inner')
+
+# Group by department and calculate the maximum and minimum salary
+salary_by_department = df.groupby('department')['salary'].agg(['max', 'min'])
+
+# Create a bar plot
+salary_by_department.plot(kind='bar')
+plt.title('Maximum and Minimum Salary per Department')
+plt.xlabel('Department')
+plt.ylabel('Salary')
+plt.xticks(rotation=45, ha='right')
+plt.tight_layout()
+
+# Save the plot to a file
+plt.savefig('salary_by_department.png')
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+result = { "type": "plot", "value": "salary_by_department.png" }
+            ```
+            
+2025-07-13 00:51:45 [INFO] Executing Step 3: CachePopulation
+2025-07-13 00:51:45 [INFO] Executing Step 4: CodeExecution
+2025-07-13 00:51:45 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-07-13 00:51:45 [INFO] 
+Code running:
+```
+employee_info = dfs[0]
+salary_info = dfs[1]
+df = pd.merge(employee_info, salary_info, on='employee_id', how='inner')
+salary_by_department = df.groupby('department')['salary'].agg(['max', 'min'])
+salary_by_department.plot(kind='bar')
+plt.title('Maximum and Minimum Salary per Department')
+plt.xlabel('Department')
+plt.ylabel('Salary')
+plt.xticks(rotation=45, ha='right')
+plt.tight_layout()
+plt.savefig('C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png')
+result = {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+        ```
+2025-07-13 00:51:46 [INFO] Executing Step 5: ResultValidation
+2025-07-13 00:51:46 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+2025-07-13 00:51:46 [INFO] Executed in: 3.8780577182769775s
+2025-07-13 00:51:46 [INFO] Executing Step 6: ResultParsing
+2025-07-13 01:17:54 [INFO] Question: list all employees salary greater than 90000
+2025-07-13 01:17:56 [INFO] Running PandasAI with huggingface LLM...
+2025-07-13 01:17:56 [INFO] Prompt ID: 480d9494-268b-4abc-a3b4-7d13f592940c
+2025-07-13 01:17:56 [INFO] Executing Step 0: CacheLookup
+2025-07-13 01:17:56 [INFO] Executing Step 1: PromptGeneration
+2025-07-13 01:17:56 [INFO] Using prompt: <dataframe>
+dfs[0]:10x6
+employee_id,first_name,last_name,email,hire_date,department
+</dataframe>
+<dataframe>
+dfs[1]:10x3
+employee_id,salary,effective_date
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: list all employees salary greater than 90000
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-07-13 01:17:56 [INFO] Executing Step 2: CodeGenerator
+2025-07-13 01:17:57 [ERROR] Pipeline failed on step 2: No code found in the response
+2025-07-13 01:18:46 [INFO] Question: list all employees salary greater than 90000
+2025-07-13 01:18:46 [INFO] Running PandasAI with google LLM...
+2025-07-13 01:18:46 [INFO] Prompt ID: 8d6a2f8c-f8c2-4f5f-9b5f-39fc4e6ac77d
+2025-07-13 01:18:46 [INFO] Executing Step 0: CacheLookup
+2025-07-13 01:18:46 [INFO] Executing Step 1: PromptGeneration
+2025-07-13 01:18:46 [INFO] Using prompt: <dataframe>
+dfs[0]:10x6
+employee_id,first_name,last_name,email,hire_date,department
+</dataframe>
+<dataframe>
+dfs[1]:10x3
+employee_id,salary,effective_date
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: list all employees salary greater than 90000
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-07-13 01:18:46 [INFO] Executing Step 2: CodeGenerator
+2025-07-13 01:18:47 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+df = pd.merge(dfs[0], dfs[1], on='employee_id', how='inner')
+df_filtered = df[df['salary'] > 90000]
+result = { "type": "dataframe", "value": df_filtered }
+            ```
+            
+2025-07-13 01:18:47 [INFO] Executing Step 3: CachePopulation
+2025-07-13 01:18:47 [INFO] Executing Step 4: CodeExecution
+2025-07-13 01:18:47 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-07-13 01:18:47 [INFO] 
+Code running:
+```
+df = pd.merge(dfs[0], dfs[1], on='employee_id', how='inner')
+df_filtered = df[df['salary'] > 90000]
+result = {'type': 'dataframe', 'value': df_filtered}
+        ```
+2025-07-13 01:18:47 [INFO] Executing Step 5: ResultValidation
+2025-07-13 01:18:48 [INFO] Answer: {'type': 'dataframe', 'value':    employee_id first_name last_name                    email   hire_date   department  salary effective_date
+0          101      Alice     Smith  alice.smith@example.com  2020-01-15  Engineering   95000     2024-01-01
+4          105      Emily     Davis      emily.d@example.com  2022-05-01  Engineering  110000     2024-05-01
+6          107      Grace    Wilson      grace.w@example.com  2017-04-25        Legal  120000     2024-02-01}
+2025-07-13 01:18:48 [INFO] Executed in: 1.6300671100616455s
+2025-07-13 01:18:48 [INFO] Executing Step 6: ResultParsing
+2025-07-13 01:19:07 [INFO] Question: plot employees per department
+2025-07-13 01:19:07 [INFO] Running PandasAI with google LLM...
+2025-07-13 01:19:07 [INFO] Prompt ID: 5f1ea282-700f-48d6-a41d-8f24d941b0cc
+2025-07-13 01:19:07 [INFO] Executing Step 0: CacheLookup
+2025-07-13 01:19:07 [INFO] Executing Step 1: PromptGeneration
+2025-07-13 01:19:07 [INFO] Using prompt: <dataframe>
+dfs[0]:10x6
+employee_id,first_name,last_name,email,hire_date,department
+</dataframe>
+<dataframe>
+dfs[1]:10x3
+employee_id,salary,effective_date
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: plot employees per department
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-07-13 01:19:07 [INFO] Executing Step 2: CodeGenerator
+2025-07-13 01:19:09 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Write code here
+df1 = dfs[0]
+df2 = dfs[1]
+
+df = pd.merge(df1, df2, on='employee_id', how='inner')
+
+department_counts = df['department'].value_counts()
+
+plt.figure(figsize=(10, 6))
+department_counts.plot(kind='bar')
+plt.title('Number of Employees per Department')
+plt.xlabel('Department')
+plt.ylabel('Number of Employees')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.savefig('department_employee_counts.png')
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+result = { "type": "plot", "value": "department_employee_counts.png" }
+            ```
+            
+2025-07-13 01:19:09 [INFO] Executing Step 3: CachePopulation
+2025-07-13 01:19:09 [INFO] Executing Step 4: CodeExecution
+2025-07-13 01:19:09 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-07-13 01:19:09 [INFO] 
+Code running:
+```
+df1 = dfs[0]
+df2 = dfs[1]
+df = pd.merge(df1, df2, on='employee_id', how='inner')
+department_counts = df['department'].value_counts()
+plt.figure(figsize=(10, 6))
+department_counts.plot(kind='bar')
+plt.title('Number of Employees per Department')
+plt.xlabel('Department')
+plt.ylabel('Number of Employees')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.savefig('C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png')
+result = {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+        ```
+2025-07-13 01:19:10 [INFO] Executing Step 5: ResultValidation
+2025-07-13 01:19:10 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+2025-07-13 01:19:10 [INFO] Executed in: 2.8587355613708496s
+2025-07-13 01:19:10 [INFO] Executing Step 6: ResultParsing
+2025-07-13 08:48:06 [INFO] Question: list all employees salary greater than 90000
+2025-07-13 08:48:06 [INFO] Running PandasAI with google LLM...
+2025-07-13 08:48:06 [INFO] Prompt ID: 23566e63-d511-4d19-9d87-f41624c4e664
+2025-07-13 08:48:06 [INFO] Executing Step 0: CacheLookup
+2025-07-13 08:48:06 [INFO] Using cached response
+2025-07-13 08:48:06 [INFO] Executing Step 1: PromptGeneration
+2025-07-13 08:48:06 [INFO] Executing Step 2: CodeGenerator
+2025-07-13 08:48:06 [INFO] Executing Step 3: CachePopulation
+2025-07-13 08:48:06 [INFO] Executing Step 4: CodeExecution
+2025-07-13 08:48:06 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-07-13 08:48:06 [INFO] 
+Code running:
+```
+df = pd.merge(dfs[0], dfs[1], on='employee_id', how='inner')
+df_filtered = df[df['salary'] > 90000]
+result = {'type': 'dataframe', 'value': df_filtered}
+        ```
+2025-07-13 08:48:06 [INFO] Executing Step 5: ResultValidation
+2025-07-13 08:48:06 [INFO] Answer: {'type': 'dataframe', 'value':    employee_id first_name last_name                    email   hire_date   department  salary effective_date
+0          101      Alice     Smith  alice.smith@example.com  2020-01-15  Engineering   95000     2024-01-01
+4          105      Emily     Davis      emily.d@example.com  2022-05-01  Engineering  110000     2024-05-01
+6          107      Grace    Wilson      grace.w@example.com  2017-04-25        Legal  120000     2024-02-01}
+2025-07-13 08:48:06 [INFO] Executed in: 0.07429718971252441s
+2025-07-13 08:48:06 [INFO] Executing Step 6: ResultParsing
+2025-07-13 09:55:53 [INFO] Question: list all employees salary greater than 90000
+2025-07-13 09:55:54 [INFO] Running PandasAI with google LLM...
+2025-07-13 09:55:54 [INFO] Prompt ID: ac4f98b1-122c-4810-96bd-026cc7ef16bb
+2025-07-13 09:55:54 [INFO] Executing Step 0: CacheLookup
+2025-07-13 09:55:54 [INFO] Using cached response
+2025-07-13 09:55:54 [INFO] Executing Step 1: PromptGeneration
+2025-07-13 09:55:54 [INFO] Executing Step 2: CodeGenerator
+2025-07-13 09:55:54 [INFO] Executing Step 3: CachePopulation
+2025-07-13 09:55:54 [INFO] Executing Step 4: CodeExecution
+2025-07-13 09:55:54 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-07-13 09:55:54 [INFO] 
+Code running:
+```
+df = pd.merge(dfs[0], dfs[1], on='employee_id', how='inner')
+df_filtered = df[df['salary'] > 90000]
+result = {'type': 'dataframe', 'value': df_filtered}
+        ```
+2025-07-13 09:55:54 [INFO] Executing Step 5: ResultValidation
+2025-07-13 09:55:54 [INFO] Answer: {'type': 'dataframe', 'value':    employee_id first_name last_name                    email   hire_date   department  salary effective_date
+0          101      Alice     Smith  alice.smith@example.com  2020-01-15  Engineering   95000     2024-01-01
+4          105      Emily     Davis      emily.d@example.com  2022-05-01  Engineering  110000     2024-05-01
+6          107      Grace    Wilson      grace.w@example.com  2017-04-25        Legal  120000     2024-02-01}
+2025-07-13 09:55:54 [INFO] Executed in: 0.8159966468811035s
+2025-07-13 09:55:54 [INFO] Executing Step 6: ResultParsing
+2025-07-14 18:16:12 [INFO] Pandas backend loaded 1.5.3
+2025-07-14 18:16:12 [INFO] Numpy backend loaded 1.25.2
+2025-07-14 18:16:12 [INFO] Pyspark backend NOT loaded
+2025-07-14 18:16:12 [INFO] Python backend loaded
+2025-07-14 22:07:43 [INFO] Question: plot department wise salary
+2025-07-14 22:07:44 [INFO] Running PandasAI with google LLM...
+2025-07-14 22:07:44 [INFO] Prompt ID: e18e20d6-0945-4bf3-aac3-cdac066d6331
+2025-07-14 22:07:44 [INFO] Executing Step 0: CacheLookup
+2025-07-14 22:07:44 [INFO] Using cached response
+2025-07-14 22:07:44 [INFO] Executing Step 1: PromptGeneration
+2025-07-14 22:07:44 [INFO] Executing Step 2: CodeGenerator
+2025-07-14 22:07:44 [INFO] Executing Step 3: CachePopulation
+2025-07-14 22:07:44 [INFO] Executing Step 4: CodeExecution
+2025-07-14 22:07:44 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-07-14 22:07:44 [INFO] 
+Code running:
+```
+df1 = dfs[0]
+df2 = dfs[1]
+df = pd.merge(df1, df2, on='employee_id', how='inner')
+department_salary = df.groupby('department')['salary'].mean()
+plt.figure(figsize=(10, 6))
+department_salary.plot(kind='bar')
+plt.title('Average Salary by Department')
+plt.xlabel('Department')
+plt.ylabel('Average Salary')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.savefig('C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png')
+result = {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+        ```
+2025-07-14 22:07:44 [INFO] Executing Step 5: ResultValidation
+2025-07-14 22:07:44 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+2025-07-14 22:07:44 [INFO] Executed in: 1.3358674049377441s
+2025-07-14 22:07:44 [INFO] Executing Step 6: ResultParsing
