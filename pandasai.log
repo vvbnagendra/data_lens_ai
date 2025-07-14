@@ -12448,3 +12448,216 @@ result = {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/pres
 2025-07-14 22:07:44 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
 2025-07-14 22:07:44 [INFO] Executed in: 1.3358674049377441s
 2025-07-14 22:07:44 [INFO] Executing Step 6: ResultParsing
+2025-07-14 23:00:18 [INFO] Pandas backend loaded 1.5.3
+2025-07-14 23:00:18 [INFO] Numpy backend loaded 1.25.2
+2025-07-14 23:00:18 [INFO] Pyspark backend NOT loaded
+2025-07-14 23:00:18 [INFO] Python backend loaded
+2025-07-14 23:01:20 [INFO] Question: summarie thia data
+2025-07-14 23:01:20 [INFO] Running PandasAI with google LLM...
+2025-07-14 23:01:20 [INFO] Prompt ID: 44b20230-d513-4458-9ece-902fa3526087
+2025-07-14 23:01:21 [INFO] Executing Step 0: CacheLookup
+2025-07-14 23:01:21 [INFO] Executing Step 1: PromptGeneration
+2025-07-14 23:01:21 [INFO] Using prompt: <dataframe>
+dfs[0]:10x6
+employee_id,first_name,last_name,email,hire_date,department
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: summarie thia data
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-07-14 23:01:21 [INFO] Executing Step 2: CodeGenerator
+2025-07-14 23:01:23 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+df = dfs[0]
+description = df.describe(include='all')
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+result = { "type": "dataframe", "value": description }
+            ```
+            
+2025-07-14 23:01:23 [INFO] Executing Step 3: CachePopulation
+2025-07-14 23:01:23 [INFO] Executing Step 4: CodeExecution
+2025-07-14 23:01:23 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-07-14 23:01:23 [INFO] 
+Code running:
+```
+df = dfs[0]
+description = df.describe(include='all')
+result = {'type': 'dataframe', 'value': description}
+        ```
+2025-07-14 23:01:23 [INFO] Executing Step 5: ResultValidation
+2025-07-14 23:01:23 [INFO] Answer: {'type': 'dataframe', 'value':         employee_id first_name last_name                    email   hire_date   department
+count      10.00000         10        10                       10          10           10
+unique          NaN         10        10                       10          10            6
+top             NaN      Alice     Smith  alice.smith@example.com  2020-01-15  Engineering
+freq            NaN          1         1                        1           1            2
+mean      105.50000        NaN       NaN                      NaN         NaN          NaN
+std         3.02765        NaN       NaN                      NaN         NaN          NaN
+min       101.00000        NaN       NaN                      NaN         NaN          NaN
+25%       103.25000        NaN       NaN                      NaN         NaN          NaN
+50%       105.50000        NaN       NaN                      NaN         NaN          NaN
+75%       107.75000        NaN       NaN                      NaN         NaN          NaN
+max       110.00000        NaN       NaN                      NaN         NaN          NaN}
+2025-07-14 23:01:23 [INFO] Executed in: 2.52571702003479s
+2025-07-14 23:01:23 [INFO] Executing Step 6: ResultParsing
+2025-07-14 23:01:32 [INFO] Question: how many records are there ? 
+2025-07-14 23:01:32 [INFO] Running PandasAI with google LLM...
+2025-07-14 23:01:32 [INFO] Prompt ID: 61a89ac7-d25e-4ab2-8475-dbcf04c1cd73
+2025-07-14 23:01:32 [INFO] Executing Step 0: CacheLookup
+2025-07-14 23:01:32 [INFO] Executing Step 1: PromptGeneration
+2025-07-14 23:01:32 [INFO] Using prompt: <dataframe>
+dfs[0]:10x6
+employee_id,first_name,last_name,email,hire_date,department
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: how many records are there ? 
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-07-14 23:01:32 [INFO] Executing Step 2: CodeGenerator
+2025-07-14 23:01:33 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+df = dfs[0]
+num_records = len(df)
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+result = { "type": "number", "value": num_records }
+            ```
+            
+2025-07-14 23:01:33 [INFO] Executing Step 3: CachePopulation
+2025-07-14 23:01:33 [INFO] Executing Step 4: CodeExecution
+2025-07-14 23:01:33 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-07-14 23:01:33 [INFO] 
+Code running:
+```
+df = dfs[0]
+num_records = len(df)
+result = {'type': 'number', 'value': num_records}
+        ```
+2025-07-14 23:01:33 [INFO] Executing Step 5: ResultValidation
+2025-07-14 23:01:33 [INFO] Answer: {'type': 'number', 'value': 10}
+2025-07-14 23:01:33 [INFO] Executed in: 1.5075409412384033s
+2025-07-14 23:01:33 [INFO] Executing Step 6: ResultParsing
+2025-07-14 23:02:00 [INFO] Question: plot department wise employees
+2025-07-14 23:02:00 [INFO] Running PandasAI with google LLM...
+2025-07-14 23:02:00 [INFO] Prompt ID: ff505522-6e20-465b-ae77-d4f533ec2e40
+2025-07-14 23:02:00 [INFO] Executing Step 0: CacheLookup
+2025-07-14 23:02:00 [INFO] Executing Step 1: PromptGeneration
+2025-07-14 23:02:00 [INFO] Using prompt: <dataframe>
+dfs[0]:10x6
+employee_id,first_name,last_name,email,hire_date,department
+</dataframe>
+
+
+
+
+Update this initial code:
+```python
+# TODO: import the required dependencies
+import pandas as pd
+
+# Write code here
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+```
+
+Q: plot department wise employees
+Variable `dfs: list[pd.DataFrame]` is already declared.
+
+At the end, declare "result" variable as a dictionary of type and value.
+
+
+
+Generate python code and return full updated code:
+2025-07-14 23:02:00 [INFO] Executing Step 2: CodeGenerator
+2025-07-14 23:02:02 [INFO] Code generated:
+            ```
+            # TODO: import the required dependencies
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Write code here
+df = dfs[0]
+department_counts = df['department'].value_counts()
+
+plt.figure(figsize=(10, 6))
+department_counts.plot(kind='bar')
+plt.title('Number of Employees per Department')
+plt.xlabel('Department')
+plt.ylabel('Number of Employees')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.savefig('department_employees.png')
+plt.close()
+
+
+# Declare result var: type (possible values "string", "number", "dataframe", "plot"). Examples: { "type": "string", "value": f"The highest salary is {highest_salary}." } or { "type": "number", "value": 125 } or { "type": "dataframe", "value": pd.DataFrame({...}) } or { "type": "plot", "value": "temp_chart.png" }
+result = { "type": "plot", "value": "department_employees.png" }
+            ```
+            
+2025-07-14 23:02:02 [INFO] Executing Step 3: CachePopulation
+2025-07-14 23:02:02 [INFO] Executing Step 4: CodeExecution
+2025-07-14 23:02:02 [INFO] Saving charts to C:\Users\LENOVO\Desktop\Python Projects\presight_data_profiler\exports\charts\temp_chart.png
+2025-07-14 23:02:02 [INFO] 
+Code running:
+```
+df = dfs[0]
+department_counts = df['department'].value_counts()
+plt.figure(figsize=(10, 6))
+department_counts.plot(kind='bar')
+plt.title('Number of Employees per Department')
+plt.xlabel('Department')
+plt.ylabel('Number of Employees')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.savefig('C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png')
+plt.close()
+result = {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+        ```
+2025-07-14 23:02:02 [INFO] Executing Step 5: ResultValidation
+2025-07-14 23:02:02 [INFO] Answer: {'type': 'plot', 'value': 'C:/Users/LENOVO/Desktop/Python Projects/presight_data_profiler/exports/charts/temp_chart.png'}
+2025-07-14 23:02:02 [INFO] Executed in: 2.0017805099487305s
+2025-07-14 23:02:02 [INFO] Executing Step 6: ResultParsing
