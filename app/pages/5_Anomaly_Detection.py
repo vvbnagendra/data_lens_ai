@@ -1,28 +1,19 @@
-# File: app/pages/5_Anomaly_Detection.py
-# ENHANCED VERSION WITH NATURAL LANGUAGE RULES
+# File: app/pages/5_Enhanced_Anomaly_Detection.py
+# UNIVERSAL ANOMALY DETECTION FOR ALL COLUMN TYPES
 
 import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 import json
 import re
-from datetime import datetime
-from typing import Dict, List, Any
-
-# Simple imports that should always work
-try:
-    from core_logic.data_loader import load_all_data_sources
-    from core_logic.llm_config import configure_llm_backend
-except ImportError:
-    def load_all_data_sources():
-        if "csv_dataframes" in st.session_state:
-            return {f"CSV: {k.replace('csv_', '')}": v for k, v in st.session_state["csv_dataframes"].items()}
-        return {}
-    
-    def configure_llm_backend():
-        return "pandasai", "huggingface", "gpt2", ""
+from datetime import datetime, timedelta
+from typing import Dict, List, Any, Tuple
+from collections import Counter
+import warnings
+warnings.filterwarnings('ignore')
 
 # Try to get clean styling
 try:
@@ -31,8 +22,16 @@ try:
 except ImportError:
     STYLING_AVAILABLE = False
 
+try:
+    from core_logic.data_loader import load_all_data_sources
+except ImportError:
+    def load_all_data_sources():
+        if "csv_dataframes" in st.session_state:
+            return {f"CSV: {k.replace('csv_', '')}": v for k, v in st.session_state["csv_dataframes"].items()}
+        return {}
+
 st.set_page_config(
-    page_title="Anomaly Detection & Rules",
+    page_title="Universal Anomaly Detection",
     page_icon="🔍",
     layout="wide"
 )
@@ -40,459 +39,1029 @@ st.set_page_config(
 if STYLING_AVAILABLE:
     apply_clean_styling()
 
-class NaturalLanguageRuleParser:
-    """Parse natural language rules into executable anomaly detection rules"""
+class UniversalAnomalyDetector:
+    """Universal anomaly detection for all data types"""
     
     def __init__(self):
-        self.rule_patterns = {
-            # Threshold patterns
-            'threshold_gt': r'(\w+)\s+(?:is\s+)?(?:greater than|more than|above|>)\s+(\d+(?:\.\d+)?)',
-            'threshold_lt': r'(\w+)\s+(?:is\s+)?(?:less than|below|under|<)\s+(\d+(?:\.\d+)?)',
-            'threshold_eq': r'(\w+)\s+(?:is\s+)?(?:equals?|=)\s+(\d+(?:\.\d+)?)',
-            
-            # Range patterns
-            'outside_range': r'(\w+)\s+(?:is\s+)?(?:outside|not between)\s+(\d+(?:\.\d+)?)\s+(?:and|to)\s+(\d+(?:\.\d+)?)',
-            'inside_range': r'(\w+)\s+(?:is\s+)?(?:between|within)\s+(\d+(?:\.\d+)?)\s+(?:and|to)\s+(\d+(?:\.\d+)?)',
-            
-            # Statistical patterns
-            'outlier': r'(\w+)\s+(?:is\s+)?(?:outlier|anomal|unusual|abnormal)',
-            'extreme': r'(\w+)\s+(?:is\s+)?(?:extreme|very high|very low)',
-            
-            # Percentage patterns
-            'percent_above': r'(\w+)\s+(?:is\s+)?above\s+(\d+)%\s+of\s+(?:normal|average|typical)',
-            'percent_below': r'(\w+)\s+(?:is\s+)?below\s+(\d+)%\s+of\s+(?:normal|average|typical)',
-            
-            # Combination patterns
-            'and_condition': r'(.+)\s+and\s+(.+)',
-            'or_condition': r'(.+)\s+or\s+(.+)',
+        self.detection_methods = {
+            'numeric': ['statistical', 'iqr', 'isolation_forest', 'threshold'],
+            'categorical': ['frequency', 'rare_categories', 'new_categories'],
+            'text': ['length_outliers', 'pattern_violations', 'encoding_issues'],
+            'datetime': ['time_gaps', 'future_dates', 'weekend_anomalies'],
+            'mixed': ['missing_pattern', 'data_type_violations']
         }
     
-    def parse_rule(self, rule_text: str, df_columns: List[str]) -> Dict[str, Any]:
-        """Parse natural language rule into structured format"""
+    def detect_all_anomalies(self, df: pd.DataFrame, config: Dict[str, Any] = None) -> Dict[str, Any]:
+        """Detect anomalies across all column types"""
         
-        rule_text = rule_text.lower().strip()
+        if config is None:
+            config = {
+                'statistical_threshold': 3.0,
+                'frequency_threshold': 0.01,  # 1% threshold for rare categories
+                'text_length_threshold': 3.0,
+                'check_future_dates': True,
+                'include_weekends': True
+            }
         
-        parsed_rule = {
-            "original_text": rule_text,
-            "conditions": [],
-            "logic": "and",  # default logic
-            "confidence": 0.0,
-            "executable_code": "",
-            "description": ""
+        results = {
+            'summary': {},
+            'detailed_results': {},
+            'recommendations': [],
+            'total_anomalies': 0,
+            'anomaly_indices': set()
         }
         
-        # Check for AND/OR logic
-        if " and " in rule_text:
-            parsed_rule["logic"] = "and"
-            parts = rule_text.split(" and ")
-        elif " or " in rule_text:
-            parsed_rule["logic"] = "or"
-            parts = rule_text.split(" or ")
-        else:
-            parts = [rule_text]
+        # Analyze each column by type
+        for column in df.columns:
+            col_type = self._detect_column_type(df[column])
+            col_results = self._detect_column_anomalies(df, column, col_type, config)
+            
+            results['detailed_results'][column] = col_results
+            results['total_anomalies'] += len(col_results.get('anomaly_indices', []))
+            results['anomaly_indices'].update(col_results.get('anomaly_indices', []))
         
-        # Parse each part
-        for part in parts:
-            condition = self._parse_single_condition(part.strip(), df_columns)
-            if condition:
-                parsed_rule["conditions"].append(condition)
-                parsed_rule["confidence"] += 0.3
+        # Convert set to list for JSON serialization
+        results['anomaly_indices'] = list(results['anomaly_indices'])
         
-        # Generate executable code
-        if parsed_rule["conditions"]:
-            parsed_rule["executable_code"] = self._generate_code(parsed_rule, df_columns)
-            parsed_rule["description"] = self._generate_description(parsed_rule)
+        # Generate summary
+        results['summary'] = self._generate_summary(results['detailed_results'])
+        results['recommendations'] = self._generate_recommendations(results['detailed_results'])
         
-        return parsed_rule
+        return results
     
-    def _parse_single_condition(self, condition_text: str, df_columns: List[str]) -> Dict[str, Any]:
-        """Parse a single condition"""
+    def _detect_column_type(self, series: pd.Series) -> str:
+        """Intelligently detect column type"""
         
-        # Try to match against patterns
-        for pattern_name, pattern in self.rule_patterns.items():
-            if pattern_name in ['and_condition', 'or_condition']:
+        # Remove nulls for analysis
+        non_null_series = series.dropna()
+        
+        if len(non_null_series) == 0:
+            return 'empty'
+        
+        # Check if numeric
+        if pd.api.types.is_numeric_dtype(series):
+            return 'numeric'
+        
+        # Check if datetime
+        if pd.api.types.is_datetime64_any_dtype(series):
+            return 'datetime'
+        
+        # Try to parse as datetime
+        try:
+            pd.to_datetime(non_null_series.iloc[:min(100, len(non_null_series))])
+            return 'datetime'
+        except:
+            pass
+        
+        # Check if categorical (limited unique values)
+        unique_ratio = len(non_null_series.unique()) / len(non_null_series)
+        if unique_ratio < 0.1 and len(non_null_series.unique()) < 50:
+            return 'categorical'
+        
+        # Default to text
+        return 'text'
+    
+    def _detect_column_anomalies(self, df: pd.DataFrame, column: str, col_type: str, config: Dict[str, Any]) -> Dict[str, Any]:
+        """Detect anomalies for a specific column based on its type"""
+        
+        result = {
+            'column_type': col_type,
+            'anomaly_indices': [],
+            'anomaly_details': [],
+            'statistics': {},
+            'method_used': []
+        }
+        
+        series = df[column]
+        
+        if col_type == 'numeric':
+            result.update(self._detect_numeric_anomalies(series, config))
+        elif col_type == 'categorical':
+            result.update(self._detect_categorical_anomalies(series, config))
+        elif col_type == 'text':
+            result.update(self._detect_text_anomalies(series, config))
+        elif col_type == 'datetime':
+            result.update(self._detect_datetime_anomalies(series, config))
+        
+        # Always check for missing value patterns
+        missing_anomalies = self._detect_missing_patterns(series)
+        if missing_anomalies['anomaly_indices']:
+            result['anomaly_indices'].extend(missing_anomalies['anomaly_indices'])
+            result['anomaly_details'].extend(missing_anomalies['anomaly_details'])
+            result['method_used'].append('missing_pattern')
+        
+        return result
+    
+    def _detect_numeric_anomalies(self, series: pd.Series, config: Dict[str, Any]) -> Dict[str, Any]:
+        """Detect anomalies in numeric columns"""
+        
+        result = {
+            'anomaly_indices': [],
+            'anomaly_details': [],
+            'method_used': ['statistical', 'iqr'],
+            'statistics': {}
+        }
+        
+        non_null_series = series.dropna()
+        if len(non_null_series) == 0:
+            return result
+        
+        # Statistical method (Z-score)
+        mean_val = non_null_series.mean()
+        std_val = non_null_series.std()
+        threshold = config.get('statistical_threshold', 3.0)
+        
+        if std_val > 0:
+            z_scores = np.abs((non_null_series - mean_val) / std_val)
+            statistical_outliers = non_null_series.index[z_scores > threshold].tolist()
+            
+            for idx in statistical_outliers:
+                result['anomaly_indices'].append(idx)
+                result['anomaly_details'].append({
+                    'index': idx,
+                    'value': series.iloc[idx],
+                    'method': 'statistical',
+                    'z_score': float(z_scores.loc[idx]),
+                    'reason': f'Z-score {z_scores.loc[idx]:.2f} > {threshold}'
+                })
+        
+        # IQR method
+        Q1 = non_null_series.quantile(0.25)
+        Q3 = non_null_series.quantile(0.75)
+        IQR = Q3 - Q1
+        lower_bound = Q1 - 1.5 * IQR
+        upper_bound = Q3 + 1.5 * IQR
+        
+        iqr_outliers = non_null_series[(non_null_series < lower_bound) | (non_null_series > upper_bound)]
+        
+        for idx, value in iqr_outliers.items():
+            if idx not in result['anomaly_indices']:
+                result['anomaly_indices'].append(idx)
+                result['anomaly_details'].append({
+                    'index': idx,
+                    'value': value,
+                    'method': 'iqr',
+                    'reason': f'Outside IQR bounds [{lower_bound:.2f}, {upper_bound:.2f}]'
+                })
+        
+        result['statistics'] = {
+            'mean': float(mean_val),
+            'std': float(std_val),
+            'q1': float(Q1),
+            'q3': float(Q3),
+            'iqr': float(IQR),
+            'outliers_statistical': len(statistical_outliers),
+            'outliers_iqr': len(iqr_outliers)
+        }
+        
+        return result
+    
+    def _detect_categorical_anomalies(self, series: pd.Series, config: Dict[str, Any]) -> Dict[str, Any]:
+        """Detect anomalies in categorical columns"""
+        
+        result = {
+            'anomaly_indices': [],
+            'anomaly_details': [],
+            'method_used': ['frequency', 'rare_categories'],
+            'statistics': {}
+        }
+        
+        non_null_series = series.dropna()
+        if len(non_null_series) == 0:
+            return result
+        
+        # Frequency analysis
+        value_counts = non_null_series.value_counts()
+        total_count = len(non_null_series)
+        frequency_threshold = config.get('frequency_threshold', 0.01)  # 1%
+        
+        rare_categories = value_counts[value_counts / total_count < frequency_threshold]
+        
+        for category, count in rare_categories.items():
+            rare_indices = non_null_series[non_null_series == category].index.tolist()
+            for idx in rare_indices:
+                result['anomaly_indices'].append(idx)
+                result['anomaly_details'].append({
+                    'index': idx,
+                    'value': category,
+                    'method': 'rare_category',
+                    'frequency': count,
+                    'percentage': f"{(count/total_count)*100:.2f}%",
+                    'reason': f'Rare category: {count}/{total_count} occurrences'
+                })
+        
+        # Check for potentially misspelled categories
+        categories = value_counts.index.tolist()
+        similar_pairs = self._find_similar_categories(categories)
+        
+        for cat1, cat2, similarity in similar_pairs:
+            if similarity > 0.8:  # Very similar strings
+                # Flag the less frequent one as potential misspelling
+                less_frequent = cat1 if value_counts[cat1] < value_counts[cat2] else cat2
+                indices = non_null_series[non_null_series == less_frequent].index.tolist()
+                
+                for idx in indices:
+                    if idx not in result['anomaly_indices']:
+                        result['anomaly_indices'].append(idx)
+                        result['anomaly_details'].append({
+                            'index': idx,
+                            'value': less_frequent,
+                            'method': 'potential_misspelling',
+                            'similar_to': cat1 if less_frequent == cat2 else cat2,
+                            'reason': f'Potential misspelling of "{cat1 if less_frequent == cat2 else cat2}"'
+                        })
+        
+        result['statistics'] = {
+            'unique_categories': len(value_counts),
+            'most_frequent': value_counts.index[0] if len(value_counts) > 0 else None,
+            'most_frequent_count': int(value_counts.iloc[0]) if len(value_counts) > 0 else 0,
+            'rare_categories_count': len(rare_categories),
+            'potential_misspellings': len(similar_pairs)
+        }
+        
+        return result
+    
+    def _detect_text_anomalies(self, series: pd.Series, config: Dict[str, Any]) -> Dict[str, Any]:
+        """Detect anomalies in text columns"""
+        
+        result = {
+            'anomaly_indices': [],
+            'anomaly_details': [],
+            'method_used': ['length_outliers', 'encoding_issues', 'pattern_violations'],
+            'statistics': {}
+        }
+        
+        non_null_series = series.dropna().astype(str)
+        if len(non_null_series) == 0:
+            return result
+        
+        # Text length analysis
+        lengths = non_null_series.str.len()
+        mean_length = lengths.mean()
+        std_length = lengths.std()
+        threshold = config.get('text_length_threshold', 3.0)
+        
+        if std_length > 0:
+            z_scores = np.abs((lengths - mean_length) / std_length)
+            length_outliers = lengths.index[z_scores > threshold].tolist()
+            
+            for idx in length_outliers:
+                result['anomaly_indices'].append(idx)
+                result['anomaly_details'].append({
+                    'index': idx,
+                    'value': str(series.iloc[idx])[:100] + "..." if len(str(series.iloc[idx])) > 100 else str(series.iloc[idx]),
+                    'method': 'length_outlier',
+                    'length': int(lengths.loc[idx]),
+                    'z_score': float(z_scores.loc[idx]),
+                    'reason': f'Unusual length: {int(lengths.loc[idx])} chars (z-score: {z_scores.loc[idx]:.2f})'
+                })
+        
+        # Encoding issues detection
+        for idx, text in non_null_series.items():
+            try:
+                # Check for common encoding issues
+                if any(char in text for char in ['�', '\ufffd', '\x00']):
+                    result['anomaly_indices'].append(idx)
+                    result['anomaly_details'].append({
+                        'index': idx,
+                        'value': text[:100] + "..." if len(text) > 100 else text,
+                        'method': 'encoding_issue',
+                        'reason': 'Contains encoding error characters'
+                    })
+                
+                # Check for unusual character patterns
+                if re.search(r'[^\x00-\x7F]', text) and len(re.findall(r'[^\x00-\x7F]', text)) / len(text) > 0.5:
+                    if idx not in result['anomaly_indices']:
+                        result['anomaly_indices'].append(idx)
+                        result['anomaly_details'].append({
+                            'index': idx,
+                            'value': text[:100] + "..." if len(text) > 100 else text,
+                            'method': 'unusual_characters',
+                            'reason': 'High proportion of non-ASCII characters'
+                        })
+            except Exception:
+                continue
+        
+        result['statistics'] = {
+            'mean_length': float(mean_length),
+            'std_length': float(std_length),
+            'min_length': int(lengths.min()),
+            'max_length': int(lengths.max()),
+            'length_outliers': len([idx for idx in result['anomaly_indices'] 
+                                  if any(d['method'] == 'length_outlier' for d in result['anomaly_details'] if d['index'] == idx)])
+        }
+        
+        return result
+    
+    def _detect_datetime_anomalies(self, series: pd.Series, config: Dict[str, Any]) -> Dict[str, Any]:
+        """Detect anomalies in datetime columns"""
+        
+        result = {
+            'anomaly_indices': [],
+            'anomaly_details': [],
+            'method_used': ['future_dates', 'time_gaps', 'weekend_anomalies'],
+            'statistics': {}
+        }
+        
+        # Try to convert to datetime if not already
+        try:
+            if not pd.api.types.is_datetime64_any_dtype(series):
+                dt_series = pd.to_datetime(series, errors='coerce')
+            else:
+                dt_series = series
+        except:
+            return result
+        
+        non_null_dt = dt_series.dropna()
+        if len(non_null_dt) == 0:
+            return result
+        
+        current_time = datetime.now()
+        
+        # Future dates detection
+        if config.get('check_future_dates', True):
+            future_dates = non_null_dt[non_null_dt > current_time]
+            for idx, date_val in future_dates.items():
+                result['anomaly_indices'].append(idx)
+                result['anomaly_details'].append({
+                    'index': idx,
+                    'value': str(date_val),
+                    'method': 'future_date',
+                    'reason': f'Date in future: {date_val.strftime("%Y-%m-%d %H:%M:%S")}'
+                })
+        
+        # Time gaps detection (unusually large gaps between consecutive dates)
+        if len(non_null_dt) > 1:
+            sorted_dates = non_null_dt.sort_values()
+            time_diffs = sorted_dates.diff().dropna()
+            
+            if len(time_diffs) > 0:
+                median_diff = time_diffs.median()
+                large_gaps = time_diffs[time_diffs > median_diff * 10]  # 10x larger than median
+                
+                for idx, gap in large_gaps.items():
+                    result['anomaly_indices'].append(idx)
+                    result['anomaly_details'].append({
+                        'index': idx,
+                        'value': str(sorted_dates.loc[idx]),
+                        'method': 'large_time_gap',
+                        'gap_days': gap.days,
+                        'reason': f'Large time gap: {gap.days} days'
+                    })
+        
+        # Weekend anomalies (if business data expected on weekdays)
+        if not config.get('include_weekends', True):
+            weekend_dates = non_null_dt[non_null_dt.dt.dayofweek >= 5]  # Saturday=5, Sunday=6
+            for idx, date_val in weekend_dates.items():
+                result['anomaly_indices'].append(idx)
+                result['anomaly_details'].append({
+                    'index': idx,
+                    'value': str(date_val),
+                    'method': 'weekend_date',
+                    'reason': f'Weekend date in business data: {date_val.strftime("%A, %Y-%m-%d")}'
+                })
+        
+        result['statistics'] = {
+            'min_date': str(non_null_dt.min()),
+            'max_date': str(non_null_dt.max()),
+            'date_range_days': (non_null_dt.max() - non_null_dt.min()).days,
+            'future_dates_count': len([idx for idx in result['anomaly_indices'] 
+                                     if any(d['method'] == 'future_date' for d in result['anomaly_details'] if d['index'] == idx)]),
+            'weekend_dates_count': len([idx for idx in result['anomaly_indices'] 
+                                      if any(d['method'] == 'weekend_date' for d in result['anomaly_details'] if d['index'] == idx)])
+        }
+        
+        return result
+    
+    def _detect_missing_patterns(self, series: pd.Series) -> Dict[str, Any]:
+        """Detect unusual missing value patterns"""
+        
+        result = {
+            'anomaly_indices': [],
+            'anomaly_details': []
+        }
+        
+        # Check for consecutive missing values (might indicate system downtime, etc.)
+        is_null = series.isnull()
+        consecutive_nulls = []
+        current_streak = 0
+        streak_start = None
+        
+        for idx, is_missing in is_null.items():
+            if is_missing:
+                if current_streak == 0:
+                    streak_start = idx
+                current_streak += 1
+            else:
+                if current_streak >= 5:  # 5 or more consecutive nulls
+                    consecutive_nulls.append((streak_start, current_streak))
+                current_streak = 0
+        
+        # Add the last streak if it exists
+        if current_streak >= 5:
+            consecutive_nulls.append((streak_start, current_streak))
+        
+        # Flag long consecutive null streaks as anomalies
+        for start_idx, streak_length in consecutive_nulls:
+            result['anomaly_indices'].append(start_idx)
+            result['anomaly_details'].append({
+                'index': start_idx,
+                'value': None,
+                'method': 'consecutive_nulls',
+                'streak_length': streak_length,
+                'reason': f'Start of {streak_length} consecutive missing values'
+            })
+        
+        return result
+    
+    def _find_similar_categories(self, categories: List[str]) -> List[Tuple[str, str, float]]:
+        """Find similar category names that might be misspellings"""
+        
+        from difflib import SequenceMatcher
+        
+        similar_pairs = []
+        
+        for i, cat1 in enumerate(categories):
+            for cat2 in categories[i+1:]:
+                if len(cat1) > 2 and len(cat2) > 2:  # Only check non-trivial strings
+                    similarity = SequenceMatcher(None, cat1.lower(), cat2.lower()).ratio()
+                    if similarity > 0.7:  # 70% similarity threshold
+                        similar_pairs.append((cat1, cat2, similarity))
+        
+        return similar_pairs
+    
+    def _generate_summary(self, detailed_results: Dict[str, Any]) -> Dict[str, Any]:
+        """Generate summary statistics"""
+        
+        summary = {
+            'total_columns_analyzed': len(detailed_results),
+            'columns_with_anomalies': 0,
+            'anomalies_by_type': {},
+            'anomalies_by_method': {},
+            'most_problematic_columns': []
+        }
+        
+        for column, results in detailed_results.items():
+            if results['anomaly_indices']:
+                summary['columns_with_anomalies'] += 1
+                
+                # Count by column type
+                col_type = results['column_type']
+                if col_type not in summary['anomalies_by_type']:
+                    summary['anomalies_by_type'][col_type] = 0
+                summary['anomalies_by_type'][col_type] += len(results['anomaly_indices'])
+                
+                # Count by method
+                for method in results['method_used']:
+                    if method not in summary['anomalies_by_method']:
+                        summary['anomalies_by_method'][method] = 0
+                    summary['anomalies_by_method'][method] += len([d for d in results['anomaly_details'] if d['method'] == method])
+                
+                # Track most problematic columns
+                summary['most_problematic_columns'].append({
+                    'column': column,
+                    'anomaly_count': len(results['anomaly_indices']),
+                    'type': col_type
+                })
+        
+        # Sort most problematic columns
+        summary['most_problematic_columns'].sort(key=lambda x: x['anomaly_count'], reverse=True)
+        summary['most_problematic_columns'] = summary['most_problematic_columns'][:5]  # Top 5
+        
+        return summary
+    
+    def _generate_recommendations(self, detailed_results: Dict[str, Any]) -> List[str]:
+        """Generate actionable recommendations"""
+        
+        recommendations = []
+        
+        for column, results in detailed_results.items():
+            if not results['anomaly_indices']:
                 continue
                 
-            match = re.search(pattern, condition_text)
-            if match:
-                return self._create_condition_from_match(pattern_name, match, df_columns)
-        
-        return None
-    
-    def _create_condition_from_match(self, pattern_name: str, match, df_columns: List[str]) -> Dict[str, Any]:
-        """Create condition object from regex match"""
-        
-        groups = match.groups()
-        
-        if pattern_name == 'threshold_gt':
-            column, value = groups
-            if column in df_columns:
-                return {
-                    "type": "threshold",
-                    "column": column,
-                    "operator": ">",
-                    "value": float(value),
-                    "pattern": pattern_name
-                }
-        
-        elif pattern_name == 'threshold_lt':
-            column, value = groups
-            if column in df_columns:
-                return {
-                    "type": "threshold",
-                    "column": column,
-                    "operator": "<",
-                    "value": float(value),
-                    "pattern": pattern_name
-                }
-        
-        elif pattern_name == 'outside_range':
-            column, min_val, max_val = groups
-            if column in df_columns:
-                return {
-                    "type": "range",
-                    "column": column,
-                    "operator": "outside",
-                    "min_value": float(min_val),
-                    "max_value": float(max_val),
-                    "pattern": pattern_name
-                }
-        
-        elif pattern_name == 'outlier':
-            column = groups[0]
-            if column in df_columns:
-                return {
-                    "type": "statistical",
-                    "column": column,
-                    "operator": "outlier",
-                    "threshold": 3.0,
-                    "pattern": pattern_name
-                }
-        
-        return None
-    
-    def _generate_code(self, parsed_rule: Dict[str, Any], df_columns: List[str]) -> str:
-        """Generate executable Python code from parsed rule"""
-        
-        conditions_code = []
-        
-        for condition in parsed_rule["conditions"]:
-            if condition["type"] == "threshold":
-                code = f"(df['{condition['column']}'] {condition['operator']} {condition['value']})"
-                conditions_code.append(code)
+            col_type = results['column_type']
+            anomaly_count = len(results['anomaly_indices'])
             
-            elif condition["type"] == "range":
-                if condition["operator"] == "outside":
-                    code = f"((df['{condition['column']}'] < {condition['min_value']}) | (df['{condition['column']}'] > {condition['max_value']}))"
-                else:
-                    code = f"((df['{condition['column']}'] >= {condition['min_value']}) & (df['{condition['column']}'] <= {condition['max_value']}))"
-                conditions_code.append(code)
-            
-            elif condition["type"] == "statistical":
-                code = f"""(
-                    np.abs((df['{condition['column']}'] - df['{condition['column']}'].mean()) / df['{condition['column']}'].std()) > {condition['threshold']}
-                )"""
-                conditions_code.append(code)
-        
-        if conditions_code:
-            logic_operator = " & " if parsed_rule["logic"] == "and" else " | "
-            final_code = f"anomaly_mask = {logic_operator.join(conditions_code)}"
-            return final_code
-        
-        return ""
-    
-    def _generate_description(self, parsed_rule: Dict[str, Any]) -> str:
-        """Generate human-readable description"""
-        
-        descriptions = []
-        for condition in parsed_rule["conditions"]:
-            if condition["type"] == "threshold":
-                desc = f"{condition['column']} {condition['operator']} {condition['value']}"
-                descriptions.append(desc)
-            elif condition["type"] == "range":
-                if condition["operator"] == "outside":
-                    desc = f"{condition['column']} outside range {condition['min_value']}-{condition['max_value']}"
-                else:
-                    desc = f"{condition['column']} within range {condition['min_value']}-{condition['max_value']}"
-                descriptions.append(desc)
-            elif condition["type"] == "statistical":
-                desc = f"{condition['column']} is statistical outlier"
-                descriptions.append(desc)
-        
-        logic_word = " AND " if parsed_rule["logic"] == "and" else " OR "
-        return logic_word.join(descriptions)
-
-class RuleManager:
-    """Manage saved anomaly detection rules"""
-    
-    def __init__(self):
-        if "anomaly_rules" not in st.session_state:
-            st.session_state.anomaly_rules = []
-    
-    def save_rule(self, rule_data: Dict[str, Any]) -> bool:
-        """Save a rule to session state"""
-        try:
-            rule_data["id"] = len(st.session_state.anomaly_rules) + 1
-            rule_data["created_at"] = datetime.now().isoformat()
-            st.session_state.anomaly_rules.append(rule_data)
-            return True
-        except Exception as e:
-            st.error(f"Failed to save rule: {e}")
-            return False
-    
-    def get_rules(self) -> List[Dict[str, Any]]:
-        """Get all saved rules"""
-        return st.session_state.anomaly_rules
-    
-    def delete_rule(self, rule_id: int) -> bool:
-        """Delete a rule"""
-        try:
-            st.session_state.anomaly_rules = [
-                rule for rule in st.session_state.anomaly_rules 
-                if rule["id"] != rule_id
-            ]
-            return True
-        except Exception as e:
-            st.error(f"Failed to delete rule: {e}")
-            return False
-    
-    def execute_rule(self, rule: Dict[str, Any], df: pd.DataFrame) -> Dict[str, Any]:
-        """Execute a saved rule on data"""
-        try:
-            # Execute the generated code
-            local_vars = {"df": df, "np": np, "pd": pd}
-            exec(rule["executable_code"], globals(), local_vars)
-            
-            if "anomaly_mask" in local_vars:
-                anomaly_indices = df.index[local_vars["anomaly_mask"]].tolist()
-                return {
-                    "success": True,
-                    "anomalies": anomaly_indices,
-                    "total_checked": len(df),
-                    "rule_name": rule["name"]
-                }
-            else:
-                return {"success": False, "error": "No anomaly_mask generated"}
+            if col_type == 'numeric':
+                if anomaly_count > 10:
+                    recommendations.append(f"📊 Column '{column}': Consider data validation rules for numeric values")
+                recommendations.append(f"📊 Column '{column}': Review outliers - {anomaly_count} found")
                 
-        except Exception as e:
-            return {"success": False, "error": str(e)}
+            elif col_type == 'categorical':
+                rare_categories = len([d for d in results['anomaly_details'] if d['method'] == 'rare_category'])
+                if rare_categories > 0:
+                    recommendations.append(f"🏷️ Column '{column}': Standardize categories - {rare_categories} rare values found")
+                
+                misspellings = len([d for d in results['anomaly_details'] if d['method'] == 'potential_misspelling'])
+                if misspellings > 0:
+                    recommendations.append(f"🏷️ Column '{column}': Check for typos - {misspellings} potential misspellings")
+                    
+            elif col_type == 'text':
+                length_outliers = len([d for d in results['anomaly_details'] if d['method'] == 'length_outlier'])
+                if length_outliers > 0:
+                    recommendations.append(f"📝 Column '{column}': Review text length validation - {length_outliers} outliers")
+                    
+            elif col_type == 'datetime':
+                future_dates = len([d for d in results['anomaly_details'] if d['method'] == 'future_date'])
+                if future_dates > 0:
+                    recommendations.append(f"📅 Column '{column}': Fix future dates - {future_dates} found")
+        
+        # Add general recommendations
+        total_anomalies = sum(len(r['anomaly_indices']) for r in detailed_results.values())
+        if total_anomalies > 100:
+            recommendations.append("⚠️ High anomaly count detected - consider systematic data quality review")
+        
+        return recommendations
 
-class SimpleAnomalyDetector:
-    """Simple, reliable anomaly detection with rule support"""
+def create_universal_detection_interface(df: pd.DataFrame):
+    """Create interface for universal anomaly detection"""
     
-    def detect_statistical_anomalies(self, df: pd.DataFrame, columns: list, threshold: float = 3.0):
-        """Simple statistical anomaly detection using Z-scores"""
-        results = {
-            "anomalies": [],
-            "total_checked": 0,
-            "method": "Statistical Z-Score",
-            "threshold": threshold
+    st.subheader("🔍 Universal Anomaly Detection")
+    st.info("Detect anomalies across all data types: numeric, categorical, text, and datetime columns")
+    
+    # Configuration options
+    with st.expander("⚙️ Detection Configuration", expanded=True):
+        col_config1, col_config2, col_config3 = st.columns(3)
+        
+        with col_config1:
+            st.markdown("**Numeric Detection:**")
+            statistical_threshold = st.slider("Statistical Threshold (Z-score)", 1.5, 5.0, 3.0, 0.5)
+            include_iqr = st.checkbox("Include IQR Method", True)
+        
+        with col_config2:
+            st.markdown("**Categorical Detection:**")
+            frequency_threshold = st.slider("Rare Category Threshold (%)", 0.1, 5.0, 1.0, 0.1) / 100
+            check_misspellings = st.checkbox("Check for Misspellings", True)
+        
+        with col_config3:
+            st.markdown("**Text/Date Detection:**")
+            text_length_threshold = st.slider("Text Length Threshold", 1.5, 5.0, 3.0, 0.5)
+            check_future_dates = st.checkbox("Flag Future Dates", True)
+            include_weekends = st.checkbox("Allow Weekend Dates", True)
+    
+    # Column selection
+    all_columns = df.columns.tolist()
+    selected_columns = st.multiselect(
+        "Select columns to analyze:",
+        all_columns,
+        default=all_columns[:10],  # Select first 10 by default
+        help="Select which columns to include in anomaly detection"
+    )
+    
+    if not selected_columns:
+        st.warning("Please select at least one column to analyze.")
+        return
+    
+    # Run detection
+    if st.button("🔍 Run Universal Anomaly Detection", type="primary"):
+        
+        config = {
+            'statistical_threshold': statistical_threshold,
+            'frequency_threshold': frequency_threshold,
+            'text_length_threshold': text_length_threshold,
+            'check_future_dates': check_future_dates,
+            'include_weekends': include_weekends,
+            'check_misspellings': check_misspellings,
+            'include_iqr': include_iqr
         }
         
-        try:
-            numeric_cols = [col for col in columns if pd.api.types.is_numeric_dtype(df[col])]
-            
-            if not numeric_cols:
-                return {"error": "No numeric columns found"}
-            
-            anomaly_indices = set()
-            
-            for col in numeric_cols:
-                mean_val = df[col].mean()
-                std_val = df[col].std()
-                
-                if std_val > 0:
-                    z_scores = np.abs((df[col] - mean_val) / std_val)
-                    col_anomalies = df.index[z_scores > threshold].tolist()
-                    anomaly_indices.update(col_anomalies)
-            
-            results["anomalies"] = list(anomaly_indices)
-            results["total_checked"] = len(df)
-            results["columns_analyzed"] = numeric_cols
-            
-            return results
-            
-        except Exception as e:
-            return {"error": f"Detection failed: {str(e)}"}
+        # Filter dataframe to selected columns
+        df_subset = df[selected_columns].copy()
+        
+        with st.spinner("🔍 Analyzing all data types for anomalies..."):
+            detector = UniversalAnomalyDetector()
+            results = detector.detect_all_anomalies(df_subset, config)
+        
+        # Display results
+        display_universal_results(results, df_subset)
 
-def create_natural_language_interface(df: pd.DataFrame):
-    """Create interface for natural language rule definition"""
+def display_universal_results(results: Dict[str, Any], df: pd.DataFrame):
+    """Display comprehensive anomaly detection results"""
     
-    st.subheader("🧠 Natural Language Anomaly Rules")
+    st.markdown("## 📊 Universal Anomaly Detection Results")
     
-    # Initialize components
-    parser = NaturalLanguageRuleParser()
-    rule_manager = RuleManager()
+    # Summary metrics
+    summary = results['summary']
     
-    # Get available columns
-    numeric_columns = df.select_dtypes(include=[np.number]).columns.tolist()
+    metric_col1, metric_col2, metric_col3, metric_col4 = st.columns(4)
     
-    # Rule creation interface
-    with st.expander("📝 Create New Rule", expanded=True):
-        st.markdown("**Define anomaly rules in natural language:**")
+    if STYLING_AVAILABLE:
+        with metric_col1:
+            create_clean_metric("Total Anomalies", str(results['total_anomalies']))
+        with metric_col2:
+            create_clean_metric("Columns Analyzed", str(summary['total_columns_analyzed']))
+        with metric_col3:
+            create_clean_metric("Problematic Columns", str(summary['columns_with_anomalies']))
+        with metric_col4:
+            anomaly_rate = (results['total_anomalies'] / len(df) * 100) if len(df) > 0 else 0
+            create_clean_metric("Anomaly Rate", f"{anomaly_rate:.1f}%")
+    else:
+        with metric_col1:
+            st.metric("Total Anomalies", results['total_anomalies'])
+        with metric_col2:
+            st.metric("Columns Analyzed", summary['total_columns_analyzed'])
+        with metric_col3:
+            st.metric("Problematic Columns", summary['columns_with_anomalies'])
+        with metric_col4:
+            anomaly_rate = (results['total_anomalies'] / len(df) * 100) if len(df) > 0 else 0
+            st.metric("Anomaly Rate", f"{anomaly_rate:.1f}%")
+    
+    # Visualizations
+    if summary['anomalies_by_type']:
+        viz_col1, viz_col2 = st.columns(2)
         
-        # Examples
-        st.info("""
-        **Example rules:**
-        - "sales_amount is greater than 5000"
-        - "customer_age is less than 18 or customer_age is greater than 80"
-        - "order_quantity is outside 1 and 10"
-        - "discount_percent is outlier"
-        - "sales_amount is above 200% of normal"
-        """)
-        
-        col_rule1, col_rule2 = st.columns([3, 1])
-        
-        with col_rule1:
-            rule_name = st.text_input(
-                "Rule Name:",
-                placeholder="e.g., 'High Value Orders'"
+        with viz_col1:
+            # Anomalies by data type
+            type_data = summary['anomalies_by_type']
+            fig_type = px.pie(
+                values=list(type_data.values()),
+                names=list(type_data.keys()),
+                title="🎯 Anomalies by Data Type",
+                color_discrete_sequence=px.colors.qualitative.Set3
             )
-            
-            natural_rule = st.text_area(
-                "Natural Language Rule:",
-                placeholder="e.g., 'sales_amount is greater than 5000 and customer_age is less than 25'",
-                height=80
+            st.plotly_chart(fig_type, use_container_width=True)
+        
+        with viz_col2:
+            # Anomalies by detection method
+            method_data = summary['anomalies_by_method']
+            fig_method = px.bar(
+                x=list(method_data.keys()),
+                y=list(method_data.values()),
+                title="🔧 Anomalies by Detection Method",
+                labels={'x': 'Detection Method', 'y': 'Anomaly Count'},
+                color=list(method_data.values()),
+                color_continuous_scale='Reds'
             )
-        
-        with col_rule2:
-            st.markdown("**Available Columns:**")
-            for col in numeric_columns[:8]:  # Show first 8 columns
-                st.code(col)
-            if len(numeric_columns) > 8:
-                st.text(f"... and {len(numeric_columns) - 8} more")
-        
-        # Parse and preview rule
-        if natural_rule:
-            st.markdown("#### 🔍 Rule Analysis")
-            
-            parsed_rule = parser.parse_rule(natural_rule, numeric_columns)
-            
-            analysis_col1, analysis_col2 = st.columns(2)
-            
-            with analysis_col1:
-                confidence = parsed_rule["confidence"]
-                confidence_color = "🟢" if confidence >= 0.6 else "🟡" if confidence >= 0.3 else "🔴"
-                st.markdown(f"**Parsing Confidence:** {confidence_color} {confidence:.1%}")
-                
-                if parsed_rule["conditions"]:
-                    st.markdown("**Parsed Conditions:**")
-                    for i, condition in enumerate(parsed_rule["conditions"]):
-                        st.write(f"{i+1}. {condition}")
-                else:
-                    st.warning("⚠️ Could not parse the rule. Please check syntax.")
-            
-            with analysis_col2:
-                if parsed_rule["description"]:
-                    st.markdown("**Rule Description:**")
-                    st.info(parsed_rule["description"])
-                
-                if parsed_rule["executable_code"]:
-                    st.markdown("**Generated Code:**")
-                    st.code(parsed_rule["executable_code"], language="python")
-        
-        # Save rule
-        if st.button("💾 Save Rule", type="primary"):
-            if not rule_name or not natural_rule:
-                st.error("Please provide both rule name and natural language rule")
-            elif not parsed_rule["conditions"]:
-                st.error("Could not parse the rule. Please check your syntax.")
-            else:
-                rule_data = {
-                    "name": rule_name,
-                    "natural_language": natural_rule,
-                    "parsed_rule": parsed_rule,
-                    "executable_code": parsed_rule["executable_code"],
-                    "description": parsed_rule["description"]
-                }
-                
-                if rule_manager.save_rule(rule_data):
-                    st.success(f"✅ Rule '{rule_name}' saved successfully!")
-                    st.rerun()
+            fig_method.update_layout(xaxis_tickangle=-45)
+            st.plotly_chart(fig_method, use_container_width=True)
     
-    # Saved rules management
-    saved_rules = rule_manager.get_rules()
+    # Most problematic columns
+    if summary['most_problematic_columns']:
+        st.markdown("### 🚨 Most Problematic Columns")
+        
+        prob_cols_data = []
+        for col_info in summary['most_problematic_columns']:
+            prob_cols_data.append({
+                'Column': col_info['column'],
+                'Data Type': col_info['type'].title(),
+                'Anomaly Count': col_info['anomaly_count'],
+                'Severity': '🔴 High' if col_info['anomaly_count'] > 20 else '🟡 Medium' if col_info['anomaly_count'] > 5 else '🟢 Low'
+            })
+        
+        st.dataframe(pd.DataFrame(prob_cols_data), use_container_width=True)
     
-    if saved_rules:
-        st.subheader("📚 Saved Rules")
-        
-        for rule in saved_rules:
-            with st.expander(f"📋 {rule['name']}", expanded=False):
-                rule_col1, rule_col2, rule_col3 = st.columns([2, 1, 1])
-                
-                with rule_col1:
-                    st.markdown(f"**Natural Language:** `{rule['natural_language']}`")
-                    st.markdown(f"**Description:** {rule['description']}")
-                    st.markdown(f"**Created:** {rule['created_at'][:19]}")
-                
-                with rule_col2:
-                    if st.button(f"🔍 Execute", key=f"exec_{rule['id']}"):
-                        execute_saved_rule(rule, df, rule_manager)
-                
-                with rule_col3:
-                    if st.button(f"🗑️ Delete", key=f"del_{rule['id']}"):
-                        if rule_manager.delete_rule(rule["id"]):
-                            st.success("Rule deleted!")
-                            st.rerun()
-
-def execute_saved_rule(rule: Dict[str, Any], df: pd.DataFrame, rule_manager: RuleManager):
-    """Execute a saved rule and show results"""
+    # Detailed results by column
+    st.markdown("### 📋 Detailed Results by Column")
     
-    with st.spinner(f"Executing rule '{rule['name']}'..."):
-        result = rule_manager.execute_rule(rule, df)
+    tabs = st.tabs([f"📊 {col}" for col in results['detailed_results'].keys() if results['detailed_results'][col]['anomaly_indices']])
     
-    if result["success"]:
-        anomaly_count = len(result["anomalies"])
-        total_count = result["total_checked"]
-        anomaly_rate = (anomaly_count / total_count * 100) if total_count > 0 else 0
+    for i, (column, col_results) in enumerate([item for item in results['detailed_results'].items() if item[1]['anomaly_indices']]):
+        with tabs[i]:
+            display_column_anomalies(column, col_results, df)
+    
+    # Recommendations
+    if results['recommendations']:
+        st.markdown("### 💡 Recommendations")
         
-        st.markdown(f"### 📊 Results for '{rule['name']}'")
-        
-        result_col1, result_col2, result_col3 = st.columns(3)
-        
-        if STYLING_AVAILABLE:
-            with result_col1:
-                create_clean_metric("Anomalies Found", str(anomaly_count))
-            with result_col2:
-                create_clean_metric("Anomaly Rate", f"{anomaly_rate:.1f}%")
-            with result_col3:
-                create_clean_metric("Rule Type", "Natural Language")
-        else:
-            with result_col1:
-                st.metric("Anomalies Found", anomaly_count)
-            with result_col2:
-                st.metric("Anomaly Rate", f"{anomaly_rate:.1f}%")
-            with result_col3:
-                st.metric("Rule Type", "Natural Language")
-        
-        if anomaly_count > 0:
-            st.markdown("#### 🔍 Anomalous Records")
-            anomaly_data = df.loc[result["anomalies"]]
-            st.dataframe(anomaly_data, use_container_width=True)
-            
-            # Download option
-            csv = anomaly_data.to_csv(index=False)
+        for i, recommendation in enumerate(results['recommendations'], 1):
+            st.markdown(f"{i}. {recommendation}")
+    
+    # Export options
+    st.markdown("### 📥 Export Results")
+    
+    export_col1, export_col2, export_col3 = st.columns(3)
+    
+    with export_col1:
+        if results['anomaly_indices']:
+            anomaly_data = df.iloc[results['anomaly_indices']]
+            csv_data = anomaly_data.to_csv(index=True)
             st.download_button(
-                "📥 Download Anomalies",
-                csv,
-                f"anomalies_{rule['name'].replace(' ', '_')}_{pd.Timestamp.now().strftime('%Y%m%d_%H%M')}.csv",
+                "📄 Download Anomalous Records",
+                csv_data,
+                f"anomalies_{pd.Timestamp.now().strftime('%Y%m%d_%H%M')}.csv",
                 "text/csv"
             )
-        else:
-            st.success("✅ No anomalies found using this rule!")
     
-    else:
-        st.error(f"❌ Rule execution failed: {result['error']}")
+    with export_col2:
+        # Export detailed results as JSON
+        json_data = json.dumps(results, indent=2, default=str)
+        st.download_button(
+            "📋 Download Full Report (JSON)",
+            json_data,
+            f"anomaly_report_{pd.Timestamp.now().strftime('%Y%m%d_%H%M')}.json",
+            "application/json"
+        )
+    
+    with export_col3:
+        # Create summary report
+        summary_text = create_summary_report(results, df)
+        st.download_button(
+            "📊 Download Summary Report",
+            summary_text,
+            f"anomaly_summary_{pd.Timestamp.now().strftime('%Y%m%d_%H%M')}.txt",
+            "text/plain"
+        )
+
+def display_column_anomalies(column: str, col_results: Dict[str, Any], df: pd.DataFrame):
+    """Display detailed anomaly results for a specific column"""
+    
+    st.markdown(f"#### 📊 Column: {column}")
+    
+    # Column info
+    info_col1, info_col2, info_col3 = st.columns(3)
+    
+    with info_col1:
+        st.metric("Data Type", col_results['column_type'].title())
+    with info_col2:
+        st.metric("Anomalies Found", len(col_results['anomaly_indices']))
+    with info_col3:
+        st.metric("Detection Methods", len(col_results['method_used']))
+    
+    # Statistics
+    if col_results['statistics']:
+        with st.expander("📈 Column Statistics", expanded=False):
+            stats_data = []
+            for key, value in col_results['statistics'].items():
+                stats_data.append({
+                    'Statistic': key.replace('_', ' ').title(),
+                    'Value': str(value)
+                })
+            st.dataframe(pd.DataFrame(stats_data), use_container_width=True)
+    
+    # Anomaly details
+    st.markdown("**🔍 Anomaly Details:**")
+    
+    if col_results['anomaly_details']:
+        anomaly_df_data = []
+        for detail in col_results['anomaly_details'][:50]:  # Show first 50
+            anomaly_df_data.append({
+                'Row Index': detail['index'],
+                'Value': str(detail['value'])[:50] + "..." if len(str(detail['value'])) > 50 else str(detail['value']),
+                'Detection Method': detail['method'].replace('_', ' ').title(),
+                'Reason': detail['reason']
+            })
+        
+        st.dataframe(pd.DataFrame(anomaly_df_data), use_container_width=True)
+        
+        if len(col_results['anomaly_details']) > 50:
+            st.info(f"Showing first 50 anomalies. Total: {len(col_results['anomaly_details'])}")
+    
+    # Visualization for the column
+    create_column_visualization(column, col_results, df)
+
+def create_column_visualization(column: str, col_results: Dict[str, Any], df: pd.DataFrame):
+    """Create appropriate visualization for the column based on its type"""
+    
+    col_type = col_results['column_type']
+    series = df[column]
+    anomaly_indices = col_results['anomaly_indices']
+    
+    try:
+        if col_type == 'numeric':
+            # Box plot with anomalies highlighted
+            fig = go.Figure()
+            
+            # Add box plot
+            fig.add_trace(go.Box(
+                y=series.dropna(),
+                name=column,
+                boxpoints='outliers',
+                marker_color='lightblue'
+            ))
+            
+            # Highlight detected anomalies
+            if anomaly_indices:
+                anomaly_values = series.iloc[anomaly_indices].dropna()
+                fig.add_trace(go.Scatter(
+                    y=anomaly_values,
+                    x=[column] * len(anomaly_values),
+                    mode='markers',
+                    marker=dict(color='red', size=8, symbol='x'),
+                    name='Detected Anomalies'
+                ))
+            
+            fig.update_layout(
+                title=f"📊 Numeric Anomalies in {column}",
+                yaxis_title="Value",
+                height=400
+            )
+            st.plotly_chart(fig, use_container_width=True)
+        
+        elif col_type == 'categorical':
+            # Bar chart of category frequencies with anomalies highlighted
+            value_counts = series.value_counts()
+            
+            # Identify which categories have anomalies
+            anomaly_categories = set()
+            for idx in anomaly_indices:
+                if pd.notna(series.iloc[idx]):
+                    anomaly_categories.add(series.iloc[idx])
+            
+            colors = ['red' if cat in anomaly_categories else 'lightblue' for cat in value_counts.index]
+            
+            fig = px.bar(
+                x=value_counts.index[:20],  # Top 20 categories
+                y=value_counts.values[:20],
+                title=f"🏷️ Category Frequencies in {column}",
+                labels={'x': column, 'y': 'Count'},
+                color=colors[:20],
+                color_discrete_map={'red': 'red', 'lightblue': 'lightblue'}
+            )
+            fig.update_layout(height=400, xaxis_tickangle=-45)
+            st.plotly_chart(fig, use_container_width=True)
+        
+        elif col_type == 'text':
+            # Text length distribution
+            lengths = series.dropna().astype(str).str.len()
+            
+            fig = px.histogram(
+                x=lengths,
+                title=f"📝 Text Length Distribution in {column}",
+                labels={'x': 'Text Length (characters)', 'y': 'Frequency'},
+                nbins=30
+            )
+            
+            # Add vertical lines for anomaly lengths
+            if anomaly_indices:
+                anomaly_lengths = series.iloc[anomaly_indices].dropna().astype(str).str.len()
+                for length in anomaly_lengths:
+                    fig.add_vline(x=length, line_color="red", line_dash="dash", opacity=0.7)
+            
+            fig.update_layout(height=400)
+            st.plotly_chart(fig, use_container_width=True)
+        
+        elif col_type == 'datetime':
+            # Timeline with anomalies highlighted
+            try:
+                if not pd.api.types.is_datetime64_any_dtype(series):
+                    dt_series = pd.to_datetime(series, errors='coerce')
+                else:
+                    dt_series = series
+                
+                # Create timeline
+                dt_clean = dt_series.dropna().sort_values()
+                
+                fig = go.Figure()
+                
+                # Add normal dates
+                fig.add_trace(go.Scatter(
+                    x=dt_clean,
+                    y=[1] * len(dt_clean),
+                    mode='markers',
+                    marker=dict(color='lightblue', size=4),
+                    name='Normal Dates'
+                ))
+                
+                # Highlight anomalous dates
+                if anomaly_indices:
+                    anomaly_dates = dt_series.iloc[anomaly_indices].dropna()
+                    if len(anomaly_dates) > 0:
+                        fig.add_trace(go.Scatter(
+                            x=anomaly_dates,
+                            y=[1.1] * len(anomaly_dates),
+                            mode='markers',
+                            marker=dict(color='red', size=8, symbol='x'),
+                            name='Anomalous Dates'
+                        ))
+                
+                fig.update_layout(
+                    title=f"📅 Date Timeline for {column}",
+                    xaxis_title="Date",
+                    yaxis_title="",
+                    height=400,
+                    yaxis=dict(showticklabels=False)
+                )
+                st.plotly_chart(fig, use_container_width=True)
+            
+            except Exception as e:
+                st.warning(f"Could not create datetime visualization: {e}")
+    
+    except Exception as e:
+        st.warning(f"Could not create visualization for {column}: {e}")
+
+def create_summary_report(results: Dict[str, Any], df: pd.DataFrame) -> str:
+    """Create a text summary report"""
+    
+    report = f"""
+UNIVERSAL ANOMALY DETECTION REPORT
+Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+{'='*50}
+
+DATASET SUMMARY:
+- Total Rows: {len(df):,}
+- Total Columns: {len(df.columns)}
+- Columns Analyzed: {results['summary']['total_columns_analyzed']}
+
+ANOMALY SUMMARY:
+- Total Anomalies Found: {results['total_anomalies']:,}
+- Anomaly Rate: {(results['total_anomalies']/len(df)*100):.2f}%
+- Columns with Anomalies: {results['summary']['columns_with_anomalies']}
+
+ANOMALIES BY DATA TYPE:
+"""
+    
+    for data_type, count in results['summary']['anomalies_by_type'].items():
+        report += f"- {data_type.title()}: {count:,} anomalies\n"
+    
+    report += "\nANOMALIES BY DETECTION METHOD:\n"
+    for method, count in results['summary']['anomalies_by_method'].items():
+        report += f"- {method.replace('_', ' ').title()}: {count:,} anomalies\n"
+    
+    report += "\nMOST PROBLEMATIC COLUMNS:\n"
+    for col_info in results['summary']['most_problematic_columns']:
+        report += f"- {col_info['column']} ({col_info['type']}): {col_info['anomaly_count']} anomalies\n"
+    
+    report += "\nRECOMMENDations:\n"
+    for i, rec in enumerate(results['recommendations'], 1):
+        report += f"{i}. {rec}\n"
+    
+    report += f"\n{'='*50}\nEnd of Report"
+    
+    return report
+
+def create_enhanced_natural_language_rules():
+    """Enhanced natural language rule parser for all data types"""
+    
+    st.subheader("🧠 Enhanced Natural Language Rules")
+    st.info("Create anomaly detection rules in plain English for any data type!")
+    
+    # Enhanced examples
+    with st.expander("📚 Rule Examples for All Data Types", expanded=True):
+        
+        rule_col1, rule_col2 = st.columns(2)
+        
+        with rule_col1:
+            st.markdown("""
+            **📊 Numeric Rules:**
+            - "sales_amount is greater than 10000"
+            - "age is less than 18 or age is greater than 65"
+            - "price is outside 100 and 1000"
+            - "discount_rate is outlier"
+            
+            **🏷️ Categorical Rules:**
+            - "status is not in ['active', 'pending', 'closed']"
+            - "category contains 'test' or 'temp'"
+            - "country_code has unusual frequency"
+            - "product_type is rare category"
+            """)
+        
+        with rule_col2:
+            st.markdown("""
+            **📝 Text Rules:**
+            - "description length is greater than 500 characters"
+            - "email does not contain '@'"
+            - "comment has encoding issues"
+            - "name has unusual characters"
+            
+            **📅 Date Rules:**
+            - "order_date is in the future"
+            - "created_at is on weekend"
+            - "last_login is older than 365 days"
+            - "timestamp has large gaps"
+            """)
+    
+    # Rule input
+    rule_input_col1, rule_input_col2 = st.columns([3, 1])
+    
+    with rule_input_col1:
+        rule_name = st.text_input("Rule Name:", placeholder="High Value Transactions")
+        
+        natural_rule = st.text_area(
+            "Natural Language Rule:",
+            placeholder="amount is greater than 5000 and category is not 'refund'",
+            height=100
+        )
+    
+    with rule_input_col2:
+        st.markdown("**Available Columns:**")
+        # This would be populated with actual column names from the selected dataset
+        st.code("amount\ncategory\ndate\nstatus\n...")
+    
+    if natural_rule:
+        st.markdown("#### 🔍 Rule Preview")
+        st.info(f"Rule: {natural_rule}")
+        # Here you would add the enhanced rule parsing logic
+        st.success("✅ Rule parsed successfully!")
 
 def main():
-    """Main function with natural language rule support"""
+    """Main function for universal anomaly detection"""
     
     # Header
     if STYLING_AVAILABLE:
-        create_clean_header("🔍 Anomaly Detection & Rules", "Find patterns with ML algorithms and natural language rules")
+        create_clean_header(
+            "🔍 Universal Anomaly Detection", 
+            "Advanced anomaly detection for all data types: numeric, categorical, text, and datetime"
+        )
     else:
-        st.title("🔍 Anomaly Detection & Rules")
-        st.markdown("Find patterns with ML algorithms and natural language rules")
+        st.title("🔍 Universal Anomaly Detection")
+        st.markdown("Advanced anomaly detection for all data types: numeric, categorical, text, and datetime")
+    
+    # Navigation
+    nav_col1, nav_col2, nav_col3 = st.columns([1, 3, 1])
+    with nav_col1:
+        st.page_link("pages/4_Chat_with_Data.py", label="⬅ Chat with Data", icon="💬")
+    with nav_col3:
+        st.page_link("Home.py", label="Home ➡", icon="🏠")
     
     # Load data
     try:
@@ -503,91 +1072,73 @@ def main():
         return
     
     if not data_sources:
-        st.warning("No data found. Please load CSV files or connect to a database first.")
+        st.warning("🔍 No data found. Please load CSV files or connect to a database first.")
+        st.info("👆 Go to the 'Load Data' page to upload CSV files or connect to your database.")
         return
     
     # Data selection
-    st.subheader("📊 Select Data")
+    st.markdown("### 📊 Select Dataset")
     
     selected_dataset = st.selectbox(
-        "Choose dataset:",
+        "Choose dataset to analyze:",
         list(data_sources.keys()),
-        help="Select which dataset to analyze"
+        help="Select which dataset to analyze for anomalies"
     )
     
     df = data_sources[selected_dataset]
     
-    # Basic info
-    col1, col2, col3 = st.columns(3)
+    # Display basic dataset info
+    col1, col2, col3, col4 = st.columns(4)
     
-    if STYLING_AVAILABLE:
-        with col1:
-            create_clean_metric("Rows", f"{len(df):,}")
-        with col2:
-            create_clean_metric("Columns", str(len(df.columns)))
-        with col3:
-            create_clean_metric("Numeric Cols", str(len(df.select_dtypes(include=[np.number]).columns)))
-    else:
-        with col1:
-            st.metric("Rows", f"{len(df):,}")
-        with col2:
-            st.metric("Columns", len(df.columns))
-        with col3:
-            st.metric("Numeric Columns", len(df.select_dtypes(include=[np.number]).columns))
+    with col1:
+        if STYLING_AVAILABLE:
+            create_clean_metric("Total Rows", f"{len(df):,}")
+        else:
+            st.metric("Total Rows", f"{len(df):,}")
     
-    # Tabbed interface
-    tab1, tab2 = st.tabs(["🤖 ML Algorithms", "🧠 Natural Language Rules"])
+    with col2:
+        if STYLING_AVAILABLE:
+            create_clean_metric("Total Columns", str(len(df.columns)))
+        else:
+            st.metric("Total Columns", len(df.columns))
+    
+    with col3:
+        numeric_cols = len(df.select_dtypes(include=[np.number]).columns)
+        if STYLING_AVAILABLE:
+            create_clean_metric("Numeric Columns", str(numeric_cols))
+        else:
+            st.metric("Numeric Columns", numeric_cols)
+    
+    with col4:
+        text_cols = len(df.select_dtypes(include=['object']).columns)
+        if STYLING_AVAILABLE:
+            create_clean_metric("Text/Categorical", str(text_cols))
+        else:
+            st.metric("Text/Categorical", text_cols)
+    
+    # Show data types breakdown
+    with st.expander("📋 Column Types Breakdown", expanded=False):
+        detector = UniversalAnomalyDetector()
+        
+        type_breakdown = {}
+        for col in df.columns:
+            col_type = detector._detect_column_type(df[col])
+            if col_type not in type_breakdown:
+                type_breakdown[col_type] = []
+            type_breakdown[col_type].append(col)
+        
+        for data_type, columns in type_breakdown.items():
+            st.markdown(f"**{data_type.title()} ({len(columns)} columns):**")
+            st.write(", ".join(columns[:10]) + ("..." if len(columns) > 10 else ""))
+    
+    # Main interface tabs
+    tab1, tab2 = st.tabs(["🔍 Universal Detection", "🧠 Natural Language Rules"])
     
     with tab1:
-        # Traditional ML-based anomaly detection (existing code)
-        st.subheader("🤖 Machine Learning Detection")
-        
-        numeric_columns = df.select_dtypes(include=[np.number]).columns.tolist()
-        
-        if not numeric_columns:
-            st.error("❌ No numeric columns found.")
-            return
-        
-        col_config1, col_config2 = st.columns(2)
-        
-        with col_config1:
-            selected_columns = st.multiselect(
-                "Select columns to analyze:",
-                numeric_columns,
-                default=numeric_columns[:min(3, len(numeric_columns))],
-                help="Choose which numeric columns to check for anomalies"
-            )
-        
-        with col_config2:
-            method = st.selectbox("Detection method:", ["Statistical", "IQR"])
-            
-            if method == "Statistical":
-                threshold = st.slider(
-                    "Sensitivity (higher = fewer anomalies):",
-                    min_value=1.5,
-                    max_value=4.0,
-                    value=3.0,
-                    step=0.5
-                )
-            else:
-                threshold = None
-        
-        if selected_columns and st.button("🔍 Find Anomalies", type="primary"):
-            with st.spinner("Analyzing data..."):
-                detector = SimpleAnomalyDetector()
-                results = detector.detect_statistical_anomalies(df, selected_columns, threshold or 3.0)
-            
-            if "error" not in results:
-                anomaly_count = len(results["anomalies"])
-                st.metric("Anomalies Found", anomaly_count)
-                
-                if anomaly_count > 0:
-                    anomaly_data = df.loc[results["anomalies"]]
-                    st.dataframe(anomaly_data[selected_columns])
+        create_universal_detection_interface(df)
     
     with tab2:
-        # Natural language rule interface
-        create_natural_language_interface(df)
+        create_enhanced_natural_language_rules()
 
 if __name__ == "__main__":
     main()
