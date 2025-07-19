@@ -43,7 +43,8 @@ except ImportError:
 st.set_page_config(
     page_title="Anomaly Detection & Rule Management",
     page_icon="🔍",
-    layout="wide"
+    layout="wide",
+    initial_sidebar_state="collapsed"
 )
 
 # Apply professional styling

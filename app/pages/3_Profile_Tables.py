@@ -21,7 +21,8 @@ except ImportError:
 st.set_page_config(
     page_title="Profile Tables",
     page_icon="📊",
-    layout="wide"
+    layout="wide",
+    initial_sidebar_state="collapsed"
 )
 
 from assets.streamlit_styles import apply_professional_styling, create_nav_header

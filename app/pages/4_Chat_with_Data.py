@@ -16,7 +16,8 @@ from assets.streamlit_styles import apply_professional_styling, create_nav_heade
 st.set_page_config(
     page_title="Chat with Data",
     page_icon="💬",
-    layout="wide"
+    layout="wide",
+    initial_sidebar_state="collapsed"
 )
 
 apply_professional_styling()
@@ -211,6 +212,17 @@ with col_stats:
 
 # --- Chat History Display ---
 display_chat_history()
+
+# --- Navigation Buttons ---
+
+nav_button_col1, nav_button_col2, nav_button_col3 = st.columns([1, 2, 1])
+
+with nav_button_col1:
+    st.page_link("pages/2_Load_Data_CSV_or_Database.py", label="⬅ Load More Data", icon="📂")
+
+
+with nav_button_col3:
+    st.page_link("pages/5_Anomaly_Detection.py", label="Anomaly Detection ➡", icon="🔍")
 
 # --- Footer with helpful information ---
 st.markdown("---")

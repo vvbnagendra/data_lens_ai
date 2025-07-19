@@ -2,6 +2,7 @@
 # REFACTORED WITH PROFESSIONAL COMPONENTS INSPIRED BY AZURE DEVOPS BOARDS
 
 import streamlit as st
+import base64
 from assets.streamlit_styles import (
     apply_professional_styling,
     create_nav_header,
@@ -23,11 +24,13 @@ apply_professional_styling()
 # --- Navigation Header ---
 create_nav_header("⚡️ Data Lens AI", "AI-powered Data Analysis and Anomaly Detection Tool")
 
-image_html_path = "app/assets/datalensailogo.png" # This is the path Streamlit will understand
 
+with open("app/assets/datalensai.png", "rb") as img_file:
+    img_bytes = img_file.read()
+    encoded = base64.b64encode(img_bytes).decode()
 
-# --- Hero Section ---
-st.markdown("""
+# HTML with embedded base64 image
+st.markdown(f"""
 <div style="display: flex; gap: 2rem; align-items: center; margin-bottom: 2rem;">
     <div style="flex: 2;">
         <h1 style="margin-bottom: 0.5rem; font-size: 2.5rem; font-weight: 700; color: #0078d4;">Welcome to Data Lens AI</h1>
@@ -40,7 +43,7 @@ st.markdown("""
         </div>
     </div>
     <div style="flex: 1; text-align: center;">
-        <img src="{image_html_path}" alt="Data Profiler" style="max-width: 220px; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,120,212,0.08);">
+        <img src="data:image/png;base64,{encoded}" alt="Data Profiler" style="max-width: 220px; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,120,212,0.08);">
     </div>
 </div>
 """, unsafe_allow_html=True)

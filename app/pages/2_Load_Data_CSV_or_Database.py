@@ -9,7 +9,8 @@ from assets.streamlit_styles import apply_professional_styling, create_nav_heade
 st.set_page_config(
     page_title="Load Data",
     page_icon="📂",
-    layout="wide"
+    layout="wide",
+    initial_sidebar_state="collapsed"
 )
 
 apply_professional_styling()
