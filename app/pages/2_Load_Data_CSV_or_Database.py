@@ -3,6 +3,7 @@ import streamlit as st
 import pandas as pd
 from utils.db_connector import get_sqlalchemy_engine
 from utils.file_handler import save_connection, load_connections
+from assets.streamlit_styles import apply_professional_styling, create_nav_header
 
 # --- Page Configuration ---
 st.set_page_config(
@@ -10,6 +11,16 @@ st.set_page_config(
     page_icon="📂",
     layout="wide"
 )
+
+apply_professional_styling()
+
+# --- Initialize data_loaded_successfully flag ---
+# This is the ONLY change needed to resolve the NameError.
+# It ensures the variable is always defined from the start.
+data_loaded_successfully = False
+
+# --- Navigation Header ---
+create_nav_header("📂 Load Your Data", "Connect to databases or upload CSV files to begin your data analysis journey")
 
 # --- Enhanced CSS ---
 st.markdown("""
@@ -96,63 +107,6 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# --- Header Section ---
-st.markdown("""
-<div class="page-header">
-    <h1>📂 Load Your Data</h1>
-    <p>Connect to databases or upload CSV files to begin your data analysis journey</p>
-</div>
-""", unsafe_allow_html=True)
-
-# --- Navigation ---
-nav_col1, nav_col2, nav_col3 = st.columns([1, 3, 1])
-with nav_col1:
-    st.page_link("Home.py", label="⬅ Home", icon="🏠")
-with nav_col3:
-    # Dynamic next button based on data loaded
-    pass
-
-# --- Progress Indicator ---
-st.markdown("### 📍 Current Progress")
-progress_col1, progress_col2, progress_col3 = st.columns(3)
-
-data_loaded_successfully = False  # Initialize the flag
-
-with progress_col1:
-    st.markdown("""
-    <div class="progress-step active">
-        <span style="font-size: 1.5rem; margin-right: 1rem;">📂</span>
-        <div>
-            <strong>Step 1: Load Data</strong><br>
-            <small>Currently active</small>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-
-with progress_col2:
-    st.markdown("""
-    <div class="progress-step">
-        <span style="font-size: 1.5rem; margin-right: 1rem;">📊</span>
-        <div>
-            <strong>Step 2: Profile Data</strong><br>
-            <small>Next up</small>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-
-with progress_col3:
-    st.markdown("""
-    <div class="progress-step">
-        <span style="font-size: 1.5rem; margin-right: 1rem;">💬</span>
-        <div>
-            <strong>Step 3: Chat with Data</strong><br>
-            <small>Final step</small>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-
-st.markdown("---")
-
 # --- Data Source Selection ---
 st.markdown("### 🎯 Choose Your Data Source")
 
@@ -167,7 +121,7 @@ with source_col1:
             <div style="text-align: center;">
                 <span style="font-size: 3rem;">📁</span>
                 <h3>Upload CSV Files</h3>
-                <p>Quick and easy - drag & drop your CSV files or browse to select them</p>
+                <p>Quick and easy - drag & drop your CSV files</p>
                 <ul style="text-align: left; margin-top: 1rem;">
                     <li>✅ Support for multiple files</li>
                     <li>✅ Automatic data type detection</li>
@@ -269,7 +223,7 @@ if data_source == "📁 Upload CSV Files":
                         with col_preview1:
                             st.dataframe(df.head(), use_container_width=True)
                         with col_preview2:
-                            st.markdown("**Column Info:**")
+                            st.markdown("*Column Info:*")
                             for col in df.columns[:10]:  # Show first 10 columns
                                 dtype = str(df[col].dtype)
                                 null_count = df[col].isnull().sum()
@@ -290,7 +244,7 @@ if data_source == "📁 Upload CSV Files":
         status_text.empty()
         
         if success_count > 0:
-            data_loaded_successfully = True
+            data_loaded_successfully = True # Set the flag to True if CSVs are successfully processed
             st.balloons()  # Celebration animation
 
     elif "csv_dataframes" in st.session_state and st.session_state["csv_dataframes"]:
@@ -300,7 +254,7 @@ if data_source == "📁 Upload CSV Files":
             <p>You have CSV files from a previous session. Upload new ones or proceed to the next step.</p>
         </div>
         """, unsafe_allow_html=True)
-        data_loaded_successfully = True
+        data_loaded_successfully = True # Set the flag to True if existing CSVs are in session state
     else:
         st.info("👆 Please upload CSV files using the area above.")
 
@@ -342,7 +296,7 @@ else:  # Database connection
             
             # Get database type
             db_type = getattr(st.session_state, 'db_type', 'PostgreSQL')
-            st.info(f"Selected: **{db_type}**")
+            st.info(f"Selected: *{db_type}*")
             
             # Connection form
             with st.form("db_connection_form", clear_on_submit=False):
@@ -379,7 +333,7 @@ else:  # Database connection
                             </div>
                             """, unsafe_allow_html=True)
                             
-                            data_loaded_successfully = True
+                            data_loaded_successfully = True # Set the flag to True if DB connected
                             
                             # Save connection if label provided
                             if label:
@@ -434,7 +388,7 @@ else:  # Database connection
                     </div>
                     """, unsafe_allow_html=True)
                     
-                    data_loaded_successfully = True
+                    data_loaded_successfully = True # Set the flag to True if saved DB connected
                     st.balloons()
                     
                 except Exception as e:
@@ -468,48 +422,11 @@ if data_loaded_successfully:
     </div>
     """, unsafe_allow_html=True)
     
-    # Update progress indicator
-    st.markdown("### ✅ Updated Progress")
-    progress_col1, progress_col2, progress_col3 = st.columns(3)
-    
-    with progress_col1:
-        st.markdown("""
-        <div class="progress-step completed">
-            <span style="font-size: 1.5rem; margin-right: 1rem;">✅</span>
-            <div>
-                <strong>Step 1: Load Data</strong><br>
-                <small>Completed</small>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with progress_col2:
-        st.markdown("""
-        <div class="progress-step active">
-            <span style="font-size: 1.5rem; margin-right: 1rem;">📊</span>
-            <div>
-                <strong>Step 2: Profile Data</strong><br>
-                <small>Ready to start</small>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with progress_col3:
-        st.markdown("""
-        <div class="progress-step">
-            <span style="font-size: 1.5rem; margin-right: 1rem;">💬</span>
-            <div>
-                <strong>Step 3: Chat with Data</strong><br>
-                <small>Coming next</small>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-    
     # Navigation buttons
-    st.markdown("### 🚀 Continue Your Journey")
+    # st.markdown("### 🚀 Continue Your Journey")
     nav_col1, nav_col2, nav_col3 = st.columns([1, 2, 1])
     
-    with nav_col2:
+    with nav_col3:
         st.page_link(
             "pages/3_Profile_Tables.py",
             label="📊 Continue to Data Profiling",
@@ -527,7 +444,7 @@ with st.expander("❓ Need Help?", expanded=False):
     
     with help_col1:
         st.markdown("""
-        **📁 CSV File Tips:**
+        *📁 CSV File Tips:*
         - Supported format: .csv files only
         - Maximum file size: 200MB per file
         - Ensure your CSV has headers in the first row
@@ -536,7 +453,7 @@ with st.expander("❓ Need Help?", expanded=False):
     
     with help_col2:
         st.markdown("""
-        **🗄️ Database Tips:**
+        *🗄️ Database Tips:*
         - Supported: PostgreSQL and MySQL
         - Ensure your database server is accessible
         - Check firewall settings if connection fails
@@ -544,7 +461,6 @@ with st.expander("❓ Need Help?", expanded=False):
         """)
 
 # --- Footer ---
-st.markdown("---")
 st.markdown("""
 <div style="text-align: center; padding: 2rem; background: #f8f9fa; border-radius: 10px; margin-top: 2rem;">
     <p style="margin: 0; color: #666;">

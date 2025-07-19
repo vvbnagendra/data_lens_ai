@@ -10,6 +10,7 @@ from core_logic.llm_config import configure_llm_backend
 from core_logic.pandasai_handler import handle_pandasai_query
 from core_logic.lotus_handler import handle_lotus_query, check_lotus_environment
 from core_logic.chat_history_manager import add_to_chat_history, display_chat_history, clear_chat_history
+from assets.streamlit_styles import apply_professional_styling, create_nav_header
 
 # --- Page Configuration ---
 st.set_page_config(
@@ -18,16 +19,10 @@ st.set_page_config(
     layout="wide"
 )
 
-# --- Header Section with Navigation ---
-col_nav1, col_nav2, col_nav3 = st.columns([1, 4, 1])
-with col_nav1:
-    st.page_link("pages/3_Profile_Tables.py", label="⬅ Profile Tables", icon="📊")
-with col_nav2:
-    st.markdown("## 💬 Chat with Data")
-with col_nav3:
-    st.page_link("Home.py", label="Home 🏠", icon="🏠")
+apply_professional_styling()
 
-st.markdown("---")
+# --- Navigation Header ---
+create_nav_header("💬 Chat with Data", "Ask questions and get insights from your data using AI")
 
 # Initialize chat history
 if "chat_history" not in st.session_state:
@@ -105,29 +100,6 @@ if llm_backend == "lotus":
                 st.rerun()
 
 st.markdown("---")
-
-# --- Chat Interface ---
-st.subheader("Ask a Question About Your Data")
-
-# Example questions based on backend
-if llm_backend == "lotus":
-    st.info("""
-    **Lotus Examples:**
-    - "Find all records where sales > 1000"
-    - "Search for customers in California"
-    - "Show me the top 5 products by revenue"
-    - "Filter data where category contains 'electronics'"
-    """)
-else:
-    st.info("""
-    **PandasAI Examples:**
-    - "What is the average sales per product category?"
-    - "Show me a histogram of customer ages"
-    - "Create a scatter plot of price vs quantity"
-    - "What are the top 10 selling products?"
-    - "Calculate the correlation between variables"
-    """)
-
 with st.form("chat_form", clear_on_submit=True):
     user_question = st.text_input(
         "Your Question:",
@@ -240,98 +212,8 @@ with col_stats:
 # --- Chat History Display ---
 display_chat_history()
 
-# --- Sidebar with helpful information ---
-with st.sidebar:
-    st.markdown("### 🔧 Current Configuration")
-    st.info(f"""
-    **Backend:** {llm_backend.title()}
-    **Model:** {model_name or 'Default'}
-    **Data Sources:** {len(selected_keys)}
-    **Total Rows:** {sum(len(df) for _, df in dfs):,}
-    """)
-    
-    if llm_backend == "lotus":
-        st.markdown("### 🪷 Lotus Features (Same Models as PandasAI)")
-        st.markdown("""
-        - **Semantic Search**: Find records by meaning, not just exact matches
-        - **Natural Filtering**: Use plain language conditions like "high sales" or "recent orders"
-        - **Smart Aggregation**: Automatic grouping and calculations based on context
-        - **Text Understanding**: Search within text columns intelligently
-        - **Model Support**: Uses same Ollama, HuggingFace & Google models as PandasAI
-        """)
-    else:
-        st.markdown("### 🐼 PandasAI Features")
-        st.markdown("""
-        - **Data Analysis**: Statistical calculations and insights
-        - **Visualizations**: Automatic chart and plot generation
-        - **Code Generation**: Python/Pandas code for your queries
-        - **Multiple Models**: Various LLM backends (Ollama, HuggingFace, Google)
-        - **Advanced Analytics**: Complex data transformations and analysis
-        """)
-    
-    st.markdown("### 📊 Model Information")
-    st.markdown(f"""
-    **🔧 Current Configuration:**
-    - **Backend**: {llm_backend.title()}
-    - **Model Provider**: {model_backend.title()}
-    - **Model**: {model_name}
-    - **Mode**: {'Semantic Processing' if llm_backend == 'lotus' else 'Data Analysis'}
-    """)
-    
-    st.markdown("### 📊 Quick Actions")
-    if st.button("📈 Show Data Summary", key="quick_summary"):
-        summary_data = []
-        for name, df in dfs:
-            summary_data.append({
-                "Dataset": name,
-                "Rows": len(df),
-                "Columns": len(df.columns),
-                "Memory (KB)": f"{df.memory_usage(deep=True).sum() / 1024:.1f}"
-            })
-        st.dataframe(pd.DataFrame(summary_data), use_container_width=True)
-    
-    if st.button("🔍 Show Column Info", key="quick_columns"):
-        for name, df in dfs:
-            st.markdown(f"**{name}:**")
-            col_info = pd.DataFrame({
-                "Column": df.columns,
-                "Type": df.dtypes.astype(str),
-                "Non-Null": df.count(),
-                "Null %": (df.isnull().sum() / len(df) * 100).round(1)
-            })
-            st.dataframe(col_info, use_container_width=True)
-
 # --- Footer with helpful information ---
 st.markdown("---")
-st.markdown("### 💡 Tips for Better Results:")
-
-if llm_backend == "lotus":
-    st.markdown("""
-    **🪷 Lotus Best Practices (Using Standard Models):**
-    - **Natural Language Filtering**: "customers in California with high revenue"
-    - **Semantic Search**: "find similar products" or "search for complaints"
-    - **Smart Conditions**: "sales greater than average" or "recent transactions"
-    - **Text Understanding**: "find positive reviews" or "locate error messages"
-    - **Model Consistency**: Same Ollama/HuggingFace/Google models as PandasAI
-    """)
-else:
-    st.markdown("""
-    **🐼 PandasAI Best Practices:**
-    - **Specific Calculations**: "calculate the mean, median, and mode of sales"
-    - **Request Visualizations**: "create a bar chart of sales by category"
-    - **Column References**: "plot price vs quantity with color by category"
-    - **Statistical Analysis**: "show correlation matrix" or "detect outliers"
-    - **Code Generation**: "generate code to clean this data"
-    """)
-
-st.markdown("""
-**🎯 General Tips:**
-- **Be Specific**: Mention exact column names when possible
-- **One Question at a Time**: Break complex requests into smaller parts
-- **Use Examples**: Reference specific values or ranges in your data
-- **Try Variations**: If you get an error, rephrase your question
-- **Check Data First**: Use the preview to understand your data structure
-""")
 
 # Performance warning for large datasets
 total_rows = sum(len(df) for _, df in dfs)

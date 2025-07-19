@@ -1,5 +1,5 @@
 # File: app/pages/5_Anomaly_Detection.py
-# ENHANCED VERSION WITH INTEGRATED RULE MANAGEMENT SYSTEM
+# REFACTORED VERSION WITH PROFESSIONAL STYLING AND NAVIGATION
 
 import streamlit as st
 import pandas as pd
@@ -41,13 +41,21 @@ except ImportError:
         return {}
 
 st.set_page_config(
-    page_title="Smart Anomaly Detection & Rule Management",
+    page_title="Anomaly Detection & Rule Management",
     page_icon="🔍",
     layout="wide"
 )
 
-if STYLING_AVAILABLE:
-    apply_clean_styling()
+# Apply professional styling
+try:
+    from assets.streamlit_styles import apply_professional_styling, create_nav_header
+    apply_professional_styling()
+except ImportError:
+    st.error("Failed to apply professional styling. Please check your assets directory.")
+
+# --- Navigation Header ---
+create_nav_header("🔍 Anomaly Detection & Rule Management", "Find unusual patterns and manage business rules for your data")
+
 
 # Enhanced Natural Language Rule Parser (with rule management integration)
 class EnhancedRuleParser:
@@ -696,7 +704,7 @@ def create_new_rule_interface(parser, df, dataset_signature, dataset_key):
     st.markdown("#### 🎯 Create New Audit Rule")
     
     # Rule examples based on dataset
-    with st.expander("💡 Smart Rule Suggestions", expanded=True):
+    with st.expander("💡 Smart Rule Suggestions", expanded=False):
         suggest_rules_for_dataset(df)
     
     # Rule creation form
@@ -1182,7 +1190,7 @@ def rule_analytics_interface(rule_db):
             executions = rule_db.get_execution_history(rule['rule_id'], limit=10)
             if executions:
                 avg_anomalies = sum(e.get('records_affected', 0) for e in executions) / len(executions)
-                success_rate = sum(1 for e in executions if e.get('execution_status') == 'success') / len(executions) * 100
+                success_rate = sum(1 for e in executions if e.get('execution_status') == 'success') / len(executions) * 100;
                 
                 rule_performance.append({
                     'Rule Name': rule['rule_name'],
@@ -1233,24 +1241,7 @@ def rule_analytics_interface(rule_db):
 
 def main():
     """Main function for enhanced anomaly detection with rule management"""
-    
-    # Header
-    if STYLING_AVAILABLE:
-        create_clean_header(
-            "🔍 Smart Anomaly Detection & Rule Management", 
-            "Advanced anomaly detection with intelligent rule management and audit trail"
-        )
-    else:
-        st.title("🔍 Smart Anomaly Detection & Rule Management")
-        st.markdown("Advanced anomaly detection with intelligent rule management and audit trail")
-    
-    # Navigation
-    nav_col1, nav_col2, nav_col3 = st.columns([1, 3, 1])
-    with nav_col1:
-        st.page_link("pages/4_Chat_with_Data.py", label="⬅ Chat with Data", icon="💬")
-    with nav_col3:
-        st.page_link("Home.py", label="Home ➡", icon="🏠")
-    
+
     # Check if rule management is available
     if not RULE_MANAGEMENT_AVAILABLE:
         st.error("❌ Rule Management system not available. Please ensure database/rule_management.py exists.")
@@ -2326,7 +2317,20 @@ def detect_numeric_outliers_quick(df: pd.DataFrame):
     if outliers_found:
         st.success(f"Found outliers in {len(outliers_found)} columns")
         
-        for outlier_info in outliers_found:
+        # Summary metrics
+        total_outlier_records = len(set(sum([o['indices'] for o in outliers_found], [])))
+        
+        summary_col1, summary_col2, summary_col3 = st.columns(3)
+        with summary_col1:
+            st.metric("Outlier Types", len(outliers_found))
+        with summary_col2:
+            st.metric("Affected Records", f"{total_outlier_records:,}")
+        with summary_col3:
+            anomaly_rate = (total_outlier_records / len(df) * 100) if len(df) > 0 else 0
+            st.metric("Outlier Rate", f"{anomaly_rate:.1f}%")
+        
+        # Detailed results
+        for outlier_info in sorted(outliers_found, key=lambda x: x['count'], reverse=True):
             with st.expander(f"📊 {outlier_info['column']} - {outlier_info['count']} outliers ({outlier_info['percentage']:.1f}%)", expanded=False):
                 st.markdown(f"**Method:** {outlier_info['method']}")
                 st.markdown(f"**Normal Range:** {outlier_info['bounds']}")

@@ -24,138 +24,13 @@ st.set_page_config(
     layout="wide"
 )
 
-# --- Enhanced CSS ---
-st.markdown("""
-<style>
-    .page-header {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        padding: 2rem;
-        border-radius: 15px;
-        margin-bottom: 2rem;
-        text-align: center;
-        color: white;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    }
-    
-    .metric-card {
-        background: white;
-        padding: 1.5rem;
-        border-radius: 15px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        border-left: 5px solid #667eea;
-        margin-bottom: 1rem;
-        transition: transform 0.3s ease;
-    }
-    
-    .metric-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-    }
-    
-    .quality-pass {
-        background: linear-gradient(135deg, #d4f5d4 0%, #b8e6b8 100%);
-        border-left-color: #28a745;
-    }
-    
-    .quality-warn {
-        background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
-        border-left-color: #ffc107;
-    }
-    
-    .quality-fail {
-        background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
-        border-left-color: #dc3545;
-    }
-    
-    .progress-step {
-        display: flex;
-        align-items: center;
-        padding: 1rem;
-        margin: 0.5rem 0;
-        border-radius: 10px;
-        background: white;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    }
-    
-    .progress-step.completed {
-        background: linear-gradient(135deg, #d4f5d4 0%, #b8e6b8 100%);
-    }
-    
-    .progress-step.active {
-        background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
-    }
-    
-    .dataset-selector {
-        background: white;
-        padding: 1.5rem;
-        border-radius: 15px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        margin-bottom: 2rem;
-    }
-    
-    .profile-container {
-        background: white;
-        padding: 2rem;
-        border-radius: 15px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        margin-bottom: 2rem;
-    }
-</style>
-""", unsafe_allow_html=True)
+from assets.streamlit_styles import apply_professional_styling, create_nav_header
 
-# --- Header Section ---
-st.markdown("""
-<div class="page-header">
-    <h1>📊 Data Profiling & Quality Analysis</h1>
-    <p>Generate comprehensive insights and quality reports for your datasets</p>
-</div>
-""", unsafe_allow_html=True)
+apply_professional_styling()
 
-# --- Navigation ---
-nav_col1, nav_col2, nav_col3 = st.columns([1, 3, 1])
-with nav_col1:
-    st.page_link("pages/2_Load_Data_CSV_or_Database.py", label="⬅ Load Data", icon="📂")
-with nav_col3:
-    st.page_link("pages/4_Chat_with_Data.py", label="Chat with Data ➡", icon="💬")
+# --- Navigation Header ---
+create_nav_header("📊 Data Profiling & Quality Analysis", "Generate comprehensive insights and quality reports for your datasets")
 
-# --- Progress Indicator ---
-st.markdown("### 📍 Current Progress")
-progress_col1, progress_col2, progress_col3 = st.columns(3)
-
-with progress_col1:
-    st.markdown("""
-    <div class="progress-step completed">
-        <span style="font-size: 1.5rem; margin-right: 1rem;">✅</span>
-        <div>
-            <strong>Step 1: Load Data</strong><br>
-            <small>Completed</small>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-
-with progress_col2:
-    st.markdown("""
-    <div class="progress-step active">
-        <span style="font-size: 1.5rem; margin-right: 1rem;">📊</span>
-        <div>
-            <strong>Step 2: Profile Data</strong><br>
-            <small>Currently active</small>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-
-with progress_col3:
-    st.markdown("""
-    <div class="progress-step">
-        <span style="font-size: 1.5rem; margin-right: 1rem;">💬</span>
-        <div>
-            <strong>Step 3: Chat with Data</strong><br>
-            <small>Next up</small>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-
-st.markdown("---")
 
 # --- Data Source Collection ---
 df_sources = []
@@ -176,12 +51,6 @@ if db_engine_available:
         st.warning(f"⚠ Could not retrieve DB tables: {e}")
 
 # --- Dataset Selection ---
-st.markdown("""
-<div class="dataset-selector">
-    <h3>🎯 Select Datasets to Profile</h3>
-    <p>Choose the datasets you want to analyze and generate comprehensive reports for</p>
-</div>
-""", unsafe_allow_html=True)
 
 if not selected_sources_options:
     st.error("❌ No data sources found. Please go back to 'Load Data' and upload CSV files or connect to a database.")
@@ -579,7 +448,7 @@ def generate_enhanced_profile(df_name, df_data):
             with st.expander("📊 Profile Summary", expanded=True):
                 try:
                     summary = profile.get_description()
-                    table_stats = summary.table
+                    table_stats = summary.table;
                     
                     summary_col1, summary_col2, summary_col3, summary_col4 = st.columns(4)
                     
@@ -746,24 +615,12 @@ with next_col3:
     """, unsafe_allow_html=True)
 
 # --- Navigation Buttons ---
-st.markdown("### 🎯 Continue Your Analysis Journey")
 
 nav_button_col1, nav_button_col2, nav_button_col3 = st.columns([1, 2, 1])
 
 with nav_button_col1:
     st.page_link("pages/2_Load_Data_CSV_or_Database.py", label="⬅ Load More Data", icon="📂")
 
-with nav_button_col2:
-    # Update progress to show profiling completed
-    st.markdown("""
-    <div class="progress-step completed" style="justify-content: center;">
-        <span style="font-size: 1.5rem; margin-right: 1rem;">✅</span>
-        <div style="text-align: center;">
-            <strong>Data Profiling Completed!</strong><br>
-            <small>Ready for interactive analysis</small>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
 
 with nav_button_col3:
     st.page_link("pages/4_Chat_with_Data.py", label="Chat with Data ➡", icon="💬")
