@@ -23,6 +23,9 @@ apply_professional_styling()
 # --- Navigation Header ---
 create_nav_header("⚡️ Data Lens AI", "AI-powered Data Analysis and Anomaly Detection Tool")
 
+image_html_path = "app/assets/datalensailogo.png" # This is the path Streamlit will understand
+
+
 # --- Hero Section ---
 st.markdown("""
 <div style="display: flex; gap: 2rem; align-items: center; margin-bottom: 2rem;">
@@ -37,7 +40,7 @@ st.markdown("""
         </div>
     </div>
     <div style="flex: 1; text-align: center;">
-        <img src="https://s3-symbol-logo.tradingview.com/presight-ai-plc--big.svg" alt="Data Profiler" style="max-width: 220px; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,120,212,0.08);">
+        <img src="{image_html_path}" alt="Data Profiler" style="max-width: 220px; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,120,212,0.08);">
     </div>
 </div>
 """, unsafe_allow_html=True)
