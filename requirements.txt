@@ -7,3 +7,7 @@ pandas-profiling==3.6.6
 pandasai==1.5.15
 psycopg2-binary==2.9.1
 google-generativeai==0.5.4
+bcrypt==4.0.1
+python-multipart==0.0.6
+cryptography==41.0.7
+email-validator==2.0.0
