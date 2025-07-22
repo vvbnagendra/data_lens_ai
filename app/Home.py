@@ -130,10 +130,13 @@ if AUTH_AVAILABLE and is_authenticated:
     </div>
     """, unsafe_allow_html=True)
     
-    # Navigation based on authentication
+    # Enhanced Navigation based on user role and permissions
     st.markdown("## 🚀 Your Available Features")
     
-    # Create columns for navigation cards
+    # Check user permissions for navigation
+    user_role = current_user['user_role']
+    
+    # Core features available to all authenticated users
     col_nav1, col_nav2, col_nav3, col_nav4 = st.columns(4)
     
     with col_nav1:
@@ -151,6 +154,105 @@ if AUTH_AVAILABLE and is_authenticated:
     with col_nav4:
         if st.button("🔍 Anomaly Detection", use_container_width=True):
             st.switch_page("pages/5_Anomaly_Detection.py")
+    
+    # Administrative features (only for Admin/SuperAdmin)
+    if user_role in ['SuperAdmin', 'Admin']:
+        st.markdown("---")
+        st.markdown("## 🛡️ Administrative Features")
+        
+        admin_col1, admin_col2, admin_col3, admin_col4 = st.columns(4)
+        
+        with admin_col1:
+            if st.button("👥 User Management", use_container_width=True, type="secondary"):
+                st.switch_page("pages/Admin_User_Management.py")
+        
+        with admin_col2:
+            if st.button("📊 Admin Dashboard", use_container_width=True, type="secondary"):
+                # This would link to the admin dashboard from your existing auth system
+                try:
+                    from auth.admin_dashboard import AdminDashboard
+                    st.info("📊 Admin Dashboard - Feature available in dedicated admin interface")
+                except ImportError:
+                    st.info("📊 Admin Dashboard - Module not found")
+        
+        with admin_col3:
+            if st.button("🔍 Audit Logs", use_container_width=True, type="secondary"):
+                st.info("🔍 Audit Logs - Feature to be implemented")
+        
+        with admin_col4:
+            if st.button("⚙️ System Settings", use_container_width=True, type="secondary"):
+                st.info("⚙️ System Settings - Available in User Management page")
+    
+    # Role-specific features
+    st.markdown("---")
+    st.markdown(f"## 🎯 {user_role} Specific Features")
+    
+    role_col1, role_col2, role_col3, role_col4 = st.columns(4)
+    
+    if user_role == 'SuperAdmin':
+        with role_col1:
+            st.info("🔴 **SuperAdmin Access**\n\nYou have full system privileges including user management, system settings, and all data features.")
+        with role_col2:
+            st.success("✅ **All Features Unlocked**\n\nAccess to every feature in the application.")
+        with role_col3:
+            st.warning("⚠️ **High Privileges**\n\nUse administrative features responsibly.")
+        with role_col4:
+            if st.button("🚨 Emergency Tools", use_container_width=True, help="Emergency administrative tools"):
+                st.info("🚨 Emergency tools available in User Management")
+    
+    elif user_role == 'Admin':
+        with role_col1:
+            st.info("🟠 **Admin Access**\n\nUser management and analytics access.")
+        with role_col2:
+            st.success("✅ **Management Features**\n\nCreate and manage user accounts.")
+        with role_col3:
+            st.info("📊 **Analytics Access**\n\nView system analytics and reports.")
+        with role_col4:
+            st.info("🔒 **Secure Operations**\n\nAll actions are logged and audited.")
+    
+    elif user_role == 'DataScientist':
+        with role_col1:
+            st.info("🔵 **Advanced Analytics**\n\nAccess to all data analysis features.")
+        with role_col2:
+            st.success("✅ **ML Capabilities**\n\nMachine learning and AI tools available.")
+        with role_col3:
+            st.info("📈 **Data Exploration**\n\nAdvanced data exploration and visualization.")
+        with role_col4:
+            if st.button("🧪 Advanced Tools", use_container_width=True):
+                st.info("🧪 Advanced data science tools - Feature to be expanded")
+    
+    elif user_role == 'BusinessAnalyst':
+        with role_col1:
+            st.info("🟢 **Business Insights**\n\nBusiness-focused analysis tools.")
+        with role_col2:
+            st.success("✅ **Reporting**\n\nCreate business reports and dashboards.")
+        with role_col3:
+            st.info("📊 **KPI Tracking**\n\nMonitor key business metrics.")
+        with role_col4:
+            if st.button("📈 Business Tools", use_container_width=True):
+                st.info("📈 Business analysis tools - Feature to be expanded")
+    
+    elif user_role == 'Developer':
+        with role_col1:
+            st.info("🟡 **Development Access**\n\nTechnical features and system logs.")
+        with role_col2:
+            st.success("✅ **API Access**\n\nProgrammatic access to data and features.")
+        with role_col3:
+            st.info("🔧 **Debug Tools**\n\nDebugging and development utilities.")
+        with role_col4:
+            if st.button("⚙️ Dev Tools", use_container_width=True):
+                st.info("⚙️ Developer tools - Feature to be expanded")
+    
+    else:  # Viewer
+        with role_col1:
+            st.info("⚪ **Viewer Access**\n\nRead-only access to data and features.")
+        with role_col2:
+            st.success("✅ **Data Viewing**\n\nView and explore existing data.")
+        with role_col3:
+            st.info("📋 **Basic Reports**\n\nGenerate basic reports and exports.")
+        with role_col4:
+            st.warning("🔒 **Limited Access**\n\nContact admin for additional permissions.")
+
 
 else:
     # Non-authenticated user - show login prompt
