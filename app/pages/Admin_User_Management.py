@@ -160,32 +160,54 @@ class EnhancedAuthDB(AuthenticationDB):
     def update_user_detailed(self, user_id: int, updates: dict, admin_user_id: int) -> bool:
         """Update user with detailed audit trail"""
         try:
-            import sqlite3
             with sqlite3.connect(self.db_path) as conn:
+                # Set row_factory for this connection if it's not set globally or by default
+                conn.row_factory = sqlite3.Row
                 cursor = conn.cursor()
-                
-                # Get old values for audit
+
+                # Get old values for audit BEFORE the update
                 cursor.execute("SELECT * FROM users WHERE user_id = ?", (user_id,))
-                old_user = dict(sqlite3.Row(*cursor.fetchone()) if cursor.fetchone() else {})
-                
-                # Update user
-                success = self.update_user(user_id, updates)
-                
-                if success:
-                    # Log audit trail
-                    self._log_audit_trail(
-                        user_id=user_id,
-                        admin_user_id=admin_user_id,
-                        action_type="USER_UPDATED",
-                        table_name="users",
-                        record_id=str(user_id),
-                        old_values=json.dumps(old_user, default=str),
-                        new_values=json.dumps(updates, default=str)
-                    )
-                
-                return success
+                old_user_row = cursor.fetchone()
+
+                if not old_user_row:
+                    print(f"User with ID {user_id} not found for update.")
+                    return False # User not found, cannot update or log audit
+
+                old_user_values = dict(old_user_row)
+
+            # Important: Perform the actual update using the self.update_user method
+            # This needs to happen outside the first 'with' block if 'self.update_user'
+            # also creates its own connection, or ensure both operations are in the same
+            # transaction if 'self.update_user' doesn't handle connection.
+            # Assuming self.update_user creates its own connection and commits.
+            success = self.update_user(user_id, updates)
+
+            if success:
+                # Get the NEW values for audit AFTER the update
+                # Reconnect or reuse connection if self.update_user happens in the same transaction
+                with sqlite3.connect(self.db_path) as conn_after_update:
+                    conn_after_update.row_factory = sqlite3.Row
+                    cursor_after_update = conn_after_update.cursor()
+                    cursor_after_update.execute("SELECT * FROM users WHERE user_id = ?", (user_id,))
+                    new_user_row = cursor_after_update.fetchone()
+                    
+                    # This should not be None if update was successful, but a safeguard
+                    new_user_values = dict(new_user_row) if new_user_row else {}
+
+                # Log audit trail
+                self._log_audit_trail(
+                    user_id=user_id,
+                    admin_user_id=admin_user_id,
+                    action_type="USER_UPDATED",
+                    table_name="users",
+                    record_id=str(user_id),
+                    old_values=json.dumps(old_user_values, default=str), # Use old_user_values dict
+                    new_values=json.dumps(new_user_values, default=str) # Use new_user_values dict
+                )
+
+            return success
         except Exception as e:
-            print(f"Error updating user: {e}")
+            print(f"Error updating user detailed: {e}")
             return False
     
     def reset_user_password(self, user_id: int, new_password: str, admin_user_id: int, 
@@ -472,6 +494,8 @@ def main():
         st.title("👥 User Management")
         st.markdown("*Manage users, roles, and permissions*")
     
+    if "target_tab_index" in st.session_state:
+        del st.session_state["target_tab_index"]
     # Main tabs
     tab1, tab2, tab3, tab4, tab5 = st.tabs([
         "👥 User Management", 

@@ -170,8 +170,13 @@ if AUTH_AVAILABLE and is_authenticated:
             if st.button("📊 Admin Dashboard", use_container_width=True, type="secondary"):
                 # This would link to the admin dashboard from your existing auth system
                 try:
-                    from auth.admin_dashboard import AdminDashboard
-                    st.info("📊 Admin Dashboard - Feature available in dedicated admin interface")
+                    # Store the target page and the desired tab index in session state
+                    st.session_state["target_page_for_tab"] = "Admin_User_Management.py" # Or whatever your page file is named
+                    st.session_state["target_tab_index"] = 1 # 0-indexed: User Management (0), Admin Dashboard (1), System Settings (2), Audit Logs (3), Emergency Tools (4)
+                    # Use st.switch_page to navigate to the target page
+                    # You need the full path relative to your project root if it's in a 'pages' folder
+                    st.switch_page("pages/Admin_User_Management.py") # Adjust path if needed (e.g., just "Admin_Dashboard_Page.py")
+
                 except ImportError:
                     st.info("📊 Admin Dashboard - Module not found")
         
